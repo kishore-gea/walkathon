@@ -1,0 +1,2 @@
+/Users/kishoreprudhvi/StudioProjects/wellnesswalkathon/android/app/.cxx/RelWithDebInfo/225d4z2g/x86_64/CMakeFiles/edit_cache.dir
+/Users/kishoreprudhvi/StudioProjects/wellnesswalkathon/android/app/.cxx/RelWithDebInfo/225d4z2g/x86_64/CMakeFiles/rebuild_cache.dir

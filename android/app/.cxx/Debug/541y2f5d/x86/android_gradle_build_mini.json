@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/Users/kishoreprudhvi/Documents/WorkSpace/SDK/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/kishoreprudhvi/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/kishoreprudhvi/StudioProjects/wellnesswalkathon/android/app/.cxx/Debug/541y2f5d/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/kishoreprudhvi/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/kishoreprudhvi/StudioProjects/wellnesswalkathon/android/app/.cxx/Debug/541y2f5d/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

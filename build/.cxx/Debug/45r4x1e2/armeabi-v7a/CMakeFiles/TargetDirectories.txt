@@ -1,0 +1,2 @@
+/Users/kishoreprudhvi/StudioProjects/wellnesswalkathon/build/.cxx/Debug/45r4x1e2/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/kishoreprudhvi/StudioProjects/wellnesswalkathon/build/.cxx/Debug/45r4x1e2/armeabi-v7a/CMakeFiles/rebuild_cache.dir
