@@ -29,7 +29,7 @@ class StepCountData {
     String filter,
   ) async {
     List<ParticipentData> participantStepCountData = [];
-    print("Walkathon Stats: ${StepCountData.originalData.length}");
+    // print("Walkathon Stats: ${StepCountData.originalData.length}");
     var data = StepCountData.originalData;
     if (code == 'HYD') {
       data =
@@ -206,7 +206,7 @@ class StepCountData {
 
         if (location == "HYD" && maySteps != 0) {
           participantStepCountData.add(data[i]);
-          print('Adding data: ${data[i].name} with May steps: ${data[i].may}');
+          // print('Adding data: ${data[i].name} with May steps: ${data[i].may}');
         }
       }
 
@@ -333,7 +333,7 @@ class StepCountData {
         highestValue = totalSteps;
       }
     }
-    print('Highest Value: $highestValue');
+    // print('Highest Value: $highestValue');
     return highestValue;
   }
 
@@ -342,14 +342,14 @@ class StepCountData {
     //BLR- Bangalore
     int locationCount = 0;
 
-    print('Original Data: ${originalData.length}');
+    // print('Original Data: ${originalData.length}');
     for (int i = 0; i < originalData.length; i++) {
-      print('Location: ${originalData[i].location}');
+      // print('Location: ${originalData[i].location}');
       if (originalData[i].location == code) {
         locationCount += int.parse(originalData[i].total.toString());
       }
     }
-    print('Location Count: $code $locationCount');
+    // print('Location Count: $code $locationCount');
 
     return locationCount;
   }

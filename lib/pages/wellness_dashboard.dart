@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:wellnesswalkathon/data_constants/stepcount_data.dart';
 import 'package:wellnesswalkathon/pages/rolling_leader.dart';
-import 'package:wellnesswalkathon/pages/walkathon_contact_us.dart';
 import 'package:wellnesswalkathon/pages/walkathon_facts.dart';
 import 'package:wellnesswalkathon/pages/walkathon_monthly_stats.dart';
 import 'package:wellnesswalkathon/pages/walkthon_stats/walkathon_stats.dart';
@@ -473,10 +472,10 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                       ),
                       SizedBox(width: 10),
                       Text(
-                        ' India Leaderboard [March - April]',
+                        ' India Leaderboard [ROLLING LEADERS]',
                         style: AppTextStyles.subtitle.copyWith(
                           color: Colors.black,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
@@ -678,51 +677,51 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
               ),
 
               SizedBox(height: 10),
-              GestureDetector(
-                onTap: () {
-                  // Handle tap event
-                  // Navigate to Walkathon Facts page
-                  Get.to(
-                    () => const WalkathonContactUs(),
-                    transition: Transition.rightToLeft,
-                    duration: const Duration(milliseconds: 500),
-                  );
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: Colors.blue.shade100,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppTextStyles.white,
-                        ),
-                        child: Icon(
-                          Icons.contact_mail,
-                          size: 20,
-                          color: AppTextStyles.primaryBlue,
-                        ),
-                      ),
-                      SizedBox(width: 10),
-
-                      Text(
-                        'Contact WellWithin Team ',
-                        style: AppTextStyles.subtitle.copyWith(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // GestureDetector(
+              //   onTap: () {
+              //     // Handle tap event
+              //     // Navigate to Walkathon Facts page
+              //     Get.to(
+              //       () => const WalkathonContactUs(),
+              //       transition: Transition.rightToLeft,
+              //       duration: const Duration(milliseconds: 500),
+              //     );
+              //   },
+              //   child: Container(
+              //     padding: const EdgeInsets.all(8.0),
+              //     decoration: BoxDecoration(
+              //       color: Colors.blue.shade100,
+              //       borderRadius: BorderRadius.circular(8),
+              //     ),
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.start,
+              //       crossAxisAlignment: CrossAxisAlignment.center,
+              //       children: [
+              //         Container(
+              //           padding: const EdgeInsets.all(8.0),
+              //           decoration: BoxDecoration(
+              //             shape: BoxShape.circle,
+              //             color: AppTextStyles.white,
+              //           ),
+              //           child: Icon(
+              //             Icons.contact_mail,
+              //             size: 20,
+              //             color: AppTextStyles.primaryBlue,
+              //           ),
+              //         ),
+              //         SizedBox(width: 10),
+              //
+              //         Text(
+              //           'Contact WellWithin Team ',
+              //           style: AppTextStyles.subtitle.copyWith(
+              //             color: Colors.black,
+              //             fontSize: 16,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
               SizedBox(height: 10),
               Align(
                 alignment: Alignment.bottomRight,
@@ -751,7 +750,6 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
         'https://opensheet.vercel.app/14nQs7JlgHbFqzGlwpHi2egdIAsdpOSlyXUvfpGj6TNk/Sheet1';
     final response = await http.get(Uri.parse(url));
     final jsonData = jsonDecode(response.body);
-    print('Data from Sheets: $jsonData');
 
     // Extracting headers from the first row of the JSON data
     var headers;
@@ -786,7 +784,7 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
             .map<ParticipentData>((item) => ParticipentData.fromJson(item))
             .toList();
 
-    print('Original Data Dashboard: ${StepCountData.originalData.length}');
+    // print('Original Data Dashboard: ${StepCountData.originalData.length}');
     totalStepCountHYD.value = await StepCountData().getLocationWiseDataCount(
       'HYD',
     );
@@ -803,7 +801,7 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
         headersList.add(headers[i]);
       }
     }
-    print('Headers FROM Excel: $headersList');
+    // print('Headers FROM Excel: $headersList');
     AppTextStyles().hideLoadingDialog(context);
   }
 }

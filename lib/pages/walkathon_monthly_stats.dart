@@ -69,20 +69,20 @@ class _MonthlyStatsState extends State<MonthlyStats> {
                                       flex: 1,
                                       child: Column(
                                         children: [
-                                          Container(
-                                            padding: const EdgeInsets.all(7.0),
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: AppTextStyles.white,
-                                            ),
-                                            child: Image.asset(
-                                              'assets/images/hyd.png', // Path to your image
-                                              width:
-                                                  25, // Adjust width as per your logo size
-                                              height:
-                                                  25, // Adjust height if needed
-                                            ),
-                                          ),
+                                          // Container(
+                                          //   padding: const EdgeInsets.all(7.0),
+                                          //   decoration: BoxDecoration(
+                                          //     shape: BoxShape.circle,
+                                          //     color: AppTextStyles.white,
+                                          //   ),
+                                          //   child: Image.asset(
+                                          //     'assets/images/hyd.png', // Path to your image
+                                          //     width:
+                                          //         25, // Adjust width as per your logo size
+                                          //     height:
+                                          //         25, // Adjust height if needed
+                                          //   ),
+                                          // ),
                                           SizedBox(height: 10),
                                           Text(
                                             AppTextStyles().formatIndianNumber(
@@ -170,20 +170,20 @@ class _MonthlyStatsState extends State<MonthlyStats> {
                                       flex: 1,
                                       child: Column(
                                         children: [
-                                          Container(
-                                            padding: const EdgeInsets.all(7.0),
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: AppTextStyles.white,
-                                            ),
-                                            child: Image.asset(
-                                              'assets/images/blr.png', // Path to your image
-                                              width:
-                                                  25, // Adjust width as per your logo size
-                                              height:
-                                                  25, // Adjust height if needed
-                                            ),
-                                          ),
+                                          // Container(
+                                          //   padding: const EdgeInsets.all(7.0),
+                                          //   decoration: BoxDecoration(
+                                          //     shape: BoxShape.circle,
+                                          //     color: AppTextStyles.white,
+                                          //   ),
+                                          //   child: Image.asset(
+                                          //     'assets/images/blr.png', // Path to your image
+                                          //     width:
+                                          //         25, // Adjust width as per your logo size
+                                          //     height:
+                                          //         25, // Adjust height if needed
+                                          //   ),
+                                          // ),
                                           SizedBox(height: 10),
                                           Text(
                                             AppTextStyles().formatIndianNumber(
@@ -325,17 +325,18 @@ class _MonthlyStatsState extends State<MonthlyStats> {
           totalStepCountBLRCurrentMonth.value;
 
       MonthlyData monthlyData = MonthlyData(
-        monthName,
-        totalStepCountHYDCurrentMonth.value,
-        totalStepCountBLRCurrentMonth.value,
-        differenceStepsMonthly.value,
-        totalStepCountHYDCurrentMonth.value +
+        month: monthName,
+        totalStepsHYD: totalStepCountHYDCurrentMonth.value,
+        totalStepsBLR: totalStepCountBLRCurrentMonth.value,
+        differenceSteps: differenceStepsMonthly.value,
+        currentMonthTotalSteps:
+            totalStepCountHYDCurrentMonth.value +
             totalStepCountBLRCurrentMonth.value,
       );
 
-      print('Monthly Data for Month $i: $monthlyData');
-      print('Total Steps HYD: $i --> ${totalStepCountHYDCurrentMonth.value}');
-      print('Total Steps BLR: $i --> ${totalStepCountBLRCurrentMonth.value}');
+      // print('Monthly Data for Month $i: $monthlyData');
+      // print('Total Steps HYD: $i --> ${totalStepCountHYDCurrentMonth.value}');
+      // print('Total Steps BLR: $i --> ${totalStepCountBLRCurrentMonth.value}');
 
       monthlyStatsList.add(monthlyData);
       totalMonthStepsHYD = 0; // Reset for next month
@@ -348,7 +349,7 @@ class _MonthlyStatsState extends State<MonthlyStats> {
 
     // Update the observable variables with the calculated values
 
-    print('Monthly Stats: $monthlyStatsList');
+    // print('Monthly Stats: $monthlyStatsList');
 
     return monthlyStatsList;
   }
@@ -361,30 +362,44 @@ class MonthlyData {
   int? differenceSteps;
   int? currentMonthTotalSteps;
 
-  MonthlyData(
-    this.month,
-    this.totalStepsHYD,
-    this.totalStepsBLR,
-    this.differenceSteps,
-    this.currentMonthTotalSteps,
-  );
+  MonthlyData({
+    required this.month,
+    required this.totalStepsHYD,
+    required this.totalStepsBLR,
+    required this.differenceSteps,
+    required this.currentMonthTotalSteps,
+  });
 
-  MonthlyData.fromJson(Map<String, dynamic> json) {
-    month = json['month'];
-    totalStepsHYD = json['totalStepsHYD'];
-    totalStepsBLR = json['totalStepsBLR'];
-    differenceSteps = json['differenceSteps'];
-    currentMonthTotalSteps = json['currentMonthTotalSteps'];
+  factory MonthlyData.fromJson(Map<String, dynamic> json) {
+    return MonthlyData(
+      month: json['month'] as String,
+      totalStepsHYD: _parseInt(json['totalStepsHYD']),
+      totalStepsBLR: _parseInt(json['totalStepsBLR']),
+      differenceSteps: _parseInt(json['differenceSteps']),
+      currentMonthTotalSteps: _parseInt(json['currentMonthTotalSteps']),
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['month'] = month;
-    data['totalStepsHYD'] = totalStepsHYD;
-    data['totalStepsBLR'] = totalStepsBLR;
-    data['differenceSteps'] = differenceSteps;
-    data['currentMonthTotalSteps'] = currentMonthTotalSteps;
-    return data;
+    return {
+      'month': month,
+      'totalStepsHYD': totalStepsHYD,
+      'totalStepsBLR': totalStepsBLR,
+      'differenceSteps': differenceSteps,
+      'currentMonthTotalSteps': currentMonthTotalSteps,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'MonthlyData(month: $month, HYD: $totalStepsHYD, BLR: $totalStepsBLR, Diff: $differenceSteps, Current: $currentMonthTotalSteps)';
+  }
+
+  static int? _parseInt(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return value;
+    if (value is String) return int.tryParse(value);
+    return null;
   }
 }
 
