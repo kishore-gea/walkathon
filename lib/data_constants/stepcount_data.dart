@@ -1,4 +1,5 @@
 import 'package:wellnesswalkathon/model/participent_data.dart';
+import 'package:wellnesswalkathon/model/team_data.dart';
 
 class StepCountData {
   static List<ParticipentData> originalData = [];
@@ -23,6 +24,47 @@ class StepCountData {
   /// Method that helps to show the walkathon stats based on the selected option
   /// 1A - 10k AVG [Location -HYD]
   /// 1B - 10k AVG [Location -BLR]
+
+  Future<List<TeamData>> getTeamData() async {
+    var data = StepCountData.originalData;
+    // Extract team names
+    Set<String> teamNames =
+        data
+            .map((entry) => entry.teams.toString().split('-').last.trim())
+            .toSet();
+
+    print('Team Names: ${teamNames.length}');
+    List<TeamData> teamData = [];
+
+    for (int t = 0; t <= teamNames.length - 1; t++) {
+      int count = 0;
+      List<ParticipentData> teamMembers = [];
+      for (int i = 0; i < data.length; i++) {
+        print('Team Name: ${teamNames.elementAt(t)} - Data: ${data[i].teams}');
+        if (data[i].teams == teamNames.elementAt(t)) {
+          count += int.parse(data[i].total.toString());
+          teamMembers.add(data[i]);
+          // data.removeAt(i);
+        }
+      }
+      print('teamMembers ${teamMembers.length}');
+      if (teamMembers.isNotEmpty) {
+        teamData.add(
+          TeamData(
+            name: teamNames.elementAt(t),
+            total: count.toString(),
+            members: teamMembers,
+          ),
+        );
+      }
+      print(
+        'MAIN -> ${teamNames.elementAt(t)}  - Team Data: ${teamData.length} - L -> ${data.length}',
+      );
+    }
+    print('Created Team Wise Data');
+    print('Team Data Length: ${teamData.length}');
+    return teamData;
+  }
 
   Future<List<ParticipentData>> getLeaderStats(
     String code,
@@ -167,8 +209,8 @@ class StepCountData {
     } else if (code == '5A') {
       for (int i = 0; i < data.length; i++) {
         if (data[i].location == "HYD") {
-          int marSteps = int.parse(data[i].apr.toString());
-          int aprSteps = int.parse(data[i].may.toString());
+          int marSteps = int.parse(data[i].may.toString());
+          int aprSteps = int.parse(data[i].jun.toString());
           if ((aprSteps - marSteps) > 25000) {
             if (aprSteps > 25000 && marSteps > 25000) {
               participantStepCountData.add(data[i]);
@@ -185,8 +227,8 @@ class StepCountData {
     } else if (code == '5B') {
       for (int i = 0; i < data.length; i++) {
         if (data[i].location == "BLR") {
-          int marSteps = int.parse(data[i].apr.toString());
-          int aprSteps = int.parse(data[i].may.toString());
+          int marSteps = int.parse(data[i].may.toString());
+          int aprSteps = int.parse(data[i].jun.toString());
           if ((aprSteps - marSteps) > 25000) {
             if (aprSteps > 25000 && marSteps > 25000) {
               participantStepCountData.add(data[i]);
@@ -199,10 +241,10 @@ class StepCountData {
         int bUp = int.parse(b.up.toString());
         return bUp.compareTo(aUp);
       });
-    } else if (code == '6A') {
+    } else if (code == '6AA') {
       for (int i = 0; i < data.length; i++) {
         var location = data[i].location?.toString()?.trim()?.toUpperCase();
-        var maySteps = int.tryParse(data[i].may.toString().trim()) ?? 0;
+        var maySteps = int.tryParse(data[i].apr.toString().trim()) ?? 0;
 
         if (location == "HYD" && maySteps != 0) {
           participantStepCountData.add(data[i]);
@@ -211,30 +253,62 @@ class StepCountData {
       }
 
       participantStepCountData.sort((a, b) {
-        int aVal = int.tryParse(a.may.toString().trim()) ?? 0;
-        int bVal = int.tryParse(b.may.toString().trim()) ?? 0;
+        int aVal = int.tryParse(a.apr.toString().trim()) ?? 0;
+        int bVal = int.tryParse(b.apr.toString().trim()) ?? 0;
+        return bVal.compareTo(aVal);
+      });
+    } else if (code == '6BB') {
+      for (int i = 0; i < data.length; i++) {
+        var location = data[i].location?.toString()?.trim()?.toUpperCase();
+        var maySteps = int.tryParse(data[i].apr.toString().trim()) ?? 0;
+
+        if (location == "BLR" && maySteps != 0) {
+          participantStepCountData.add(data[i]);
+          // print('Adding data: ${data[i].name} with May steps: ${data[i].may}');
+        }
+      }
+
+      participantStepCountData.sort((a, b) {
+        int aVal = int.tryParse(a.apr.toString().trim()) ?? 0;
+        int bVal = int.tryParse(b.apr.toString().trim()) ?? 0;
+        return bVal.compareTo(aVal);
+      });
+    } else if (code == '6A') {
+      for (int i = 0; i < data.length; i++) {
+        var location = data[i].location?.toString()?.trim()?.toUpperCase();
+        var maySteps = int.tryParse(data[i].jun.toString().trim()) ?? 0;
+
+        if (location == "HYD" && maySteps != 0) {
+          participantStepCountData.add(data[i]);
+          // print('Adding data: ${data[i].name} with May steps: ${data[i].may}');
+        }
+      }
+
+      participantStepCountData.sort((a, b) {
+        int aVal = int.tryParse(a.jun.toString().trim()) ?? 0;
+        int bVal = int.tryParse(b.jun.toString().trim()) ?? 0;
         return bVal.compareTo(aVal);
       });
     } else if (code == '6B') {
       for (int i = 0; i < data.length; i++) {
         if (data[i].location == "BLR") {
-          if (data[i].may != '0') {
+          if (data[i].jun != '0') {
             participantStepCountData.add(data[i]);
           }
         }
       }
       //Sort based in apr stepcount
       participantStepCountData.sort((a, b) {
-        int aVal = int.parse(a.may.toString());
-        int bVal = int.parse(b.may.toString());
+        int aVal = int.parse(a.jun.toString());
+        int bVal = int.parse(b.jun.toString());
         return bVal.compareTo(aVal);
       });
     } else if (code == '6C') {
       participantStepCountData.addAll(data);
       //Sort based in apr stepcount
       participantStepCountData.sort((a, b) {
-        int aApr = int.parse(a.may.toString());
-        int bApr = int.parse(b.may.toString());
+        int aApr = int.parse(a.jun.toString());
+        int bApr = int.parse(b.jun.toString());
         return bApr.compareTo(aApr);
       });
     } else if (code == 'RL') {

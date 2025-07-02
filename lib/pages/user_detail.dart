@@ -369,7 +369,7 @@ class _UserDetailState extends State<UserDetail> {
     int sepSteps = int.parse(participant.sep.toString());
     var val = aprSteps - marSteps;
     if (DateTime.now().month == 6 && maySteps > 0) {
-      val = maySteps - aprSteps;
+      val = aprSteps > 0 ? maySteps - aprSteps : 0;
     } else if (DateTime.now().month == 7 && junSteps > 0) {
       val = junSteps - maySteps;
     } else if (DateTime.now().month == 8 && julSteps > 0) {
@@ -390,7 +390,9 @@ class _UserDetailState extends State<UserDetail> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            marSteps != 0 && aprSteps != 0
+            val > 0
+                ? AppTextStyles().formatIndianNumber(val)
+                : val < 0
                 ? AppTextStyles().formatIndianNumber(val)
                 : 'N.A',
 
@@ -402,9 +404,9 @@ class _UserDetailState extends State<UserDetail> {
             ),
           ),
           SizedBox(width: 5),
-          val > 0 && (marSteps != 0 && aprSteps != 0)
+          val > 0
               ? Icon(Icons.trending_up_outlined, color: Colors.green)
-              : marSteps == 0 || aprSteps == 0
+              : aprSteps == 0 || maySteps == 0
               ? Icon(Icons.timer, color: Colors.grey)
               : Icon(Icons.trending_down_outlined, color: Colors.redAccent),
         ],

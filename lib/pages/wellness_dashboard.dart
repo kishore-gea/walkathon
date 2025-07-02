@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:wellnesswalkathon/data_constants/stepcount_data.dart';
+import 'package:wellnesswalkathon/pages/india_teams.dart';
 import 'package:wellnesswalkathon/pages/rolling_leader.dart';
 import 'package:wellnesswalkathon/pages/walkathon_facts.dart';
 import 'package:wellnesswalkathon/pages/walkathon_monthly_stats.dart';
@@ -437,6 +438,52 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                   // Handle tap event
                   // Navigate to Dashboard Data page
                   Get.to(
+                    () => IndiaTeamsDashboard(),
+                    transition: Transition.rightToLeft,
+                    duration: const Duration(milliseconds: 500),
+                  ); // 1- IND 2- HYD 3- BLR
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    color: Colors.green.shade100,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppTextStyles.white,
+                        ),
+                        child: Icon(
+                          Icons.leaderboard,
+                          size: 20,
+                          color: AppTextStyles.primaryBlue,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        ' India Teams',
+                        style: AppTextStyles.subtitle.copyWith(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              GestureDetector(
+                onTap: () {
+                  // Handle tap event
+                  // Navigate to Dashboard Data page
+                  Get.to(
                     () => DashboardData(
                       selectedCode: 'ALL',
                       headerName: 'India',
@@ -484,7 +531,6 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                 ),
               ),
               SizedBox(height: 10),
-
               GestureDetector(
                 onTap: () {
                   // Handle tap event
@@ -524,7 +570,7 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                       SizedBox(width: 10),
 
                       Text(
-                        'MAY 2025 - Leaderboard',
+                        'JUNE 2025 - Leaderboard',
                         style: AppTextStyles.subtitle.copyWith(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,

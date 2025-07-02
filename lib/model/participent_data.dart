@@ -14,6 +14,7 @@ class ParticipentData {
   String? avg;
   String? up;
   String? awards;
+  String? teams;
 
   ParticipentData({this.name, this.steps, this.location, this.gender});
 
@@ -33,6 +34,7 @@ class ParticipentData {
     rank = json['Rank'];
     up = json['UP'];
     awards = json['HIS'];
+    teams = json['Team'];
   }
 
   Map<String, dynamic> toJson() {
@@ -52,6 +54,7 @@ class ParticipentData {
     data['Rank'] = rank;
     data['UP'] = up;
     data['HIS'] = awards;
+    data['Team'] = teams;
     return data;
   }
 }

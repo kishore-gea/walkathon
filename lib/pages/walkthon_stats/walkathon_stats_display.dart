@@ -586,14 +586,14 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                         ),
                                                         child: Text(
                                                           int.parse(
-                                                                    data.may
+                                                                    data.jun
                                                                         .toString(),
                                                                   ) >
                                                                   0
                                                               ? AppTextStyles()
                                                                   .formatIndianNumber(
                                                                     int.parse(
-                                                                      data.may
+                                                                      data.jun
                                                                           .toString(),
                                                                     ),
                                                                   )
@@ -688,14 +688,14 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                           ),
                                                           child: Text(
                                                             int.parse(
-                                                                      data.may
+                                                                      data.jun
                                                                           .toString(),
                                                                     ) >
                                                                     0
                                                                 ? AppTextStyles()
                                                                     .formatIndianNumber(
                                                                       int.parse(
-                                                                        data.may
+                                                                        data.jun
                                                                             .toString(),
                                                                       ),
                                                                     )
@@ -1046,7 +1046,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                   AppTextStyles()
                                                                       .formatIndianNumber(
                                                                         int.parse(
-                                                                          data.may
+                                                                          data.jun
                                                                               .toString(),
                                                                         ),
                                                                       ),
@@ -1392,7 +1392,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                   AppTextStyles()
                                                                       .formatIndianNumber(
                                                                         int.parse(
-                                                                          data.may
+                                                                          data.jun
                                                                               .toString(),
                                                                         ),
                                                                       ),
@@ -1849,7 +1849,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
   }
 
   getAvgMonthStepCount(ParticipentData data, String code) {
-    int userSteps = int.parse(data.may.toString());
+    int userSteps = int.parse(data.jun.toString());
     if (userSteps != 0) {
       final monthCode = DateTime.now().month - 1;
       var val = 30;
@@ -1899,6 +1899,8 @@ class _StatsDisplayState extends State<StatsDisplay> {
     final aprAyvSteps = aprSteps / 30;
     int maySteps = int.parse(data.may.toString());
     final mayAyvSteps = maySteps / 31;
+    int junSteps = int.parse(data.jun.toString());
+    final junAvgSteps = junSteps / 30;
     // var value = (marAyvSteps + aprAyvSteps) / 2;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8),
@@ -1931,9 +1933,9 @@ class _StatsDisplayState extends State<StatsDisplay> {
                 ],
               )
               : Text(
-                '${AppTextStyles().formatIndianNumber(marAyvSteps.toInt())} - ${AppTextStyles().formatIndianNumber(aprAyvSteps.toInt())} - ${AppTextStyles().formatIndianNumber(mayAyvSteps.toInt())}',
+                '${AppTextStyles().formatIndianNumber(marAyvSteps.toInt())} - ${AppTextStyles().formatIndianNumber(aprAyvSteps.toInt())} - ${AppTextStyles().formatIndianNumber(mayAyvSteps.toInt())} -${AppTextStyles().formatIndianNumber(junAvgSteps.toInt())}',
                 style: AppTextStyles.subtitle.copyWith(
-                  fontSize: !kIsWeb ? 12 : 17,
+                  fontSize: !kIsWeb ? 12 : 14,
                   fontWeight: FontWeight.bold,
                   color: AppTextStyles.white,
                 ),
@@ -1942,9 +1944,9 @@ class _StatsDisplayState extends State<StatsDisplay> {
   }
 
   String getValue(ParticipentData data) {
-    int aprSteps = int.parse(data.apr.toString());
     int maySteps = int.parse(data.may.toString());
-    final val = maySteps - aprSteps;
+    int junSteps = int.parse(data.jun.toString());
+    final val = junSteps - maySteps;
     return AppTextStyles().formatIndianNumber(val);
   }
 }

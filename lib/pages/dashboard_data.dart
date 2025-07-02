@@ -397,8 +397,41 @@ class _DashboardDataState extends State<DashboardData> {
 
   getGraphIcon(ParticipentData data) {
     int val = int.parse(data.up ?? '0');
-    if (data.steps.toString() == '0') {
-      return SizedBox();
+    String curMonthVal = '';
+    switch (DateTime.now().month) {
+      case 4:
+        curMonthVal = data.steps ?? '0';
+        break;
+      case 5:
+        curMonthVal = data.apr ?? '0';
+        break;
+      case 6:
+        curMonthVal = data.may ?? '0';
+        break;
+      case 7:
+        curMonthVal = data.jun ?? '0';
+        break;
+      case 8:
+        curMonthVal = data.jul ?? '0';
+        break;
+      case 9:
+        curMonthVal = data.aug ?? '0';
+        break;
+      case 10:
+        curMonthVal = data.sep ?? '0';
+        break;
+      default:
+        curMonthVal = data.steps ?? '0';
+    }
+    if (curMonthVal == data.total.toString()) {
+      return Text(
+        'DEB',
+        style: AppTextStyles.body.copyWith(
+          fontSize: 16,
+          color: AppTextStyles.secondaryBlue,
+          fontWeight: FontWeight.bold,
+        ),
+      );
     } else {
       if (val > 0) {
         return Image.asset('assets/images/trend_up.png', height: 25, width: 25);
