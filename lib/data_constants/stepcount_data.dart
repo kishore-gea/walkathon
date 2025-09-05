@@ -33,21 +33,18 @@ class StepCountData {
             .map((entry) => entry.teams.toString().split('-').last.trim())
             .toSet();
 
-    print('Team Names: ${teamNames.length}');
     List<TeamData> teamData = [];
 
     for (int t = 0; t <= teamNames.length - 1; t++) {
       int count = 0;
       List<ParticipentData> teamMembers = [];
       for (int i = 0; i < data.length; i++) {
-        print('Team Name: ${teamNames.elementAt(t)} - Data: ${data[i].teams}');
         if (data[i].teams == teamNames.elementAt(t)) {
           count += int.parse(data[i].total.toString());
           teamMembers.add(data[i]);
           // data.removeAt(i);
         }
       }
-      print('teamMembers ${teamMembers.length}');
       if (teamMembers.isNotEmpty) {
         teamData.add(
           TeamData(
@@ -57,12 +54,7 @@ class StepCountData {
           ),
         );
       }
-      print(
-        'MAIN -> ${teamNames.elementAt(t)}  - Team Data: ${teamData.length} - L -> ${data.length}',
-      );
     }
-    print('Created Team Wise Data');
-    print('Team Data Length: ${teamData.length}');
     return teamData;
   }
 
@@ -97,15 +89,24 @@ class StepCountData {
     } else if (code == '1A') {
       for (int i = 0; i < data.length; i++) {
         if (data[i].location == "HYD") {
-          int marSteps = int.parse(data[i].steps.toString());
+          int marSteps = int.parse(data[i].jun.toString());
           final marAyvSteps = marSteps / 31;
-          int aprSteps = int.parse(data[i].apr.toString());
+          int aprSteps = int.parse(data[i].jun.toString());
           final aprAyvSteps = aprSteps / 30;
-          int maySteps = int.parse(data[i].may.toString());
+          int maySteps = int.parse(data[i].jul.toString());
           final mayAvgSteps = maySteps / 31;
+          int junSteps = int.parse(data[i].jun.toString());
+          final junAvgSteps = junSteps / 31;
+          int julSteps = int.parse(data[i].jul.toString());
+          final julAvgSteps = julSteps / 30;
+          int augSteps = int.parse(data[i].aug.toString());
+          final augAvgSteps = augSteps / 31;
           if (marAyvSteps > 10000 &&
               aprAyvSteps > 10000 &&
-              mayAvgSteps > 10000) {
+              mayAvgSteps > 10000 &&
+              junAvgSteps > 10000 &&
+              julAvgSteps > 10000 &&
+              augAvgSteps > 10000) {
             participantStepCountData.add(data[i]);
           }
         }
@@ -119,9 +120,18 @@ class StepCountData {
           final aprAyvSteps = aprSteps / 30;
           int maySteps = int.parse(data[i].may.toString());
           final mayAvgSteps = maySteps / 31;
+          int junSteps = int.parse(data[i].jun.toString());
+          final junAvgSteps = junSteps / 31;
+          int julSteps = int.parse(data[i].jul.toString());
+          final julAvgSteps = julSteps / 30;
+          int augSteps = int.parse(data[i].aug.toString());
+          final augAvgSteps = augSteps / 31;
           if (marAyvSteps > 10000 &&
               aprAyvSteps > 10000 &&
-              mayAvgSteps > 10000) {
+              mayAvgSteps > 10000 &&
+              junAvgSteps > 10000 &&
+              julAvgSteps > 10000 &&
+              augAvgSteps > 10000) {
             participantStepCountData.add(data[i]);
           }
         }
@@ -135,12 +145,24 @@ class StepCountData {
           final aprAyvSteps = aprSteps / 30;
           int maySteps = int.parse(data[i].may.toString());
           final mayAvgSteps = maySteps / 31;
+          int junSteps = int.parse(data[i].jun.toString());
+          final junAvgSteps = junSteps / 31;
+          int julSteps = int.parse(data[i].jul.toString());
+          final julAvgSteps = julSteps / 30;
+          int augSteps = int.parse(data[i].aug.toString());
+          final augAvgSteps = augSteps / 31;
           if ((marAyvSteps > 7000 && marAyvSteps < 10000) ||
               (aprAyvSteps > 7000 && aprAyvSteps < 10000) ||
-              (mayAvgSteps > 7000 && mayAvgSteps < 10000)) {
+              (mayAvgSteps > 7000 && mayAvgSteps < 10000) ||
+              (junAvgSteps > 7000 && junAvgSteps < 10000) ||
+              (julAvgSteps > 7000 && julAvgSteps < 10000) ||
+              (augAvgSteps > 7000 && augAvgSteps < 10000)) {
             if (aprAyvSteps > 7000 &&
                 marAyvSteps > 7000 &&
-                mayAvgSteps > 7000) {
+                mayAvgSteps > 7000 &&
+                junAvgSteps > 7000 &&
+                julAvgSteps > 7000 &&
+                augAvgSteps > 7000) {
               participantStepCountData.add(data[i]);
             }
           }
@@ -155,12 +177,24 @@ class StepCountData {
           final aprAyvSteps = aprSteps / 30;
           int maySteps = int.parse(data[i].may.toString());
           final mayAvgSteps = maySteps / 31;
+          int junSteps = int.parse(data[i].jun.toString());
+          final junAvgSteps = junSteps / 31;
+          int julSteps = int.parse(data[i].jul.toString());
+          final julAvgSteps = julSteps / 30;
+          int augSteps = int.parse(data[i].aug.toString());
+          final augAvgSteps = augSteps / 31;
           if ((marAyvSteps > 7000 && marAyvSteps < 10000) ||
               (aprAyvSteps > 7000 && aprAyvSteps < 10000) ||
-              (mayAvgSteps > 7000 && mayAvgSteps < 10000)) {
+              (mayAvgSteps > 7000 && mayAvgSteps < 10000) ||
+              (junAvgSteps > 7000 && junAvgSteps < 10000) ||
+              (julAvgSteps > 7000 && julAvgSteps < 10000) ||
+              (augAvgSteps > 7000 && augAvgSteps < 10000)) {
             if (aprAyvSteps > 7000 &&
                 marAyvSteps > 7000 &&
-                mayAvgSteps > 7000) {
+                mayAvgSteps > 7000 &&
+                junAvgSteps > 7000 &&
+                julAvgSteps > 7000 &&
+                augAvgSteps > 7000) {
               participantStepCountData.add(data[i]);
             }
           }
@@ -175,12 +209,24 @@ class StepCountData {
           final aprAyvSteps = aprSteps / 30;
           int maySteps = int.parse(data[i].may.toString());
           final mayAvgSteps = maySteps / 31;
+          int junSteps = int.parse(data[i].jun.toString());
+          final junAvgSteps = junSteps / 31;
+          int julSteps = int.parse(data[i].jul.toString());
+          final julAvgSteps = julSteps / 30;
+          int augSteps = int.parse(data[i].aug.toString());
+          final augAvgSteps = augSteps / 31;
           if ((marAyvSteps > 5000 && marAyvSteps < 7000) ||
               (aprAyvSteps > 5000 && aprAyvSteps < 7000) ||
-              (mayAvgSteps > 5000 && mayAvgSteps < 7000)) {
+              (mayAvgSteps > 5000 && mayAvgSteps < 7000) ||
+              (junAvgSteps > 5000 && junAvgSteps < 7000) ||
+              (julAvgSteps > 5000 && julAvgSteps < 7000) ||
+              (augAvgSteps > 5000 && augAvgSteps < 7000)) {
             if (aprAyvSteps > 5000 &&
                 marAyvSteps > 5000 &&
-                mayAvgSteps > 5000) {
+                mayAvgSteps > 5000 &&
+                junAvgSteps > 5000 &&
+                julAvgSteps > 5000 &&
+                augAvgSteps > 5000) {
               participantStepCountData.add(data[i]);
             }
           }
@@ -195,12 +241,24 @@ class StepCountData {
           final aprAyvSteps = aprSteps / 30;
           int maySteps = int.parse(data[i].may.toString());
           final mayAvgSteps = maySteps / 31;
+          int junSteps = int.parse(data[i].jun.toString());
+          final junAvgSteps = junSteps / 31;
+          int julSteps = int.parse(data[i].jul.toString());
+          final julAvgSteps = julSteps / 30;
+          int augSteps = int.parse(data[i].aug.toString());
+          final augAvgSteps = augSteps / 31;
           if ((marAyvSteps > 5000 && marAyvSteps < 7000) ||
               (aprAyvSteps > 5000 && aprAyvSteps < 7000) ||
-              (mayAvgSteps > 5000 && mayAvgSteps < 7000)) {
+              (mayAvgSteps > 5000 && mayAvgSteps < 7000) ||
+              (junAvgSteps > 5000 && junAvgSteps < 7000) ||
+              (julAvgSteps > 5000 && julAvgSteps < 7000) ||
+              (augAvgSteps > 5000 && augAvgSteps < 7000)) {
             if (aprAyvSteps > 5000 &&
                 marAyvSteps > 5000 &&
-                mayAvgSteps > 5000) {
+                mayAvgSteps > 5000 &&
+                junAvgSteps > 5000 &&
+                julAvgSteps > 5000 &&
+                augAvgSteps > 5000) {
               participantStepCountData.add(data[i]);
             }
           }
@@ -209,10 +267,10 @@ class StepCountData {
     } else if (code == '5A') {
       for (int i = 0; i < data.length; i++) {
         if (data[i].location == "HYD") {
-          int marSteps = int.parse(data[i].may.toString());
-          int aprSteps = int.parse(data[i].jun.toString());
-          if ((aprSteps - marSteps) > 25000) {
-            if (aprSteps > 25000 && marSteps > 25000) {
+          int julSteps = int.parse(data[i].jul.toString());
+          int augSteps = int.parse(data[i].aug.toString());
+          if ((augSteps - julSteps) > 25000) {
+            if (augSteps > 25000 && julSteps > 25000) {
               participantStepCountData.add(data[i]);
             }
           }
@@ -227,8 +285,8 @@ class StepCountData {
     } else if (code == '5B') {
       for (int i = 0; i < data.length; i++) {
         if (data[i].location == "BLR") {
-          int marSteps = int.parse(data[i].may.toString());
-          int aprSteps = int.parse(data[i].jun.toString());
+          int marSteps = int.parse(data[i].jul.toString());
+          int aprSteps = int.parse(data[i].aug.toString());
           if ((aprSteps - marSteps) > 25000) {
             if (aprSteps > 25000 && marSteps > 25000) {
               participantStepCountData.add(data[i]);
@@ -243,7 +301,7 @@ class StepCountData {
       });
     } else if (code == '6AA') {
       for (int i = 0; i < data.length; i++) {
-        var location = data[i].location?.toString()?.trim()?.toUpperCase();
+        var location = data[i].location?.toString().trim().toUpperCase();
         var maySteps = int.tryParse(data[i].apr.toString().trim()) ?? 0;
 
         if (location == "HYD" && maySteps != 0) {
@@ -259,7 +317,7 @@ class StepCountData {
       });
     } else if (code == '6BB') {
       for (int i = 0; i < data.length; i++) {
-        var location = data[i].location?.toString()?.trim()?.toUpperCase();
+        var location = data[i].location?.toString().trim().toUpperCase();
         var maySteps = int.tryParse(data[i].apr.toString().trim()) ?? 0;
 
         if (location == "BLR" && maySteps != 0) {
@@ -275,8 +333,8 @@ class StepCountData {
       });
     } else if (code == '6A') {
       for (int i = 0; i < data.length; i++) {
-        var location = data[i].location?.toString()?.trim()?.toUpperCase();
-        var maySteps = int.tryParse(data[i].jun.toString().trim()) ?? 0;
+        var location = data[i].location?.toString().trim().toUpperCase();
+        var maySteps = int.tryParse(data[i].aug.toString().trim()) ?? 0;
 
         if (location == "HYD" && maySteps != 0) {
           participantStepCountData.add(data[i]);
@@ -285,22 +343,22 @@ class StepCountData {
       }
 
       participantStepCountData.sort((a, b) {
-        int aVal = int.tryParse(a.jun.toString().trim()) ?? 0;
-        int bVal = int.tryParse(b.jun.toString().trim()) ?? 0;
+        int aVal = int.tryParse(a.aug.toString().trim()) ?? 0;
+        int bVal = int.tryParse(b.aug.toString().trim()) ?? 0;
         return bVal.compareTo(aVal);
       });
     } else if (code == '6B') {
       for (int i = 0; i < data.length; i++) {
         if (data[i].location == "BLR") {
-          if (data[i].jun != '0') {
+          if (data[i].aug != '0') {
             participantStepCountData.add(data[i]);
           }
         }
       }
       //Sort based in apr stepcount
       participantStepCountData.sort((a, b) {
-        int aVal = int.parse(a.jun.toString());
-        int bVal = int.parse(b.jun.toString());
+        int aVal = int.parse(a.aug.toString());
+        int bVal = int.parse(b.aug.toString());
         return bVal.compareTo(aVal);
       });
     } else if (code == '6C') {

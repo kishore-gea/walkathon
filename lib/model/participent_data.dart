@@ -27,12 +27,12 @@ class ParticipentData {
     jul = json['Jul'] ?? '0';
     aug = json['Aug'] ?? '0';
     sep = json['Sep'] ?? '0';
-    total = json['Total'];
-    avg = json['AVG'];
+    total = json['Total'] ?? '0';
+    avg = json['AVG'] ?? '0';
     location = json['Location'];
     gender = json['Gender'];
     rank = json['Rank'];
-    up = json['UP'];
+    up = json['UP'] ?? '0';
     awards = json['HIS'];
     teams = json['Team'];
   }

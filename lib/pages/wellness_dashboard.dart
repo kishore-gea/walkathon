@@ -537,7 +537,7 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                   // Navigate to Rolling Leader page
                   Get.to(
                     () => const StatsDisplay(
-                      title: 'MAY 2025 - Leaderboard',
+                      title: 'AUG 2025 - Leaderboard',
                       code1: '6A',
                       code2: '6B',
                     ),
@@ -570,7 +570,7 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                       SizedBox(width: 10),
 
                       Text(
-                        'JUNE 2025 - Leaderboard',
+                        'AUG - Leaderboard',
                         style: AppTextStyles.subtitle.copyWith(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,

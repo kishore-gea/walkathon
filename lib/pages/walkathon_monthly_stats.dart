@@ -48,6 +48,7 @@ class _MonthlyStatsState extends State<MonthlyStats> {
                 FutureBuilder(
                   future: fetchStepCountData(),
                   builder: (context, snapshot) {
+                    print('KISH snapshot data: ${snapshot.data!.length}');
                     return ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
@@ -262,7 +263,10 @@ class _MonthlyStatsState extends State<MonthlyStats> {
     List<MonthlyData> monthlyStatsList = [];
     final data = StepCountData.originalData;
 
+    print('Data Length: ${data.length}  Date Month: ${DateTime.now().month}');
+
     for (int i = 4; i <= DateTime.now().month; i++) {
+      print('KISH i Val $i -- ${DateTime.now().month}');
       int dateMonth = i;
       String monthName = '';
       for (int i = 0; i < data.length; i++) {
@@ -276,22 +280,29 @@ class _MonthlyStatsState extends State<MonthlyStats> {
           } else if (dateMonth == 6) {
             monthName = 'May';
             totalMonthStepsHYD += int.parse(data[i].may.toString());
+            print('totalMonthStepsHYD MAY: $totalMonthStepsHYD');
           } else if (dateMonth == 7) {
             monthName = 'June';
             totalMonthStepsHYD += int.parse(data[i].jun.toString());
+            print('totalMonthStepsHYD JUN : $totalMonthStepsHYD');
           } else if (dateMonth == 8) {
             monthName = 'July';
             totalMonthStepsHYD += int.parse(data[i].jul.toString());
+            print('totalMonthStepsHYD JULy: $totalMonthStepsHYD');
           } else if (dateMonth == 9) {
             monthName = 'August';
             totalMonthStepsHYD += int.parse(data[i].aug.toString());
+            print('totalMonthStepsHYD AUG: $totalMonthStepsHYD');
           } else if (dateMonth == 10) {
             monthName = 'September';
             totalMonthStepsHYD += int.parse(data[i].sep.toString());
           }
+          print('totalMonthStepsHYD before assign: $totalMonthStepsHYD');
 
           totalStepCountHYDCurrentMonth.value = totalMonthStepsHYD;
+          print('totalMonthStepsHYD:  ${data[i].name} --> $totalMonthStepsHYD');
           totalStepCountHYD.value += int.parse(data[i].total.toString());
+          print('HYD Steps for Month $i: ${totalStepCountHYD.value}');
         } else if (data[i].location == "BLR") {
           if (dateMonth == 4) {
             monthName = 'March';
@@ -318,11 +329,16 @@ class _MonthlyStatsState extends State<MonthlyStats> {
 
           totalStepCountBLRCurrentMonth.value = totalMonthStepsBLR;
           totalStepCountBLR.value += int.parse(data[i].total.toString());
+          print('BLR Steps for Month $i: ${totalStepCountBLR.value}');
         }
       }
       differenceStepsMonthly.value =
           totalStepCountHYDCurrentMonth.value -
           totalStepCountBLRCurrentMonth.value;
+
+      print('differenceStepsMonthly.value  : $differenceStepsMonthly');
+      print('Total Steps HYD: $i --> ${totalStepCountHYDCurrentMonth.value}');
+      print('Total Steps BLR: $i --> ${totalStepCountBLRCurrentMonth.value}');
 
       MonthlyData monthlyData = MonthlyData(
         month: monthName,
@@ -334,9 +350,7 @@ class _MonthlyStatsState extends State<MonthlyStats> {
             totalStepCountBLRCurrentMonth.value,
       );
 
-      // print('Monthly Data for Month $i: $monthlyData');
-      // print('Total Steps HYD: $i --> ${totalStepCountHYDCurrentMonth.value}');
-      // print('Total Steps BLR: $i --> ${totalStepCountBLRCurrentMonth.value}');
+      print('Monthly Data for Month $i: $monthlyData');
 
       monthlyStatsList.add(monthlyData);
       totalMonthStepsHYD = 0; // Reset for next month
@@ -349,7 +363,7 @@ class _MonthlyStatsState extends State<MonthlyStats> {
 
     // Update the observable variables with the calculated values
 
-    // print('Monthly Stats: $monthlyStatsList');
+    print('Monthly Stats: $monthlyStatsList');
 
     return monthlyStatsList;
   }
