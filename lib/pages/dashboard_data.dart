@@ -262,7 +262,7 @@ class _DashboardDataState extends State<DashboardData> {
                         },
                         child: Card(
                           color:
-                              item.may!.isNotEmpty && item.may != '0'
+                              item.aug!.isNotEmpty && item.aug != '0'
                                   ? Colors.white
                                   : Colors.red.shade100,
                           shape: RoundedRectangleBorder(

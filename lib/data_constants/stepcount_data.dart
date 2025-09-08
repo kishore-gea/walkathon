@@ -21,6 +21,51 @@ class StepCountData {
 
   final highestValue = 0;
 
+  int monthlySubmissions(monthCode) {
+    int count = 0;
+    for (var data in originalData) {
+      final monthValues = {
+        3: data.steps,
+        4: data.apr,
+        5: data.may,
+        6: data.jun,
+        7: data.jul,
+        8: data.aug,
+        9: data.sep,
+      };
+
+      final value = monthValues[monthCode] ?? '0';
+
+      if (int.parse(value) > 0 &&
+          (data.location == 'HYD' || data.location == 'BLR')) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  int monthlySubmissionsLocationWise(monthCode, String location) {
+    int count = 0;
+    for (var data in originalData) {
+      final monthValues = {
+        3: data.steps,
+        4: data.apr,
+        5: data.may,
+        6: data.jun,
+        7: data.jul,
+        8: data.aug,
+        9: data.sep,
+      };
+
+      final value = monthValues[monthCode] ?? '0';
+
+      if (int.parse(value) > 0 && data.location == location) {
+        count++;
+      }
+    }
+    return count;
+  }
+
   /// Method that helps to show the walkathon stats based on the selected option
   /// 1A - 10k AVG [Location -HYD]
   /// 1B - 10k AVG [Location -BLR]
