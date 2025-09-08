@@ -262,7 +262,101 @@ class _MonthlyStatsState extends State<MonthlyStats> {
 
   Future<List<MonthlyData>> fetchStepCountData() async {
     // Your existing fetchStepCountData implementation
-    return [];
+    int totalMonthStepsHYD = 0;
+    int totalMonthStepsBLR = 0;
+    List<MonthlyData> monthlyStatsList = [];
+    final data = StepCountData.originalData;
+
+    for (int i = 4; i <= DateTime.now().month; i++) {
+      int dateMonth = i;
+      String monthName = '';
+      for (int i = 0; i < data.length; i++) {
+        if (data[i].location == "HYD") {
+          if (dateMonth == 4) {
+            monthName = 'March';
+            totalMonthStepsHYD += int.parse(data[i].steps.toString());
+          } else if (dateMonth == 5) {
+            monthName = 'April';
+            totalMonthStepsHYD += int.parse(data[i].apr.toString());
+          } else if (dateMonth == 6) {
+            monthName = 'May';
+            totalMonthStepsHYD += int.parse(data[i].may.toString());
+          } else if (dateMonth == 7) {
+            monthName = 'June';
+            totalMonthStepsHYD += int.parse(data[i].jun.toString());
+          } else if (dateMonth == 8) {
+            monthName = 'July';
+            totalMonthStepsHYD += int.parse(data[i].jul.toString());
+          } else if (dateMonth == 9) {
+            monthName = 'August';
+            totalMonthStepsHYD += int.parse(data[i].aug.toString());
+          } else if (dateMonth == 10) {
+            monthName = 'September';
+            totalMonthStepsHYD += int.parse(data[i].sep.toString());
+          }
+
+          totalStepCountHYDCurrentMonth.value = totalMonthStepsHYD;
+          totalStepCountHYD.value += int.parse(data[i].total.toString());
+        } else if (data[i].location == "BLR") {
+          if (dateMonth == 4) {
+            monthName = 'March';
+            totalMonthStepsBLR += int.parse(data[i].steps.toString());
+          } else if (dateMonth == 5) {
+            monthName = 'April';
+            totalMonthStepsBLR += int.parse(data[i].apr.toString());
+          } else if (dateMonth == 6) {
+            monthName = 'May';
+            totalMonthStepsBLR += int.parse(data[i].may.toString());
+          } else if (dateMonth == 7) {
+            monthName = 'June';
+            totalMonthStepsBLR += int.parse(data[i].jun.toString());
+          } else if (dateMonth == 8) {
+            monthName = 'July';
+            totalMonthStepsBLR += int.parse(data[i].jul.toString());
+          } else if (dateMonth == 9) {
+            monthName = 'August';
+            totalMonthStepsBLR += int.parse(data[i].aug.toString());
+          } else if (dateMonth == 10) {
+            monthName = 'September';
+            totalMonthStepsBLR += int.parse(data[i].sep.toString());
+          }
+
+          totalStepCountBLRCurrentMonth.value = totalMonthStepsBLR;
+          totalStepCountBLR.value += int.parse(data[i].total.toString());
+        }
+      }
+      differenceStepsMonthly.value =
+          totalStepCountHYDCurrentMonth.value -
+          totalStepCountBLRCurrentMonth.value;
+
+      MonthlyData monthlyData = MonthlyData(
+        month: monthName,
+        totalStepsHYD: totalStepCountHYDCurrentMonth.value,
+        totalStepsBLR: totalStepCountBLRCurrentMonth.value,
+        differenceSteps: differenceStepsMonthly.value,
+        currentMonthTotalSteps:
+            totalStepCountHYDCurrentMonth.value +
+            totalStepCountBLRCurrentMonth.value,
+      );
+
+      print('Monthly Data for Month $i: $monthlyData');
+      print('Total Steps HYD: $i --> ${totalStepCountHYDCurrentMonth.value}');
+      print('Total Steps BLR: $i --> ${totalStepCountBLRCurrentMonth.value}');
+
+      monthlyStatsList.add(monthlyData);
+      totalMonthStepsHYD = 0; // Reset for next month
+      totalMonthStepsBLR = 0; // Reset for next month
+      totalStepCountHYDCurrentMonth.value = 0; // Reset for next month
+      totalStepCountBLRCurrentMonth.value = 0; // Reset for next month
+      totalStepCountHYD.value = 0; // Reset for next month
+      totalStepCountBLR.value = 0; // Reset for next month
+    }
+
+    // Update the observable variables with the calculated values
+
+    print('Monthly Stats: $monthlyStatsList');
+
+    return monthlyStatsList;
   }
 }
 
