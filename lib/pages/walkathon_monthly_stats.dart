@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wellnesswalkathon/pages/walkthon_stats/animater_text.dart';
 
 import '../data_constants/stepcount_data.dart';
 import '../style/text_style.dart';
@@ -84,7 +85,7 @@ class _MonthlyStatsState extends State<MonthlyStats> {
                                               .copyWith(
                                                 color: AppTextStyles.black,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 22,
+                                                fontSize: 30,
                                               ),
                                         ),
                                         Text(
@@ -92,9 +93,9 @@ class _MonthlyStatsState extends State<MonthlyStats> {
                                               .toUpperCase(),
                                           style: AppTextStyles.subtitle
                                               .copyWith(
-                                                color: AppTextStyles.black,
-                                                fontWeight: FontWeight.w300,
-                                                fontSize: 14,
+                                                color: AppTextStyles.primaryBlue,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
                                               ),
                                         ),
                                       ],
@@ -105,16 +106,16 @@ class _MonthlyStatsState extends State<MonthlyStats> {
                                     child: Column(
                                       children: [
                                         Text(
-                                          '${data.month}',
+                                          data.month.toString().toUpperCase(),
                                           style: AppTextStyles.headline
                                               .copyWith(
                                                 fontWeight: FontWeight.bold,
                                                 color:
                                                     AppTextStyles.primaryBlue,
-                                                fontSize: 20,
+                                                fontSize: 24,
                                               ),
                                         ),
-                                        SizedBox(width: 10),
+                                        SizedBox(height: 10),
                                         data.month != '3'
                                             ? Container(
                                               decoration: BoxDecoration(
@@ -129,7 +130,18 @@ class _MonthlyStatsState extends State<MonthlyStats> {
                                                       vertical: 5.0,
                                                       horizontal: 8,
                                                     ),
-                                                child: Text(
+                                                child:
+                                                data.month.toString() == 'September' ?
+                                                AnimatedCounter(
+                                                  targetValue: data.currentMonthTotalSteps!.toDouble(),
+                                                  duration: const Duration(seconds: 15),
+                                                  style: AppTextStyles.headline.copyWith(
+                                                    color: AppTextStyles.white,
+                                                    fontSize: 35,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ):
+                                                Text(
                                                   ' ${AppTextStyles().formatIndianNumber(data.currentMonthTotalSteps!)}',
                                                   style: AppTextStyles.headline
                                                       .copyWith(
@@ -137,7 +149,7 @@ class _MonthlyStatsState extends State<MonthlyStats> {
                                                             FontWeight.bold,
                                                         color:
                                                             AppTextStyles.white,
-                                                        fontSize: 20,
+                                                        fontSize: 35,
                                                       ),
                                                 ),
                                               ),
@@ -174,11 +186,21 @@ class _MonthlyStatsState extends State<MonthlyStats> {
                                             '${StepCountData().monthlySubmissions(index + 3)}',
                                             style: AppTextStyles.subtitle
                                                 .copyWith(
-                                                  fontSize: 16,
+                                                  fontSize: 40,
                                                   color:
                                                       AppTextStyles.primaryBlue,
                                                   fontWeight: FontWeight.bold,
                                                 ),
+                                          ),
+                                        ),
+                                        Text(
+                                          'Total Submissions',
+                                          style: AppTextStyles.subtitle
+                                              .copyWith(
+                                            fontSize: 16,
+                                            color:
+                                            AppTextStyles.black,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ],
@@ -197,7 +219,7 @@ class _MonthlyStatsState extends State<MonthlyStats> {
                                               .copyWith(
                                                 color: AppTextStyles.black,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 22,
+                                                fontSize: 30,
                                               ),
                                         ),
                                         Text(
@@ -205,9 +227,9 @@ class _MonthlyStatsState extends State<MonthlyStats> {
                                               .toUpperCase(),
                                           style: AppTextStyles.subtitle
                                               .copyWith(
-                                                color: AppTextStyles.black,
-                                                fontWeight: FontWeight.w300,
-                                                fontSize: 14,
+                                                color: AppTextStyles.primaryBlue,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
                                               ),
                                         ),
                                       ],
@@ -293,8 +315,8 @@ class _MonthlyStatsState extends State<MonthlyStats> {
           } else if (dateMonth == 10) {
             monthName = 'September';
             totalMonthStepsHYD += int.parse(data[i].sep.toString());
+            print('Inside Sept $totalMonthStepsHYD');
           }
-
           totalStepCountHYDCurrentMonth.value = totalMonthStepsHYD;
           totalStepCountHYD.value += int.parse(data[i].total.toString());
         } else if (data[i].location == "BLR") {

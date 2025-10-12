@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellnesswalkathon/data_constants/stepcount_data.dart';
+import 'package:wellnesswalkathon/pages/walkthon_stats/animater_text.dart';
 import 'package:wellnesswalkathon/style/text_style.dart';
 
 class IndiaTeamsDashboard extends StatefulWidget {
@@ -79,9 +80,18 @@ class _IndiaTeamsDashboardState extends State<IndiaTeamsDashboard> {
                                       ),
                                     ),
                                     SizedBox(width: 10),
-                                    IconGeneratorWidget(
-                                      iconCount: data.members!.length,
+                                    AnimatedCounter(
+                                      targetValue: data.members!.length.toDouble(),
+                                      duration: const Duration(seconds: 2),
+                                      style: AppTextStyles.headline.copyWith(
+                                        color: AppTextStyles.primaryBlue,
+                                        fontSize: 35,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
+                                    // IconGeneratorWidget(
+                                    //   iconCount: data.members!.length,
+                                    // ),
                                   ],
                                 ),
                                 Padding(
@@ -97,16 +107,25 @@ class _IndiaTeamsDashboardState extends State<IndiaTeamsDashboard> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        AppTextStyles().formatIndianNumber(
-                                          int.parse(data.total.toString()),
-                                        ), // Replace with actual data
-                                        style: AppTextStyles.body.copyWith(
+                                      AnimatedCounter(
+                                        targetValue: int.parse(data.total.toString()).toDouble(),
+                                        duration: const Duration(seconds: 2),
+                                        style: AppTextStyles.headline.copyWith(
+                                          color: AppTextStyles.black,
                                           fontSize: 55,
                                           fontWeight: FontWeight.normal,
-                                          color: AppTextStyles.black,
                                         ),
-                                      ),
+                                      )
+                                      // Text(
+                                      //   AppTextStyles().formatIndianNumber(
+                                      //     int.parse(data.total.toString()),
+                                      //   ), // Replace with actual data
+                                      //   style: AppTextStyles.body.copyWith(
+                                      //     fontSize: 55,
+                                      //     fontWeight: FontWeight.normal,
+                                      //     color: AppTextStyles.black,
+                                      //   ),
+                                      // ),
                                     ],
                                   ),
                                 ),

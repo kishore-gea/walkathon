@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wellnesswalkathon/pages/debut_leaders.dart';
 import 'package:wellnesswalkathon/pages/walkthon_stats/walkathon_stats_display.dart';
 
 import '../../style/text_style.dart';
@@ -24,7 +25,7 @@ class _WalkathonStatsState extends State<WalkathonStats> {
       backgroundColor: AppTextStyles.white,
       appBar: AppBar(
         title: Text(
-          'Walkathon Stats',
+          'Walkathon Step Spectrum',
           style: AppTextStyles.headline.copyWith(
             fontWeight: FontWeight.bold,
             color: AppTextStyles.primaryBlue,
@@ -77,9 +78,10 @@ class _WalkathonStatsState extends State<WalkathonStats> {
                       SizedBox(width: 10),
 
                       Text(
-                        'Consistent 10k Leader [Average] ',
+                        'Consistent 10k Leader ',
                         style: AppTextStyles.subtitle.copyWith(
                           color: Colors.black,
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
@@ -125,10 +127,10 @@ class _WalkathonStatsState extends State<WalkathonStats> {
                       SizedBox(width: 10),
 
                       Text(
-                        'Consistent 7K Leader [Average] ',
+                        'Consistent 7K Leader ',
                         style: AppTextStyles.subtitle.copyWith(
                           color: Colors.black,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
@@ -166,7 +168,7 @@ class _WalkathonStatsState extends State<WalkathonStats> {
                           color: AppTextStyles.white,
                         ),
                         child: Icon(
-                          Icons.ten_k_rounded,
+                          Icons.five_k,
                           size: 25,
                           color: AppTextStyles.primaryBlue,
                         ),
@@ -174,10 +176,10 @@ class _WalkathonStatsState extends State<WalkathonStats> {
                       SizedBox(width: 10),
 
                       Text(
-                        'Consistent 5K Leader [Average] ',
+                        'Consistent 5K Leader',
                         style: AppTextStyles.subtitle.copyWith(
                           color: Colors.black,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
@@ -187,7 +189,13 @@ class _WalkathonStatsState extends State<WalkathonStats> {
               ),
               SizedBox(height: 10),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Get.to(
+                        () => const DebutLeaders(),
+                    transition: Transition.rightToLeft,
+                    duration: const Duration(milliseconds: 500),
+                  );
+                },
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
@@ -205,7 +213,7 @@ class _WalkathonStatsState extends State<WalkathonStats> {
                           color: AppTextStyles.white,
                         ),
                         child: Icon(
-                          Icons.download,
+                          Icons.start_sharp,
                           size: 25,
                           color: AppTextStyles.primaryBlue,
                         ),
@@ -213,10 +221,10 @@ class _WalkathonStatsState extends State<WalkathonStats> {
                       SizedBox(width: 10),
 
                       Text(
-                        'Consistent Submission ',
+                        'First Mile Achievers - Debut Leaders',
                         style: AppTextStyles.subtitle.copyWith(
                           color: Colors.black,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
@@ -262,10 +270,10 @@ class _WalkathonStatsState extends State<WalkathonStats> {
                       SizedBox(width: 10),
 
                       Text(
-                        'Consistent Uptrend ',
+                        'Monthly Uptrend: +25K',
                         style: AppTextStyles.subtitle.copyWith(
                           color: Colors.black,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),

@@ -1,12 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:wellnesswalkathon/model/participent_data.dart';
+import 'package:wellnesswalkathon/pages/user_detail.dart';
 
 import '../data_constants/stepcount_data.dart';
 import '../style/text_style.dart';
+import 'package:get/get.dart';
 
 class RollingLeader extends StatefulWidget {
-  const RollingLeader({super.key});
+   const RollingLeader({super.key, required this.totalWalkathonSteps, required this.hydTotalSteps, required this.blrTotalSteps});
+
+  final int totalWalkathonSteps;
+  final int hydTotalSteps;
+  final int blrTotalSteps;
 
   @override
   State<RollingLeader> createState() => _RollingLeaderState();
@@ -154,170 +160,72 @@ class _RollingLeaderState extends State<RollingLeader> {
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
                     final data = snapshot.data![index];
-                    return Card(
-                      elevation: 2,
-                      color: Colors.orange.shade100,
-                      child:
-                          !kIsWeb
-                              ? Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 8.0,
-                                  horizontal: 16,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 2.0,
-                                        horizontal: 8.0,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        color: Colors.white,
-                                        border: Border.all(
-                                          color: AppTextStyles.primaryBlue,
-                                          width: 2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Text(
-                                        ' ${index + 1} ',
-                                        style: AppTextStyles.subtitle.copyWith(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold,
-                                          color: AppTextStyles.primaryBlue,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Center(
-                                      child: Text(
-                                        textAlign: TextAlign.center,
-                                        '${data.name}',
-                                        style: AppTextStyles.subtitle.copyWith(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: AppTextStyles.black,
-                                        ),
-                                      ),
-                                    ),
-                                    Center(
-                                      child: Container(
+                    return GestureDetector(
+                      onTap: (){
+                        FocusScope.of(context).unfocus();
+                        Get.to(
+                              () => UserDetail(
+                            participant: data,
+                            totalSteps: widget.totalWalkathonSteps,
+                            hyderabadSteps: widget.hydTotalSteps,
+                            bangaloreSteps: widget.blrTotalSteps,
+                            rank:
+                            data.rank != null ? int.parse(data.rank!) : 0,
+                            participants: [],
+                          ),
+                          transition: Transition.rightToLeft,
+                          duration: const Duration(milliseconds: 500),
+                        );
+                      },
+                      child: Card(
+                        elevation: 2,
+                        color: Colors.orange.shade100,
+                        child:
+                            !kIsWeb
+                                ? Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 8.0,
+                                    horizontal: 16,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
                                         padding: const EdgeInsets.symmetric(
-                                          vertical: 4.0,
-                                          horizontal: 16.0,
+                                          vertical: 2.0,
+                                          horizontal: 8.0,
                                         ),
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
                                           shape: BoxShape.rectangle,
-                                          color: AppTextStyles.primaryBlue,
+                                          color: Colors.white,
+                                          border: Border.all(
+                                            color: AppTextStyles.primaryBlue,
+                                            width: 2,
+                                          ),
+                                          borderRadius: BorderRadius.circular(12),
                                         ),
                                         child: Text(
-                                          AppTextStyles().formatIndianNumber(
-                                            int.parse(data.apr.toString()),
+                                          ' ${index + 1} ',
+                                          style: AppTextStyles.subtitle.copyWith(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppTextStyles.primaryBlue,
                                           ),
-                                          style: AppTextStyles.subtitle
-                                              .copyWith(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                color: AppTextStyles.white,
-                                              ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                              : Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 8.0,
-                                  horizontal: 16,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      '${index + 1}',
-                                      style: AppTextStyles.subtitle.copyWith(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppTextStyles.black,
-                                      ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    CircleAvatar(
-                                      backgroundColor:
-                                          data.gender == 'Male'
-                                              ? AppTextStyles.primaryBlue
-                                              : Colors.pink,
-                                      child: Text(
-                                        data.name != null &&
-                                                data.name!.isNotEmpty
-                                            ? data.name![0].toUpperCase()
-                                            : '?',
-                                        style: TextStyle(
-                                          fontFamily: 'Barlow',
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: 16,
+                                      SizedBox(width: 5),
+                                      Center(
+                                        child: Text(
+                                          textAlign: TextAlign.center,
+                                          '${data.name}',
+                                          style: AppTextStyles.subtitle.copyWith(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppTextStyles.black,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            '${data.name}',
-                                            style: AppTextStyles.subtitle
-                                                .copyWith(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: AppTextStyles.black,
-                                                ),
-                                          ),
-                                          SizedBox(width: 15),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 2.0,
-                                              horizontal: 8.0,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.rectangle,
-                                              color: AppTextStyles.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              border: Border.all(
-                                                color:
-                                                    AppTextStyles.primaryBlue,
-                                                width: 2,
-                                              ),
-                                            ),
-                                            child: Text(
-                                              '${data.location}',
-                                              style: AppTextStyles.subtitle
-                                                  .copyWith(
-                                                    fontSize: 11,
-                                                    fontWeight: FontWeight.bold,
-                                                    color:
-                                                        AppTextStyles
-                                                            .secondaryBlue,
-                                                  ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    Expanded(
-                                      flex: 1,
-                                      child: Center(
+                                      Center(
                                         child: Container(
                                           padding: const EdgeInsets.symmetric(
                                             vertical: 4.0,
@@ -332,37 +240,153 @@ class _RollingLeaderState extends State<RollingLeader> {
                                           ),
                                           child: Text(
                                             AppTextStyles().formatIndianNumber(
-                                              int.parse(data.total.toString()),
+                                              int.parse(data.apr.toString()),
                                             ),
                                             style: AppTextStyles.subtitle
                                                 .copyWith(
-                                                  fontSize: 22,
+                                                  fontSize: 18,
                                                   fontWeight: FontWeight.bold,
                                                   color: AppTextStyles.white,
                                                 ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Center(
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 4.0,
-                                          horizontal: 16.0,
+                                    ],
+                                  ),
+                                )
+                                : Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 8.0,
+                                    horizontal: 16,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '${index + 1}',
+                                        style: AppTextStyles.subtitle.copyWith(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppTextStyles.black,
                                         ),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                          shape: BoxShape.rectangle,
-                                          color: AppTextStyles.white,
-                                        ),
-                                        child: getMonthlyCount(data),
                                       ),
-                                    ),
-                                  ],
+                                      SizedBox(width: 10),
+                                      CircleAvatar(
+                                        backgroundColor:
+                                            data.gender == 'Male'
+                                                ? AppTextStyles.primaryBlue
+                                                : Colors.pink,
+                                        child: Text(
+                                          data.name != null &&
+                                                  data.name!.isNotEmpty
+                                              ? data.name![0].toUpperCase()
+                                              : '?',
+                                          style: TextStyle(
+                                            fontFamily: 'Barlow',
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 10),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                              '${data.name}',
+                                              style: AppTextStyles.subtitle
+                                                  .copyWith(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: AppTextStyles.black,
+                                                  ),
+                                            ),
+                                            SizedBox(width: 15),
+                                            Container(
+                                              padding: const EdgeInsets.symmetric(
+                                                vertical: 2.0,
+                                                horizontal: 8.0,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.rectangle,
+                                                color: AppTextStyles.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                border: Border.all(
+                                                  color:
+                                                      AppTextStyles.primaryBlue,
+                                                  width: 2,
+                                                ),
+                                              ),
+                                              child: Text(
+                                                '${data.location}',
+                                                style: AppTextStyles.subtitle
+                                                    .copyWith(
+                                                      fontSize: 11,
+                                                      fontWeight: FontWeight.bold,
+                                                      color:
+                                                          AppTextStyles
+                                                              .secondaryBlue,
+                                                    ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      Expanded(
+                                        flex: 1,
+                                        child: Center(
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 4.0,
+                                              horizontal: 16.0,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(
+                                                12,
+                                              ),
+                                              shape: BoxShape.rectangle,
+                                              color: AppTextStyles.primaryBlue,
+                                            ),
+                                            child: Text(
+                                              AppTextStyles().formatIndianNumber(
+                                                int.parse(data.total.toString()),
+                                              ),
+                                              style: AppTextStyles.subtitle
+                                                  .copyWith(
+                                                    fontSize: 22,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: AppTextStyles.white,
+                                                  ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Center(
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 4.0,
+                                            horizontal: 16.0,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
+                                            shape: BoxShape.rectangle,
+                                            color: AppTextStyles.white,
+                                          ),
+                                          child: getMonthlyCount(data),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
+                      ),
                     );
                   },
                 );

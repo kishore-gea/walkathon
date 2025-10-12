@@ -167,8 +167,8 @@ class _UserDetailState extends State<UserDetail> {
                     SizedBox(height: 6),
                     getMonthDifferenceValue(widget.participant),
                     SizedBox(height: 10),
-                    getAwardsForUser(widget.participant),
-                    SizedBox(height: 10),
+                    // getAwardsForUser(widget.participant),
+                    // SizedBox(height: 10),
                     Container(
                       margin: EdgeInsets.only(top: 5),
                       padding: EdgeInsets.symmetric(horizontal: 15),
@@ -268,7 +268,7 @@ class _UserDetailState extends State<UserDetail> {
                   height: 300, // and height
                   child: LineChart(
                     LineChartData(
-                      maxX: 8,
+                      maxX: 10,
                       // point show label
                       lineBarsData: [
                         LineChartBarData(

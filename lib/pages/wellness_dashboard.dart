@@ -9,6 +9,7 @@ import 'package:wellnesswalkathon/pages/india_teams.dart';
 import 'package:wellnesswalkathon/pages/rolling_leader.dart';
 import 'package:wellnesswalkathon/pages/walkathon_facts.dart';
 import 'package:wellnesswalkathon/pages/walkathon_monthly_stats.dart';
+import 'package:wellnesswalkathon/pages/walkathon_total_count_page.dart';
 import 'package:wellnesswalkathon/pages/walkthon_stats/walkathon_stats.dart';
 import 'package:wellnesswalkathon/pages/walkthon_stats/walkathon_stats_display.dart';
 
@@ -33,9 +34,10 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
     true,
     true,
     true,
-    false,
-    false,
-    false,
+    true,
+    true,
+    true,
+    true,
     false,
   ];
   final List<String> months = ['MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP'];
@@ -94,8 +96,8 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
           child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.start,
-            // mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,32 +189,45 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                         ),
                       ),
                       SizedBox(width: 10),
-                      Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppTextStyles.white,
-                        ),
-                        child: Image.asset(
-                          'assets/images/ind.png', // Path to your image
-                          width: 60, // Adjust width as per your logo size
-                          height: 60, // Adjust height if needed
+                      GestureDetector(
+                        onTap: (){
+                          Get.to(
+                                () => WalkathonTotalStepCountPage(
+                              targetValue: totalStepCount.value,
+                                ),
+                            transition: Transition.rightToLeft,
+                            duration: const Duration(milliseconds: 500),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppTextStyles.white,
+                          ),
+                          child: Image.asset(
+                            'assets/images/ind.png', // Path to your image
+                            width: 60, // Adjust width as per your logo size
+                            height: 60, // Adjust height if needed
+                          ),
                         ),
                       ),
                       SizedBox(width: 10),
-                      Obx(
-                        () => Text(
-                          AppTextStyles().formatIndianNumber(
-                            totalStepCount.value,
-                          ),
+                      // Obx(
+                      //   () =>
+                            Text(
+                          // AppTextStyles().formatIndianNumber(
+                          //   totalStepCount.value,
+                          // ),
+                          'Total Step Count'.toUpperCase(),
                           style: AppTextStyles.headline.copyWith(
                             color: AppTextStyles.primaryBlue,
                             fontSize: 44,
                           ),
                         ),
-                      ),
+                      // ),
                       Text(
-                        'Walkathon Total Step Count',
+                        'MARCH 2025 - SEPTEMBER 2025',
                         style: AppTextStyles.subtitle.copyWith(
                           color: Colors.black,
                           fontWeight: FontWeight.w500,
@@ -225,9 +240,9 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                 ),
               ),
               SizedBox(height: 10),
-              Align(
-                alignment: Alignment.center,
+              Center(
                 child: Container(
+                  alignment: Alignment.center,
                   height: 65,
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: ListView.separated(
@@ -242,6 +257,9 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                         onTap: () {
                           setState(() {
                             selectedMonth = month;
+                            if(selectedMonth == 'SEP'){
+                              monthSelected[index] = false;
+                            }
                           });
                         },
                         child: Column(
@@ -438,53 +456,7 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                   // Handle tap event
                   // Navigate to Dashboard Data page
                   Get.to(
-                    () => IndiaTeamsDashboard(),
-                    transition: Transition.rightToLeft,
-                    duration: const Duration(milliseconds: 500),
-                  ); // 1- IND 2- HYD 3- BLR
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: Colors.green.shade100,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppTextStyles.white,
-                        ),
-                        child: Icon(
-                          Icons.leaderboard,
-                          size: 20,
-                          color: AppTextStyles.primaryBlue,
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Text(
-                        ' India Teams',
-                        style: AppTextStyles.subtitle.copyWith(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              GestureDetector(
-                onTap: () {
-                  // Handle tap event
-                  // Navigate to Dashboard Data page
-                  Get.to(
-                    () => DashboardData(
+                        () => DashboardData(
                       selectedCode: 'ALL',
                       headerName: 'India',
                       totalWalkathonSteps: totalStepCount.value,
@@ -519,7 +491,7 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                       ),
                       SizedBox(width: 10),
                       Text(
-                        ' India Leaderboard [ROLLING LEADERS]',
+                        ' India Leaderboard',
                         style: AppTextStyles.subtitle.copyWith(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -536,8 +508,8 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                   // Handle tap event
                   // Navigate to Rolling Leader page
                   Get.to(
-                    () => const StatsDisplay(
-                      title: 'AUG 2025 - Leaderboard',
+                        () => const StatsDisplay(
+                      title: 'AUGUST Leaderboard',
                       code1: '6A',
                       code2: '6B',
                     ),
@@ -570,7 +542,7 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                       SizedBox(width: 10),
 
                       Text(
-                        'AUG - Leaderboard',
+                        'September - Leaderboard',
                         style: AppTextStyles.subtitle.copyWith(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -587,7 +559,11 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                   // Handle tap event
                   // Navigate to Rolling Leader page
                   Get.to(
-                    () => const RollingLeader(),
+                    () =>  RollingLeader(
+                      totalWalkathonSteps: totalStepCount.value,
+                      hydTotalSteps: totalStepCountHYD.value,
+                      blrTotalSteps: totalStepCountBLR.value,
+                    ),
                     transition: Transition.rightToLeft,
                     duration: const Duration(milliseconds: 500),
                   );
@@ -620,7 +596,7 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                         'Rolling Leaders',
                         style: AppTextStyles.subtitle.copyWith(
                           color: Colors.black,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
@@ -664,9 +640,10 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                       SizedBox(width: 10),
 
                       Text(
-                        'Walkathon Stats ',
+                        'Walkathon Step Spectrum ',
                         style: AppTextStyles.subtitle.copyWith(
                           color: Colors.black,
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
@@ -678,17 +655,17 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
               GestureDetector(
                 onTap: () {
                   // Handle tap event
-                  // Navigate to Walkathon Facts page
+                  // Navigate to Dashboard Data page
                   Get.to(
-                    () => const WalkathonFacts(),
+                        () => IndiaTeamsDashboard(),
                     transition: Transition.rightToLeft,
                     duration: const Duration(milliseconds: 500),
-                  );
+                  ); // 1- IND 2- HYD 3- BLR
                 },
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
-                    color: Colors.pink.shade100,
+                    color: Colors.green.shade100,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -702,18 +679,17 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                           color: AppTextStyles.white,
                         ),
                         child: Icon(
-                          Icons.fact_check_outlined,
+                          Icons.leaderboard,
                           size: 20,
                           color: AppTextStyles.primaryBlue,
                         ),
                       ),
                       SizedBox(width: 10),
-
                       Text(
-                        'Walkathon Facts ',
+                        ' India Teams',
                         style: AppTextStyles.subtitle.copyWith(
-                          color: AppTextStyles.black,
-                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
@@ -721,8 +697,55 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                   ),
                 ),
               ),
-
               SizedBox(height: 10),
+              // GestureDetector(
+              //   onTap: () {
+              //     // Handle tap event
+              //     // Navigate to Walkathon Facts page
+              //     Get.to(
+              //       () => const WalkathonFacts(),
+              //       transition: Transition.rightToLeft,
+              //       duration: const Duration(milliseconds: 500),
+              //     );
+              //   },
+              //   child: Container(
+              //     padding: const EdgeInsets.all(8.0),
+              //     decoration: BoxDecoration(
+              //       color: Colors.pink.shade100,
+              //       borderRadius: BorderRadius.circular(8),
+              //     ),
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.start,
+              //       crossAxisAlignment: CrossAxisAlignment.center,
+              //       children: [
+              //         Container(
+              //           padding: const EdgeInsets.all(8.0),
+              //           decoration: BoxDecoration(
+              //             shape: BoxShape.circle,
+              //             color: AppTextStyles.white,
+              //           ),
+              //           child: Icon(
+              //             Icons.fact_check_outlined,
+              //             size: 20,
+              //             color: AppTextStyles.primaryBlue,
+              //           ),
+              //         ),
+              //         SizedBox(width: 10),
+              //
+              //         Text(
+              //           'Walkathon Facts ',
+              //           style: AppTextStyles.subtitle.copyWith(
+              //             color: AppTextStyles.black,
+              //             fontWeight: FontWeight.w500,
+              //             fontSize: 16,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              //
+              // SizedBox(height: 10),
               // GestureDetector(
               //   onTap: () {
               //     // Handle tap event

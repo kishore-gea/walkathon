@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:wellnesswalkathon/data_constants/stepcount_data.dart';
 import 'package:wellnesswalkathon/model/participent_data.dart';
 import 'package:wellnesswalkathon/pages/user_detail.dart';
+import 'package:wellnesswalkathon/pages/walkthon_stats/animater_text.dart';
 import 'package:wellnesswalkathon/style/text_style.dart';
 
 class DashboardData extends StatefulWidget {
@@ -64,6 +65,21 @@ class _DashboardDataState extends State<DashboardData> {
           ),
         ),
         actions: [
+          AnimatedCounter(
+            targetValue: widget.selectedCode == 'HYD' ? widget.hydTotalSteps.toDouble():widget.blrTotalSteps.toDouble(),
+            duration: const Duration(seconds: 30),
+            style: TextStyle(
+              color: AppTextStyles.black,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(' Steps  ', style: AppTextStyles.headline.copyWith(
+            fontWeight: FontWeight.bold,
+            color: AppTextStyles.primaryBlue,
+            fontSize: 16,
+          ),),
+          SizedBox(width: 16),
           GestureDetector(
             onTap: () {
               setState(() {
@@ -262,7 +278,7 @@ class _DashboardDataState extends State<DashboardData> {
                         },
                         child: Card(
                           color:
-                              item.aug!.isNotEmpty && item.aug != '0'
+                              item.sep!.isNotEmpty && item.sep != '0'
                                   ? Colors.white
                                   : Colors.red.shade100,
                           shape: RoundedRectangleBorder(
@@ -314,7 +330,7 @@ class _DashboardDataState extends State<DashboardData> {
                                   ? item.name!
                                   : 'Unknown',
                               style: AppTextStyles.subtitle.copyWith(
-                                fontWeight: FontWeight.normal,
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: AppTextStyles.primaryBlue,
                               ),
@@ -329,7 +345,7 @@ class _DashboardDataState extends State<DashboardData> {
                                   style: AppTextStyles.subtitle.copyWith(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
-                                    color: AppTextStyles.primaryBlue,
+                                    color: AppTextStyles.black,
                                   ),
                                 ),
                                 SizedBox(width: 10),

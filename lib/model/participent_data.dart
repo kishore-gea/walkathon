@@ -26,7 +26,7 @@ class ParticipentData {
     jun = json['Jun'] ?? '0';
     jul = json['Jul'] ?? '0';
     aug = json['Aug'] ?? '0';
-    sep = json['Sep'] ?? '0';
+    sep = json['Sept'] ?? '0';
     total = json['Total'] ?? '0';
     avg = json['AVG'] ?? '0';
     location = json['Location'];
@@ -46,7 +46,7 @@ class ParticipentData {
     data['Jun'] = jun;
     data['Jul'] = jul;
     data['Aug'] = aug;
-    data['Sep'] = sep;
+    data['Sept'] = sep;
     data['Total'] = total;
     data['AVG'] = avg;
     data['Location'] = location;

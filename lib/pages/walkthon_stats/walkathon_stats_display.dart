@@ -586,14 +586,14 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                         ),
                                                         child: Text(
                                                           int.parse(
-                                                                    data.aug
+                                                                    data.sep
                                                                         .toString(),
                                                                   ) >
                                                                   0
                                                               ? AppTextStyles()
                                                                   .formatIndianNumber(
                                                                     int.parse(
-                                                                      data.aug
+                                                                      data.sep
                                                                           .toString(),
                                                                     ),
                                                                   )
@@ -688,14 +688,14 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                           ),
                                                           child: Text(
                                                             int.parse(
-                                                                      data.aug
+                                                                      data.sep
                                                                           .toString(),
                                                                     ) >
                                                                     0
                                                                 ? AppTextStyles()
                                                                     .formatIndianNumber(
                                                                       int.parse(
-                                                                        data.aug
+                                                                        data.sep
                                                                             .toString(),
                                                                       ),
                                                                     )
@@ -841,12 +841,14 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                         itemCount: snapshot.data!.length,
                                         itemBuilder: (context, index) {
                                           final data = snapshot.data![index];
-                                          return Card(
+                                          int val =  int.parse(data.sep.toString());
+                                           return Card(
                                             elevation: 4,
                                             color:
+                                                data.awards == '1' ? AppTextStyles.orange :
                                                 data.gender == 'Female'
-                                                    ? Colors.pink.shade100
-                                                    : Colors.blue.shade100,
+                                                    ? Colors.red.shade100
+                                                    : data.awards == '1' ? AppTextStyles.orange :Colors.blue.shade100,
                                             child:
                                                 !kIsWeb
                                                     ? Padding(
@@ -1046,7 +1048,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                   AppTextStyles()
                                                                       .formatIndianNumber(
                                                                         int.parse(
-                                                                          data.aug
+                                                                          data.sep
                                                                               .toString(),
                                                                         ),
                                                                       ),
@@ -1188,9 +1190,10 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                           return Card(
                                             elevation: 4,
                                             color:
-                                                data.gender == 'Female'
-                                                    ? Colors.pink.shade100
-                                                    : Colors.green.shade100,
+                                            data.awards == '1' ? AppTextStyles.orange :
+                                            data.gender == 'Female'
+                                                ? Colors.red.shade100
+                                                : data.awards == '1' ? AppTextStyles.orange :Colors.blue.shade100,
                                             child:
                                                 !kIsWeb
                                                     ? Padding(
@@ -1392,7 +1395,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                   AppTextStyles()
                                                                       .formatIndianNumber(
                                                                         int.parse(
-                                                                          data.aug
+                                                                          data.sep
                                                                               .toString(),
                                                                         ),
                                                                       ),
@@ -1448,7 +1451,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                 horizontal: 8.0,
                               ),
                               child: Text(
-                                'An uptrend is identified when someone walks at least 25,000 more steps in a month compared to the previous month',
+                                'An uptrend is defined as a month in which the participant logs a minimum of 25,000 additional steps compared with the preceding month',
                                 style: AppTextStyles.headline.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: AppTextStyles.primaryBlue,
@@ -1458,9 +1461,9 @@ class _StatsDisplayState extends State<StatsDisplay> {
                             )
                             : widget.code1 == '1A' || widget.code2 == '1B'
                             ? Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8),
+                              padding: EdgeInsets.symmetric(horizontal: 8,vertical: 10),
                               child: Text(
-                                'Consistently Averaged 10K in consecutive months',
+                                'Maintained a consistent record of walking at least 10,000 steps per month over successive months'.toUpperCase(),
                                 style: AppTextStyles.headline.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: AppTextStyles.primaryBlue,
@@ -1472,7 +1475,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                             ? Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8),
                               child: Text(
-                                'Consistently Averaged 7K Steps in consecutive months',
+                                'Maintained a consistent record of walking at least 7,000 steps per month over successive months',
                                 style: AppTextStyles.headline.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: AppTextStyles.primaryBlue,
@@ -1484,7 +1487,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                             ? Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8),
                               child: Text(
-                                'Consistently Averaged 5K Steps in consecutive months',
+                                'Maintained a consistent record of walking at least 5,000 steps per month over successive months',
                                 style: AppTextStyles.headline.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: AppTextStyles.primaryBlue,
@@ -1849,7 +1852,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
   }
 
   getAvgMonthStepCount(ParticipentData data, String code) {
-    int userSteps = int.parse(data.aug.toString());
+    int userSteps = int.parse(data.sep.toString());
     if (userSteps != 0) {
       final monthCode = DateTime.now().month - 1;
       var val = 30;
@@ -1900,11 +1903,13 @@ class _StatsDisplayState extends State<StatsDisplay> {
     int maySteps = int.parse(data.may.toString());
     final mayAyvSteps = maySteps / 31;
     final junSteps = int.parse(data.jun.toString());
-    final junAvgSteps = junSteps / 31;
+    final junAvgSteps = junSteps / 30;
     int julSteps = int.parse(data.jul.toString());
-    final julAvgSteps = julSteps / 30;
+    final julAvgSteps = julSteps / 31;
     int augSteps = int.parse(data.aug.toString());
     final augAvgSteps = augSteps / 31;
+    int septSteps = int.parse(data.sep.toString());
+    final septAvgSteps = septSteps / 30;
 
     // var value = (marAyvSteps + aprAyvSteps) / 2;
     return Container(
@@ -1938,7 +1943,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                 ],
               )
               : Text(
-                '${AppTextStyles().formatIndianNumber(marAyvSteps.toInt())} - ${AppTextStyles().formatIndianNumber(aprAyvSteps.toInt())} - ${AppTextStyles().formatIndianNumber(mayAyvSteps.toInt())} -${AppTextStyles().formatIndianNumber(junAvgSteps.toInt())}- ${AppTextStyles().formatIndianNumber(junAvgSteps.toInt())} - ${AppTextStyles().formatIndianNumber(augAvgSteps.toInt())}',
+                '${AppTextStyles().formatIndianNumber(marAyvSteps.toInt())} - ${AppTextStyles().formatIndianNumber(aprAyvSteps.toInt())} - ${AppTextStyles().formatIndianNumber(mayAyvSteps.toInt())} -${AppTextStyles().formatIndianNumber(junAvgSteps.toInt())}- ${AppTextStyles().formatIndianNumber(julAvgSteps.toInt())} - ${AppTextStyles().formatIndianNumber(augAvgSteps.toInt())} - ${AppTextStyles().formatIndianNumber(septAvgSteps.toInt())}',
                 style: AppTextStyles.subtitle.copyWith(
                   fontSize: !kIsWeb ? 12 : 12,
                   fontWeight: FontWeight.bold,
@@ -1949,8 +1954,8 @@ class _StatsDisplayState extends State<StatsDisplay> {
   }
 
   String getValue(ParticipentData data) {
-    int julSteps = int.parse(data.jul.toString());
-    int augSteps = int.parse(data.aug.toString());
+    int julSteps = int.parse(data.aug.toString());
+    int augSteps = int.parse(data.sep.toString());
     final val = augSteps - julSteps;
     return AppTextStyles().formatIndianNumber(val);
   }
