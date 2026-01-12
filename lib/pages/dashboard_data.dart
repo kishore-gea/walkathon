@@ -65,15 +65,16 @@ class _DashboardDataState extends State<DashboardData> {
           ),
         ),
         actions: [
+          widget.selectedCode == 'HYD' || widget.selectedCode == 'BLR' ?
           AnimatedCounter(
-            targetValue: widget.selectedCode == 'HYD' ? widget.hydTotalSteps.toDouble():widget.blrTotalSteps.toDouble(),
+            targetValue: widget.selectedCode == 'HYD' ? widget.hydTotalSteps.toDouble(): widget.selectedCode == 'BLR' ? widget.blrTotalSteps.toDouble() :0.toDouble(),
             duration: const Duration(seconds: 30),
             style: TextStyle(
               color: AppTextStyles.black,
               fontSize: 30,
               fontWeight: FontWeight.bold,
             ),
-          ),
+          ) : SizedBox(),
           Text(' Steps  ', style: AppTextStyles.headline.copyWith(
             fontWeight: FontWeight.bold,
             color: AppTextStyles.primaryBlue,
@@ -261,6 +262,7 @@ class _DashboardDataState extends State<DashboardData> {
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: GestureDetector(
                         onTap: () {
+
                           FocusScope.of(context).unfocus();
                           Get.to(
                             () => UserDetail(
@@ -278,7 +280,7 @@ class _DashboardDataState extends State<DashboardData> {
                         },
                         child: Card(
                           color:
-                              item.sep!.isNotEmpty && item.sep != '0'
+                              item.dec!.isNotEmpty && item.dec != '0'
                                   ? Colors.white
                                   : Colors.red.shade100,
                           shape: RoundedRectangleBorder(
@@ -310,7 +312,7 @@ class _DashboardDataState extends State<DashboardData> {
                                   backgroundColor:
                                       item.gender == 'Male'
                                           ? AppTextStyles.primaryBlue
-                                          : Colors.red,
+                                          : Colors.red.shade200,
                                   child: Text(
                                     item.name != null && item.name!.isNotEmpty
                                         ? item.name![0].toUpperCase()
@@ -325,20 +327,45 @@ class _DashboardDataState extends State<DashboardData> {
                                 ),
                               ],
                             ),
-                            title: Text(
-                              item.name != null && item.name!.isNotEmpty
-                                  ? item.name!
-                                  : 'Unknown',
-                              style: AppTextStyles.subtitle.copyWith(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: AppTextStyles.primaryBlue,
-                              ),
+
+                            title: Row(
+                              children: [
+                                SelectableText(
+                                  item.name != null && item.name!.isNotEmpty
+                                      ? item.name!
+                                      : 'Unknown',
+                                  style: AppTextStyles.subtitle.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: AppTextStyles.primaryBlue,
+                                  ),
+                                ),
+                                getStarIfSubmittedAllMonths(item),
+                                Container(
+                                  padding: EdgeInsetsGeometry.symmetric(horizontal: 5,vertical: 5),
+                                  margin: EdgeInsetsGeometry.symmetric(horizontal: 10),
+                                  decoration: BoxDecoration(
+                                    color: AppTextStyles.primaryBlue,
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: Colors.green.shade200,
+                                    ),
+                                  ),
+                                  child: SelectableText(
+                                    '${stepsToKm(int.parse(item.total ?? '0')).toStringAsFixed(2)} KM',
+                                    style: AppTextStyles.subtitle.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: AppTextStyles.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                             subtitle: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                SelectableText(
                                   AppTextStyles().formatIndianNumber(
                                     int.parse(item.total ?? '0'),
                                   ),
@@ -369,6 +396,25 @@ class _DashboardDataState extends State<DashboardData> {
                                   ),
                                 ),
                                 SizedBox(width: 5),
+                                Container(
+                                  margin: EdgeInsets.only(top: 5),
+                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue.shade200,
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: Colors.blue.shade200,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'Average Step Count: ${getValue(item)}',
+                                    style: AppTextStyles.body.copyWith(
+                                      fontSize: 11,
+                                      color: AppTextStyles.primaryBlue,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                             trailing: getGraphIcon(item),
@@ -420,21 +466,35 @@ class _DashboardDataState extends State<DashboardData> {
         break;
       case 5:
         curMonthVal = data.apr ?? '0';
+        val = int.parse(data.steps ?? '0');
         break;
       case 6:
         curMonthVal = data.may ?? '0';
+        val = int.parse(data.apr ?? '0');
         break;
       case 7:
         curMonthVal = data.jun ?? '0';
+        val = int.parse(data.may ?? '0');
         break;
       case 8:
         curMonthVal = data.jul ?? '0';
+        val = int.parse(data.jun ?? '0');
         break;
       case 9:
         curMonthVal = data.aug ?? '0';
+        val = int.parse(data.jul ?? '0');
         break;
       case 10:
         curMonthVal = data.sep ?? '0';
+        val = int.parse(data.aug ?? '0');
+        break;
+      case 11:
+        curMonthVal = data.oct ?? '0';
+        val = int.parse(data.sep ?? '0');
+        break;
+      case 12:
+        curMonthVal = data.nov ?? '0';
+        val = int.parse(data.oct ?? '0');
         break;
       default:
         curMonthVal = data.steps ?? '0';
@@ -449,8 +509,11 @@ class _DashboardDataState extends State<DashboardData> {
         ),
       );
     } else {
-      if (val > 0) {
+      final currentMonth = int.parse(curMonthVal);
+      if (currentMonth > val) {
         return Image.asset('assets/images/trend_up.png', height: 25, width: 25);
+      }else if (currentMonth == val) {
+        return Icon(Icons.do_not_step_sharp);
       } else {
         return Image.asset(
           'assets/images/trend_down.png',
@@ -460,4 +523,64 @@ class _DashboardDataState extends State<DashboardData> {
       }
     }
   }
+
+  String getValue(ParticipentData data) {
+    /// We need to generate average steps for month based on months submitted
+    int avgMonthsToCalculate = 0;
+    if(data.steps!='0'){
+      avgMonthsToCalculate = avgMonthsToCalculate + 31;
+    }
+    if(data.apr!='0'){
+      avgMonthsToCalculate = avgMonthsToCalculate + 30;
+    }
+    if(data.may!='0'){
+      avgMonthsToCalculate = avgMonthsToCalculate + 31;
+    }
+    if(data.jun!='0'){
+      avgMonthsToCalculate = avgMonthsToCalculate + 30;
+    }
+    if(data.jul!='0'){
+      avgMonthsToCalculate = avgMonthsToCalculate + 31;
+    }
+    if(data.aug!='0'){
+      avgMonthsToCalculate = avgMonthsToCalculate + 31;
+    }
+    if(data.sep!='0'){
+      avgMonthsToCalculate = avgMonthsToCalculate + 30;
+    }
+    if(data.oct!='0') {
+      avgMonthsToCalculate = avgMonthsToCalculate + 31;
+    }
+    if(data.nov!='0') {
+      avgMonthsToCalculate = avgMonthsToCalculate + 30;
+    }
+    if(data.dec!='0') {
+      avgMonthsToCalculate = avgMonthsToCalculate + 31;
+    }
+    final avgSteps = int.parse(data.total.toString()) / avgMonthsToCalculate;
+    print('CHECK -- > ${data.name} - $avgSteps  ${data.total} $avgMonthsToCalculate');
+    return avgSteps.toInt().toString();
+
+  }
+
+  getStarIfSubmittedAllMonths(ParticipentData item) {
+    print('Checking for ${item.name}');
+    int count = StepCountData().  checkNoOfSubmissions(item, item.name) ?? 0;
+    print('Name ---> ${item.name} - Months Submitted : $count');
+    return count >= 8
+        ? Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: Icon(
+        Icons.star,
+        color: Colors.amber,
+        size: 20,
+      ),
+    )
+        : SizedBox();
+  }
+
+  double stepsToKm(int steps) {
+    return steps * 0.0008;
+  }
+
 }

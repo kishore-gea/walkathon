@@ -152,7 +152,7 @@ class _RollingLeaderState extends State<RollingLeader> {
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(child: Text('No steps found'));
+                  return Center(child: Text('No steps founds'));
                 }
                 return ListView.builder(
                   shrinkWrap: true,
@@ -380,7 +380,7 @@ class _RollingLeaderState extends State<RollingLeader> {
                                             shape: BoxShape.rectangle,
                                             color: AppTextStyles.white,
                                           ),
-                                          child: getMonthlyCount(data),
+                                          child: Text(getValue(data),style: AppTextStyles.subtitle.copyWith(fontSize: 15,color: AppTextStyles.primaryBlue,fontWeight: FontWeight.bold),),
                                         ),
                                       ),
                                     ],
@@ -398,6 +398,25 @@ class _RollingLeaderState extends State<RollingLeader> {
     );
   }
 
+
+  String getValue(ParticipentData data) {
+    /// We need to generate average steps for month based on months submitted
+    int avgMonthsToCalculate = 0;
+    if (data.steps != '0') avgMonthsToCalculate += 31; // March
+    if (data.apr != '0') avgMonthsToCalculate += 30;
+    if (data.may != '0') avgMonthsToCalculate += 31;
+    if (data.jun != '0') avgMonthsToCalculate += 30;
+    if (data.jul != '0') avgMonthsToCalculate += 31;
+    if (data.aug != '0') avgMonthsToCalculate += 31;
+    if (data.sep != '0') avgMonthsToCalculate += 30;
+    if (data.oct != '0') avgMonthsToCalculate += 31;
+    if (data.nov != '0') avgMonthsToCalculate += 30;
+    if (data.dec != '0') avgMonthsToCalculate += 31;
+    print(' total ${data.total.toString()}  avgMonthsToCalculate: $avgMonthsToCalculate');
+    final avgSteps = int.parse(data.total.toString()) / avgMonthsToCalculate;
+    return avgSteps.toInt().toString();
+  }
+
   getMonthlyCount(ParticipentData data) {
     var monthsCount = '';
 
@@ -408,6 +427,8 @@ class _RollingLeaderState extends State<RollingLeader> {
     int stepsJULY = int.parse(data.jul.toString());
     int stepsAUG = int.parse(data.aug.toString());
     int stepsSEP = int.parse(data.sep.toString());
+    int stepsOCT = int.parse(data.oct.toString());
+    int stepsNOV = int.parse(data.nov.toString());
 
     if (DateTime.now().month == 4) {
       monthsCount = stepsMAR.toString();
@@ -459,11 +480,40 @@ class _RollingLeaderState extends State<RollingLeader> {
             '$stepsMAR | $stepsAPR | $stepsMAY  | $stepsJUNE | $stepsJULY | $stepsAUG | $stepsSEP';
       }
       stepsSEP = 0;
+    }else if (DateTime.now().month == 11) {
+      if (stepsMAR > 0 &&
+          stepsAPR > 0 &&
+          stepsMAY > 0 &&
+          stepsJUNE > 0 &&
+          stepsJULY > 0 &&
+          stepsAUG > 0 &&
+          stepsSEP > 0 &&
+          stepsOCT > 0) {
+        monthsCount =
+            '$stepsMAR | $stepsAPR | $stepsMAY  | $stepsJUNE | $stepsJULY | $stepsAUG | $stepsSEP | $stepsOCT';
+      }
+      stepsOCT = 0;
+    }else if (DateTime.now().month == 12) {
+      if (stepsMAR > 0 &&
+          stepsAPR > 0 &&
+          stepsMAY > 0 &&
+          stepsJUNE > 0 &&
+          stepsJULY > 0 &&
+          stepsAUG > 0 &&
+          stepsSEP > 0 &&
+          stepsOCT > 0 &&
+      stepsNOV > 0) {
+        monthsCount =
+            '$stepsMAR | $stepsAPR | $stepsMAY  | $stepsJUNE | $stepsJULY | $stepsAUG | $stepsSEP | $stepsOCT | $stepsNOV';
+      }
+      stepsNOV = 0;
     }
+
+
 
     return Row(
       children: [
-        Text(
+        SelectableText(
           monthsCount,
           style: AppTextStyles.subtitle.copyWith(
             fontSize: 14,

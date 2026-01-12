@@ -53,7 +53,7 @@ class WalkathonTotalStepCountPage extends StatelessWidget {
                 ),
               ),
               Text(
-                'TOTAL STEP COUNT ( MARCH - SEPTEMBER )',
+                'TOTAL STEP COUNT ( MARCH - NOVEMBER )',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.headline.copyWith(
                   color: AppTextStyles.orange,

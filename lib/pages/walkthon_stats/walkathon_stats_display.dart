@@ -43,7 +43,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
     return Scaffold(
       backgroundColor: AppTextStyles.white,
       appBar: AppBar(
-        title: Text(
+        title: SelectableText(
           widget.code1 == '6A' || widget.code1 == '6B'
               ? widget.title
               : 'Leaderboard Stats',
@@ -86,7 +86,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                             ? AppTextStyles.primaryBlue
                             : Colors.white,
                   ),
-                  child: Text(
+                  child: SelectableText(
                     'ALL',
                     style: AppTextStyles.headline.copyWith(
                       fontWeight:
@@ -130,7 +130,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                             ? AppTextStyles.primaryBlue
                             : Colors.white,
                   ),
-                  child: Text(
+                  child: SelectableText(
                     'MEN',
                     style: AppTextStyles.headline.copyWith(
                       fontWeight:
@@ -174,7 +174,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                             ? AppTextStyles.primaryBlue
                             : Colors.white,
                   ),
-                  child: Text(
+                  child: SelectableText(
                     'WOMEN',
                     style: AppTextStyles.headline.copyWith(
                       fontWeight:
@@ -220,7 +220,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
+                      SelectableText(
                         'IND',
                         style: AppTextStyles.headline.copyWith(
                           fontWeight:
@@ -235,7 +235,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                         ),
                       ),
                       SizedBox(width: 4),
-                      Text(
+                      SelectableText(
                         'HYD & BLR ',
                         style: AppTextStyles.headline.copyWith(
                           fontWeight:
@@ -294,7 +294,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                 ),
                               ),
                               SizedBox(width: 10),
-                              Text(
+                              SelectableText(
                                 'INDIA',
                                 style: AppTextStyles.subtitle.copyWith(
                                   fontWeight: FontWeight.bold,
@@ -332,7 +332,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                             ? AppTextStyles.primaryBlue
                                             : Colors.white,
                                   ),
-                                  child: Text(
+                                  child: SelectableText(
                                     'WOMEN',
                                     style: AppTextStyles.headline.copyWith(
                                       fontWeight:
@@ -378,7 +378,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                             ? AppTextStyles.primaryBlue
                                             : Colors.white,
                                   ),
-                                  child: Text(
+                                  child: SelectableText(
                                     'MEN',
                                     style: AppTextStyles.headline.copyWith(
                                       fontWeight:
@@ -424,7 +424,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                             ? AppTextStyles.primaryBlue
                                             : Colors.white,
                                   ),
-                                  child: Text(
+                                  child: SelectableText(
                                     'ALL',
                                     style: AppTextStyles.headline.copyWith(
                                       fontWeight:
@@ -460,7 +460,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                   );
                                 } else if (snapshot.hasError) {
                                   return Center(
-                                    child: Text('Error: ${snapshot.error}'),
+                                    child: SelectableText('Error: ${snapshot.error}'),
                                   );
                                 } else if (!snapshot.hasData ||
                                     snapshot.data!.isEmpty) {
@@ -469,7 +469,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        Text(
+                                        SelectableText(
                                           'No steps found',
                                           style: AppTextStyles.body.copyWith(
                                             fontSize: 16,
@@ -531,7 +531,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                               12,
                                                             ),
                                                       ),
-                                                      child: Text(
+                                                      child: SelectableText(
                                                         ' ${index + 1} ',
                                                         style: AppTextStyles
                                                             .subtitle
@@ -548,7 +548,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                     ),
                                                     SizedBox(width: 5),
                                                     Center(
-                                                      child: Text(
+                                                      child: SelectableText(
                                                         textAlign:
                                                             TextAlign.center,
                                                         '${data.name}',
@@ -584,16 +584,16 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                               AppTextStyles
                                                                   .primaryBlue,
                                                         ),
-                                                        child: Text(
+                                                        child: SelectableText(
                                                           int.parse(
-                                                                    data.sep
+                                                                    data.dec
                                                                         .toString(),
                                                                   ) >
                                                                   0
                                                               ? AppTextStyles()
                                                                   .formatIndianNumber(
                                                                     int.parse(
-                                                                      data.sep
+                                                                      data.dec
                                                                           .toString(),
                                                                     ),
                                                                   )
@@ -634,7 +634,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Text(
+                                                    SelectableText(
                                                       '${index + 1}. ',
                                                       style: AppTextStyles
                                                           .subtitle
@@ -649,7 +649,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                     ),
                                                     Expanded(
                                                       flex: 2,
-                                                      child: Text(
+                                                      child: SelectableText(
                                                         '${data.name}',
                                                         style: AppTextStyles
                                                             .subtitle
@@ -686,16 +686,16 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                 AppTextStyles
                                                                     .primaryBlue,
                                                           ),
-                                                          child: Text(
+                                                          child: SelectableText(
                                                             int.parse(
-                                                                      data.sep
+                                                                      data.dec
                                                                           .toString(),
                                                                     ) >
                                                                     0
                                                                 ? AppTextStyles()
                                                                     .formatIndianNumber(
                                                                       int.parse(
-                                                                        data.sep
+                                                                        data.dec
                                                                             .toString(),
                                                                       ),
                                                                     )
@@ -776,7 +776,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                       ),
                                     ),
                                     SizedBox(width: 10),
-                                    Text(
+                                    SelectableText(
                                       'HYDERABAD',
                                       style: AppTextStyles.subtitle.copyWith(
                                         fontWeight: FontWeight.bold,
@@ -803,7 +803,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                         );
                                       } else if (snapshot.hasError) {
                                         return Center(
-                                          child: Text(
+                                          child: SelectableText(
                                             'Error: ${snapshot.error}',
                                           ),
                                         );
@@ -814,7 +814,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
-                                              Text(
+                                              SelectableText(
                                                 'No steps found',
                                                 style: AppTextStyles.body
                                                     .copyWith(
@@ -841,7 +841,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                         itemCount: snapshot.data!.length,
                                         itemBuilder: (context, index) {
                                           final data = snapshot.data![index];
-                                          int val =  int.parse(data.sep.toString());
+                                          int val =  int.parse(data.dec.toString());
                                            return Card(
                                             elevation: 4,
                                             color:
@@ -886,8 +886,8 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                     12,
                                                                   ),
                                                             ),
-                                                            child: Text(
-                                                              ' ${index + 1} ',
+                                                            child: SelectableText(
+                                                              ' ${index + 1}',
                                                               style: AppTextStyles
                                                                   .subtitle
                                                                   .copyWith(
@@ -904,7 +904,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                           ),
                                                           SizedBox(width: 5),
                                                           Center(
-                                                            child: Text(
+                                                            child: SelectableText(
                                                               textAlign:
                                                                   TextAlign
                                                                       .center,
@@ -944,7 +944,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                     AppTextStyles
                                                                         .primaryBlue,
                                                               ),
-                                                              child: Text(
+                                                              child: SelectableText(
                                                                 AppTextStyles()
                                                                     .formatIndianNumber(
                                                                       int.parse(
@@ -989,7 +989,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                             MainAxisAlignment
                                                                 .spaceBetween,
                                                         children: [
-                                                          Text(
+                                                          SelectableText(
                                                             '${index + 1}. ',
                                                             style: AppTextStyles
                                                                 .subtitle
@@ -1005,7 +1005,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                           ),
                                                           Expanded(
                                                             flex: 2,
-                                                            child: Text(
+                                                            child: SelectableText(
                                                               '${data.name}',
                                                               style: AppTextStyles
                                                                   .subtitle
@@ -1019,6 +1019,14 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                         AppTextStyles
                                                                             .primaryBlue,
                                                                   ),
+                                                            ),
+                                                          ),
+                                                          SelectableText(
+                                                            '${stepsToKm(int.parse(data.dec ?? '0')).toStringAsFixed(2)} KM',
+                                                            style: AppTextStyles.subtitle.copyWith(
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 18,
+                                                              color: AppTextStyles.white,
                                                             ),
                                                           ),
                                                           Expanded(
@@ -1044,11 +1052,11 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                       AppTextStyles
                                                                           .primaryBlue,
                                                                 ),
-                                                                child: Text(
+                                                                child: SelectableText(
                                                                   AppTextStyles()
                                                                       .formatIndianNumber(
                                                                         int.parse(
-                                                                          data.sep
+                                                                          data.dec
                                                                               .toString(),
                                                                         ),
                                                                       ),
@@ -1124,7 +1132,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                       ),
                                     ),
                                     SizedBox(width: 10),
-                                    Text(
+                                    SelectableText(
                                       'BANGALORE',
                                       style: AppTextStyles.subtitle.copyWith(
                                         fontWeight: FontWeight.bold,
@@ -1151,7 +1159,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                         );
                                       } else if (snapshot.hasError) {
                                         return Center(
-                                          child: Text(
+                                          child: SelectableText(
                                             'Error: ${snapshot.error}',
                                           ),
                                         );
@@ -1160,7 +1168,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                         return Center(
                                           child: Column(
                                             children: [
-                                              Text(
+                                              SelectableText(
                                                 'No steps found',
                                                 style: AppTextStyles.body
                                                     .copyWith(
@@ -1231,7 +1239,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                     12,
                                                                   ),
                                                             ),
-                                                            child: Text(
+                                                            child: SelectableText(
                                                               ' ${index + 1} ',
                                                               style: AppTextStyles
                                                                   .subtitle
@@ -1250,7 +1258,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
 
                                                           SizedBox(width: 5),
                                                           Center(
-                                                            child: Text(
+                                                            child: SelectableText(
                                                               textAlign:
                                                                   TextAlign
                                                                       .center,
@@ -1290,7 +1298,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                     AppTextStyles
                                                                         .primaryBlue,
                                                               ),
-                                                              child: Text(
+                                                              child: SelectableText(
                                                                 AppTextStyles()
                                                                     .formatIndianNumber(
                                                                       int.parse(
@@ -1335,7 +1343,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                             MainAxisAlignment
                                                                 .spaceBetween,
                                                         children: [
-                                                          Text(
+                                                          SelectableText(
                                                             '${index + 1}.',
                                                             style: AppTextStyles
                                                                 .subtitle
@@ -1352,7 +1360,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                           SizedBox(width: 5),
                                                           Expanded(
                                                             flex: 2,
-                                                            child: Text(
+                                                            child: SelectableText(
                                                               '${data.name}',
                                                               style: AppTextStyles
                                                                   .subtitle
@@ -1366,6 +1374,14 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                         AppTextStyles
                                                                             .primaryBlue,
                                                                   ),
+                                                            ),
+                                                          ),
+                                                          SelectableText(
+                                                            '${stepsToKm(int.parse(data.dec ?? '0')).toStringAsFixed(2)} KM',
+                                                            style: AppTextStyles.subtitle.copyWith(
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 18,
+                                                              color: AppTextStyles.white,
                                                             ),
                                                           ),
                                                           Expanded(
@@ -1391,23 +1407,23 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                       AppTextStyles
                                                                           .primaryBlue,
                                                                 ),
-                                                                child: Text(
+                                                                child: SelectableText(
                                                                   AppTextStyles()
                                                                       .formatIndianNumber(
-                                                                        int.parse(
-                                                                          data.sep
-                                                                              .toString(),
-                                                                        ),
-                                                                      ),
+                                                                    int.parse(
+                                                                      data.dec
+                                                                          .toString(),
+                                                                    ),
+                                                                  ),
                                                                   style: AppTextStyles.subtitle.copyWith(
                                                                     fontSize:
-                                                                        18,
+                                                                    18,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
+                                                                    FontWeight
+                                                                        .bold,
                                                                     color:
-                                                                        AppTextStyles
-                                                                            .white,
+                                                                    AppTextStyles
+                                                                        .white,
                                                                   ),
                                                                 ),
                                                               ),
@@ -1450,7 +1466,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 8.0,
                               ),
-                              child: Text(
+                              child: SelectableText(
                                 'An uptrend is defined as a month in which the participant logs a minimum of 25,000 additional steps compared with the preceding month',
                                 style: AppTextStyles.headline.copyWith(
                                   fontWeight: FontWeight.bold,
@@ -1462,7 +1478,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                             : widget.code1 == '1A' || widget.code2 == '1B'
                             ? Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8,vertical: 10),
-                              child: Text(
+                              child: SelectableText(
                                 'Maintained a consistent record of walking at least 10,000 steps per month over successive months'.toUpperCase(),
                                 style: AppTextStyles.headline.copyWith(
                                   fontWeight: FontWeight.bold,
@@ -1474,7 +1490,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                             : widget.code1 == '2A' || widget.code2 == '2B'
                             ? Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8),
-                              child: Text(
+                              child: SelectableText(
                                 'Maintained a consistent record of walking at least 7,000 steps per month over successive months',
                                 style: AppTextStyles.headline.copyWith(
                                   fontWeight: FontWeight.bold,
@@ -1486,7 +1502,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                             : widget.code1 == '3A' || widget.code2 == '3B'
                             ? Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8),
-                              child: Text(
+                              child: SelectableText(
                                 'Maintained a consistent record of walking at least 5,000 steps per month over successive months',
                                 style: AppTextStyles.headline.copyWith(
                                   fontWeight: FontWeight.bold,
@@ -1524,7 +1540,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                 ),
                               ),
                               SizedBox(width: 10),
-                              Text(
+                              SelectableText(
                                 'HYDERABAD',
                                 style: AppTextStyles.subtitle.copyWith(
                                   fontWeight: FontWeight.bold,
@@ -1547,15 +1563,15 @@ class _StatsDisplayState extends State<StatsDisplay> {
                               return Center(child: CircularProgressIndicator());
                             } else if (snapshot.hasError) {
                               return Center(
-                                child: Text('Error: ${snapshot.error}'),
+                                child: Text('Error: ${snapshot.error.toString()}'),
                               );
                             } else if (!snapshot.hasData ||
                                 snapshot.data!.isEmpty) {
                               return Center(
                                 child: Column(
                                   children: [
-                                    Text(
-                                      'No steps found',
+                                    SelectableText(
+                                      'No steps founds',
                                       style: AppTextStyles.body.copyWith(
                                         fontSize: 16,
                                         fontWeight: FontWeight.normal,
@@ -1598,10 +1614,10 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                         children: [
                                           Expanded(
                                             flex: !kIsWeb ? 0 : 4,
-                                            child: Text(
-                                              '${data.name}  ',
+                                            child: SelectableText(
+                                              '${data.name}',
                                               maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
+                                              // o: TextOverflow.ellipsis,
                                               style: AppTextStyles.subtitle
                                                   .copyWith(
                                                     fontSize: !kIsWeb ? 12 : 20,
@@ -1614,11 +1630,16 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                           ),
                                           Expanded(
                                             flex: !kIsWeb ? 0 : 2,
-                                            child: Center(
-                                              child: getAvgSteps(
-                                                data,
-                                                widget.code1,
-                                              ),
+                                            child: Row(
+                                              children: [
+                                                SelectableText(
+                                                  '${StepCountData().getAvgValue(data)}',
+                                                  style: AppTextStyles.subtitle,
+
+                                                ),
+                                                 getMonthSubmitted(data),
+
+                                              ],
                                             ),
                                           ),
                                           Expanded(
@@ -1640,7 +1661,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                   shape: BoxShape.rectangle,
                                                   color: AppTextStyles.white,
                                                 ),
-                                                child: Text(
+                                                child: SelectableText(
                                                   AppTextStyles()
                                                       .formatIndianNumber(
                                                         int.parse(
@@ -1698,7 +1719,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                 ),
                               ),
                               SizedBox(width: 10),
-                              Text(
+                              SelectableText(
                                 'BANGALORE',
                                 style: AppTextStyles.subtitle.copyWith(
                                   fontWeight: FontWeight.bold,
@@ -1721,14 +1742,14 @@ class _StatsDisplayState extends State<StatsDisplay> {
                               return Center(child: CircularProgressIndicator());
                             } else if (snapshot.hasError) {
                               return Center(
-                                child: Text('Error: ${snapshot.error}'),
+                                child: SelectableText('Error: ${snapshot.error}'),
                               );
                             } else if (!snapshot.hasData ||
                                 snapshot.data!.isEmpty) {
                               return Center(
                                 child: Column(
                                   children: [
-                                    Text(
+                                    SelectableText(
                                       'No steps found',
                                       style: AppTextStyles.body.copyWith(
                                         fontSize: 16,
@@ -1770,11 +1791,12 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Expanded(
-                                            flex: !kIsWeb ? 0 : 4,
-                                            child: Text(
-                                              '${data.name}  ',
+                                            flex: !kIsWeb ? 2 : 4,
+                                            child: SelectableText(
+                                              '${data.name} ',
+
                                               maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
+                                              // overflow: TextOverflow.ellipsis,
                                               style: AppTextStyles.subtitle
                                                   .copyWith(
                                                     fontSize: !kIsWeb ? 12 : 20,
@@ -1787,11 +1809,17 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                           ),
                                           Expanded(
                                             flex: !kIsWeb ? 0 : 2,
-                                            child: Center(
-                                              child: getAvgSteps(
-                                                data,
-                                                widget.code1,
-                                              ),
+                                            child: Row(
+                                              children: [
+                                                SelectableText(
+                                                  AppTextStyles()
+                                                      .formatIndianNumber(
+                                                    int.parse('${StepCountData().getAvgValue(data)}',),),
+                                                  style: AppTextStyles.subtitle,
+
+                                                ),
+                                                getMonthSubmitted(data),
+                                              ],
                                             ),
                                           ),
                                           Expanded(
@@ -1813,7 +1841,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                   shape: BoxShape.rectangle,
                                                   color: AppTextStyles.white,
                                                 ),
-                                                child: Text(
+                                                child: SelectableText(
                                                   AppTextStyles()
                                                       .formatIndianNumber(
                                                         int.parse(
@@ -1852,7 +1880,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
   }
 
   getAvgMonthStepCount(ParticipentData data, String code) {
-    int userSteps = int.parse(data.sep.toString());
+    int userSteps = int.parse(data.dec.toString());
     if (userSteps != 0) {
       final monthCode = DateTime.now().month - 1;
       var val = 30;
@@ -1870,6 +1898,10 @@ class _StatsDisplayState extends State<StatsDisplay> {
         val = 31;
       } else if (monthCode == 9) {
         val = 30;
+      }else if (monthCode == 9) {
+        val = 31;
+      }else if (monthCode == 9) {
+        val = 30;
       }
       final aprAyvSteps = userSteps / val;
       return Container(
@@ -1881,9 +1913,9 @@ class _StatsDisplayState extends State<StatsDisplay> {
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: AppTextStyles.secondaryBlue, width: 1),
         ),
-        child: Text(
+        child: SelectableText(
           userSteps != 0
-              ? AppTextStyles().formatIndianNumber(aprAyvSteps.toInt())
+              ? AppTextStyles().formatIndianNumber(StepCountData().getAvgValue(data))
               : '0',
           style: AppTextStyles.subtitle.copyWith(
             fontSize: 16,
@@ -1893,6 +1925,85 @@ class _StatsDisplayState extends State<StatsDisplay> {
         ),
       );
     }
+  }
+
+
+  Widget getMonthSubmitted(ParticipentData data) {
+    List<String> months = [];
+    if(data.steps!='0'){
+      months.add('MAR');
+    }
+    if(data.apr!='0'){
+      months.add('APR');
+    }
+    if(data.may!='0'){
+      months.add('MAY');
+    }
+    if(data.jun!='0'){
+      months.add('JUN');
+    }
+    if(data.jul!='0'){
+      months.add('JUL');
+    }
+    if(data.aug!='0'){
+      months.add('AUG');
+    }
+    if(data.sep!='0'){
+      months.add('SEP');
+    }
+    if(data.oct!='0') {
+      months.add('OCT');
+    }
+    if(data.dec!='0') {
+      months.add('NOV');
+    }
+
+    print(' codes are ${widget.code1} and ${widget.code2}');
+    return (widget.code1 == '5A' || widget.code2 == '5B') ?
+        Container(
+          padding: EdgeInsetsGeometry.symmetric(horizontal: 8,vertical: 4),
+          decoration: BoxDecoration(
+            color: AppTextStyles.orange,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: SelectableText(AppTextStyles()
+              .formatIndianNumber(getStepUpValueForThisMonth(data)),style: AppTextStyles.subtitle
+              .copyWith(
+            fontSize:
+            !kIsWeb ? 10 : 13,
+            fontWeight:
+            FontWeight.bold,
+            color:
+            AppTextStyles
+                .white,
+          ),),
+        ):
+    Row(
+      children: months.map((char) => Center(
+        child: Container(
+          margin: EdgeInsetsGeometry.symmetric(horizontal: 2),
+          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: AppTextStyles
+                .primaryBlue,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: AppTextStyles
+                .primaryBlue, width: 1),
+          ),
+          child: Center(
+            child: SelectableText(
+              char,
+              style: AppTextStyles.subtitle.copyWith(
+                fontSize: 8,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      )).toList(),
+    );
   }
 
   getAvgSteps(ParticipentData data, String code) {
@@ -1910,6 +2021,8 @@ class _StatsDisplayState extends State<StatsDisplay> {
     final augAvgSteps = augSteps / 31;
     int septSteps = int.parse(data.sep.toString());
     final septAvgSteps = septSteps / 30;
+    int octSteps = int.parse(data.oct.toString());
+    final octAvgSteps = octSteps / 31;
 
     // var value = (marAyvSteps + aprAyvSteps) / 2;
     return Container(
@@ -1925,7 +2038,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
               ? Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
+                  SelectableText(
                     getValue(data),
                     style: AppTextStyles.subtitle.copyWith(
                       fontSize: !kIsWeb ? 14 : 18,
@@ -1942,8 +2055,8 @@ class _StatsDisplayState extends State<StatsDisplay> {
                   SizedBox(width: 5),
                 ],
               )
-              : Text(
-                '${AppTextStyles().formatIndianNumber(marAyvSteps.toInt())} - ${AppTextStyles().formatIndianNumber(aprAyvSteps.toInt())} - ${AppTextStyles().formatIndianNumber(mayAyvSteps.toInt())} -${AppTextStyles().formatIndianNumber(junAvgSteps.toInt())}- ${AppTextStyles().formatIndianNumber(julAvgSteps.toInt())} - ${AppTextStyles().formatIndianNumber(augAvgSteps.toInt())} - ${AppTextStyles().formatIndianNumber(septAvgSteps.toInt())}',
+              : SelectableText(
+                '${AppTextStyles().formatIndianNumber(marAyvSteps.toInt())} - ${AppTextStyles().formatIndianNumber(aprAyvSteps.toInt())} - ${AppTextStyles().formatIndianNumber(mayAyvSteps.toInt())} -${AppTextStyles().formatIndianNumber(junAvgSteps.toInt())}- ${AppTextStyles().formatIndianNumber(julAvgSteps.toInt())} - ${AppTextStyles().formatIndianNumber(augAvgSteps.toInt())} - ${AppTextStyles().formatIndianNumber(septAvgSteps.toInt())} - ${AppTextStyles().formatIndianNumber(octAvgSteps.toInt())}',
                 style: AppTextStyles.subtitle.copyWith(
                   fontSize: !kIsWeb ? 12 : 12,
                   fontWeight: FontWeight.bold,
@@ -1953,10 +2066,42 @@ class _StatsDisplayState extends State<StatsDisplay> {
     );
   }
 
+  double stepsToKm(int steps) {
+    return steps * 0.0008;
+  }
+
+  getStepUpValueForThisMonth(ParticipentData data) {
+    int novSteps = int.parse(data.dec.toString());
+    int octSteps = int.parse(data.nov.toString());
+    final stepUpValue = novSteps - octSteps;
+    return stepUpValue;
+  }
+
   String getValue(ParticipentData data) {
-    int julSteps = int.parse(data.aug.toString());
-    int augSteps = int.parse(data.sep.toString());
-    final val = augSteps - julSteps;
-    return AppTextStyles().formatIndianNumber(val);
+    /// We need to generate average steps for month based on months submitted
+    int avgMonthsToCalculate = 0;
+    if(data.steps!='0'){
+        avgMonthsToCalculate = avgMonthsToCalculate + 31;
+    }else if(data.apr!='0'){
+        avgMonthsToCalculate = avgMonthsToCalculate + 30;
+    }else if(data.may!='0'){
+        avgMonthsToCalculate = avgMonthsToCalculate + 31;
+    }else if(data.jun!='0'){
+        avgMonthsToCalculate = avgMonthsToCalculate + 30;
+    }else if(data.jul!='0'){
+        avgMonthsToCalculate = avgMonthsToCalculate + 31;
+    }else if(data.aug!='0'){
+        avgMonthsToCalculate = avgMonthsToCalculate + 31;
+    }else if(data.sep!='0'){
+        avgMonthsToCalculate = avgMonthsToCalculate + 30;
+    }else if(data.oct!='0') {
+        avgMonthsToCalculate = avgMonthsToCalculate + 31;
+    }else if(data.dec!='0') {
+        avgMonthsToCalculate = avgMonthsToCalculate + 30;
+    }else if(data.dec!='0') {
+        avgMonthsToCalculate = avgMonthsToCalculate + 31;
+    }
+    final avgSteps = int.parse(data.total.toString()) / avgMonthsToCalculate;
+    return avgSteps.toInt().toString();
   }
 }

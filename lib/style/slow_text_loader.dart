@@ -32,10 +32,14 @@ class _SlowTextLoaderState extends State<SlowTextLoader> {
   void _startTyping() {
     _timer = Timer.periodic(widget.speed, (timer) {
       if (_index < widget.fullText.length) {
-        setState(() {
-          _visibleText += widget.fullText[_index];
-          _index++;
-        });
+        if (mounted) {
+          setState(() {
+            _visibleText += widget.fullText[_index];
+            _index++;
+          });
+        } else {
+          timer.cancel();
+        }
       } else {
         _timer?.cancel();
       }

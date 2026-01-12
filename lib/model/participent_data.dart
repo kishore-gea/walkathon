@@ -10,11 +10,15 @@ class ParticipentData {
   String? jul;
   String? aug;
   String? sep;
+  String? oct;
+  String? nov;
+  String? dec;
   String? total;
   String? avg;
   String? up;
   String? awards;
   String? teams;
+  String? teamName;
 
   ParticipentData({this.name, this.steps, this.location, this.gender});
 
@@ -27,6 +31,9 @@ class ParticipentData {
     jul = json['Jul'] ?? '0';
     aug = json['Aug'] ?? '0';
     sep = json['Sept'] ?? '0';
+    oct = json['Oct'] ?? '0';
+    nov = json['Nov'] ?? '0';
+    dec = json['Dec'] ?? '0';
     total = json['Total'] ?? '0';
     avg = json['AVG'] ?? '0';
     location = json['Location'];
@@ -34,7 +41,8 @@ class ParticipentData {
     rank = json['Rank'];
     up = json['UP'] ?? '0';
     awards = json['HIS'];
-    teams = json['Team'];
+    teams = json['Team'] ?? '0';
+    teamName = json['TeamName'] ?? '0';
   }
 
   Map<String, dynamic> toJson() {
@@ -47,6 +55,9 @@ class ParticipentData {
     data['Jul'] = jul;
     data['Aug'] = aug;
     data['Sept'] = sep;
+    data['Oct'] = oct;
+    data['Nov'] = nov;
+    data['Dec'] = dec;
     data['Total'] = total;
     data['AVG'] = avg;
     data['Location'] = location;
@@ -55,6 +66,7 @@ class ParticipentData {
     data['UP'] = up;
     data['HIS'] = awards;
     data['Team'] = teams;
+    data['TeamName'] = teamName;
     return data;
   }
 }

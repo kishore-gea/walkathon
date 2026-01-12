@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +94,8 @@ class _DebutLeadersState extends State<DebutLeaders> {
                                   : Colors.blue.shade100,
                               child:
                               !kIsWeb
-                                  ? Padding(
+                                  ?
+                              Padding(
                                 padding:
                                 const EdgeInsets.symmetric(
                                   vertical: 8.0,
@@ -126,7 +126,7 @@ class _DebutLeadersState extends State<DebutLeaders> {
                                           12,
                                         ),
                                       ),
-                                      child: Text(
+                                      child: SelectableText(
                                         ' ${index + 1} ',
                                         style: AppTextStyles
                                             .subtitle
@@ -143,7 +143,7 @@ class _DebutLeadersState extends State<DebutLeaders> {
                                     ),
                                     SizedBox(width: 5),
                                     Center(
-                                      child: Text(
+                                      child: SelectableText(
                                         textAlign:
                                         TextAlign.center,
                                         '${data.name}',
@@ -175,23 +175,14 @@ class _DebutLeadersState extends State<DebutLeaders> {
                                           shape:
                                           BoxShape
                                               .rectangle,
+
                                           color:
                                           AppTextStyles
                                               .primaryBlue,
                                         ),
-                                        child: Text(
-                                          int.parse(
-                                            data.sep
-                                                .toString(),
-                                          ) >
-                                              0
-                                              ? AppTextStyles()
-                                              .formatIndianNumber(
-                                            int.parse(
-                                              data.sep
-                                                  .toString(),
-                                            ),
-                                          )
+                                        child: SelectableText(
+                                          (int.tryParse(data.dec.toString()) ?? 0) > 0
+                                              ? AppTextStyles().formatIndianNumber(int.tryParse(data.dec.toString()) ?? 0)
                                               : 'D.N.S',
                                           style: AppTextStyles
                                               .subtitle
@@ -203,6 +194,7 @@ class _DebutLeadersState extends State<DebutLeaders> {
                                             color:
                                             AppTextStyles
                                                 .white,
+
                                           ),
                                         ),
                                       ),
@@ -236,7 +228,7 @@ class _DebutLeadersState extends State<DebutLeaders> {
                                     ),
                                     Expanded(
                                       flex: 2,
-                                      child: Text(
+                                      child: SelectableText(
                                         '${data.name}',
                                         style: AppTextStyles
                                             .subtitle
@@ -271,21 +263,49 @@ class _DebutLeadersState extends State<DebutLeaders> {
                                                 .rectangle,
                                             color:
                                             AppTextStyles
+                                                .white,
+                                          ),
+                                          child: Text( data.location ?? '',
+                                            style: AppTextStyles
+                                                .subtitle
+                                                .copyWith(
+                                              fontSize: 14,
+                                              fontWeight:
+                                              FontWeight
+                                                  .bold,
+                                              color:
+                                              AppTextStyles
+                                                  .primaryBlue,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Center(
+                                        child: Container(
+                                          padding:
+                                          const EdgeInsets.symmetric(
+                                            vertical: 4.0,
+                                            horizontal:
+                                            16.0,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                            BorderRadius.circular(
+                                              12,
+                                            ),
+                                            shape:
+                                            BoxShape
+                                                .rectangle,
+                                            color:
+                                            AppTextStyles
                                                 .primaryBlue,
                                           ),
-                                          child: Text(
-                                            int.parse(
-                                              data.sep
-                                                  .toString(),
-                                            ) >
-                                                0
-                                                ? AppTextStyles()
-                                                .formatIndianNumber(
-                                              int.parse(
-                                                data.sep
-                                                    .toString(),
-                                              ),
-                                            )
+                                          child: SelectableText(
+                                            (int.tryParse(data.dec.toString()) ?? 0) > 0
+                                                ? AppTextStyles().formatIndianNumber(int.tryParse(data.dec.toString()) ?? 0)
                                                 : 'D.N.S',
 
                                             style: AppTextStyles
@@ -303,7 +323,6 @@ class _DebutLeadersState extends State<DebutLeaders> {
                                         ),
                                       ),
                                     ),
-
                                     Expanded(
                                       flex: 1,
                                       child: Center(
@@ -332,7 +351,7 @@ class _DebutLeadersState extends State<DebutLeaders> {
   }
 
   getAvgMonthStepCount(ParticipentData data) {
-    int userSteps = int.parse(data.sep.toString());
+    int userSteps = int.tryParse(data.oct.toString()) ?? 0;
     if (userSteps != 0) {
       final monthCode = DateTime.now().month - 1;
       var val = 30;
@@ -349,6 +368,10 @@ class _DebutLeadersState extends State<DebutLeaders> {
       } else if (monthCode == 8) {
         val = 31;
       } else if (monthCode == 9) {
+        val = 30;
+      }else if (monthCode == 10) {
+        val = 31;
+      }else if (monthCode == 11) {
         val = 30;
       }
       final aprAyvSteps = userSteps / val;
@@ -376,5 +399,3 @@ class _DebutLeadersState extends State<DebutLeaders> {
   }
 
 }
-
-

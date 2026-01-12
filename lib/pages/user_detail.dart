@@ -165,7 +165,7 @@ class _UserDetailState extends State<UserDetail> {
                       ),
                     ),
                     SizedBox(height: 6),
-                    getMonthDifferenceValue(widget.participant),
+                    // getMonthDifferenceValue(widget.participant),
                     SizedBox(height: 10),
                     // getAwardsForUser(widget.participant),
                     // SizedBox(height: 10),
@@ -268,7 +268,7 @@ class _UserDetailState extends State<UserDetail> {
                   height: 300, // and height
                   child: LineChart(
                     LineChartData(
-                      maxX: 10,
+                      maxX: 12,
                       // point show label
                       lineBarsData: [
                         LineChartBarData(
@@ -330,6 +330,12 @@ class _UserDetailState extends State<UserDetail> {
       val = 31;
     } else if (monthCode == 9) {
       val = 30;
+    }else if (monthCode == 10) {
+      val = 31;
+    } else if (monthCode == 11) {
+      val = 30;
+    }else if(monthCode == 12){
+      val = 31;
     }
     int avg = (steps / val).toInt();
     return AppTextStyles().formatIndianNumber(int.parse(avg.toString()));
@@ -345,6 +351,8 @@ class _UserDetailState extends State<UserDetail> {
       7: participant.jul,
       8: participant.aug,
       9: participant.sep,
+      10: participant.oct,
+      11: participant.nov,
     };
 
     int currentMonth = DateTime.now().month;
@@ -367,6 +375,10 @@ class _UserDetailState extends State<UserDetail> {
     int julSteps = int.parse(participant.jul.toString());
     int augSteps = int.parse(participant.aug.toString());
     int sepSteps = int.parse(participant.sep.toString());
+    int octSteps = int.parse(participant.oct.toString());
+    int novSteps = int.parse(participant.nov.toString());
+    int decSteps = int.parse(participant.dec.toString());
+
     var val = aprSteps - marSteps;
     if (DateTime.now().month == 6 && maySteps > 0) {
       val = aprSteps > 0 ? maySteps - aprSteps : 0;
@@ -378,6 +390,12 @@ class _UserDetailState extends State<UserDetail> {
       val = augSteps - julSteps;
     } else if (DateTime.now().month == 10 && sepSteps > 0) {
       val = sepSteps - augSteps;
+    }else if (DateTime.now().month == 11 && octSteps > 0) {
+      val = octSteps - sepSteps;
+    }else if (DateTime.now().month == 12  && novSteps > 0) {
+      val = novSteps - octSteps;
+    } else if(DateTime.now().month == 1 && decSteps > 0){
+      val = decSteps - novSteps;
     }
     return Container(
       padding: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
@@ -536,13 +554,16 @@ class _UserDetailState extends State<UserDetail> {
 
   Widget getDataForMonthToDisplay(ParticipentData participant) {
     int currentMonth = DateTime.now().month;
+    if(currentMonth <=3){
+      currentMonth = 13;
+    }
     List<Widget> monthWidgets = [];
     int difference = 0;
 
-    for (int i = 3; i < currentMonth && i <= 9; i++) {
+    for (int i = 1; i <=currentMonth; i++) {
       String totalSteps = '0';
       String monthForWalk = '';
-
+      print('i value: $i');
       switch (i) {
         case 3:
           totalSteps = participant.steps ?? '0';
@@ -590,8 +611,28 @@ class _UserDetailState extends State<UserDetail> {
               int.parse(participant.sep.toString()) -
               int.parse(participant.aug.toString());
           break;
-      }
+        case 10:
+          totalSteps = participant.oct ?? '0';
+          monthForWalk = 'OCT';
+          difference =
+              int.parse(participant.oct.toString()) -
+                  int.parse(participant.sep.toString());
 
+        case 11:
+          totalSteps = participant.nov ?? '0';
+          monthForWalk = 'NOV';
+          difference =
+              int.parse(participant.nov.toString()) -
+                  int.parse(participant.oct.toString());
+          break;
+        case 12:
+          totalSteps = participant.dec ?? '0';
+          monthForWalk = 'DEC';
+          difference =
+              int.parse(participant.dec.toString()) -
+                  int.parse(participant.nov.toString());
+      }
+      print('Total Steps for $monthForWalk : $totalSteps');
       totalSteps != '0'
           ? monthWidgets.add(
             Container(
@@ -743,6 +784,7 @@ class _UserDetailState extends State<UserDetail> {
 
   List<FlSpot> generateFlSpots(ParticipentData participant) {
     Map<int, String?> monthData = {
+      12: participant.dec, // January
       3: participant.steps, // March
       4: participant.apr,
       5: participant.may,
@@ -750,11 +792,13 @@ class _UserDetailState extends State<UserDetail> {
       7: participant.jul,
       8: participant.aug,
       9: participant.sep,
+      10: participant.oct,
+      11: participant.nov,
     };
 
     List<FlSpot> spots = [];
 
-    for (int month = 3; month < DateTime.now().month; month++) {
+    for (int month = 1; month <=12; month++) {
       String? value = monthData[month];
       double y = 0;
 
