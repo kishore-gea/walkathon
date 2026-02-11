@@ -13,6 +13,7 @@ class ParticipentData {
   String? oct;
   String? nov;
   String? dec;
+  String? jan;
   String? total;
   String? avg;
   String? up;
@@ -34,6 +35,7 @@ class ParticipentData {
     oct = json['Oct'] ?? '0';
     nov = json['Nov'] ?? '0';
     dec = json['Dec'] ?? '0';
+    jan = json['Jan'] ?? '0';
     total = json['Total'] ?? '0';
     avg = json['AVG'] ?? '0';
     location = json['Location'];
@@ -58,6 +60,7 @@ class ParticipentData {
     data['Oct'] = oct;
     data['Nov'] = nov;
     data['Dec'] = dec;
+    data['Jan'] = jan;
     data['Total'] = total;
     data['AVG'] = avg;
     data['Location'] = location;

@@ -37,8 +37,11 @@ class _CustomteamsState extends State<Customteams> {
     'KILL-O-METERS',
     'THE POWER WALKERS',
     'THE WALKING FIVE',
-    'TEAM 23',
-    'TEAM 24',
+    'HAPPY SOUL',
+    'HAPPY FEET',
+    'WALK YOGIS',
+    'HAPPY FEET 2.0',
+    'MILES FOR SMILES'
   ];
 
 
@@ -70,22 +73,31 @@ class _CustomteamsState extends State<Customteams> {
                 final data = snapshot.data!;
                 final chunkedData = chunkList(data, 5);
 
+                // Map each group to its total steps
+                final chunkedWithTotals = chunkedData.asMap().entries.map((entry) {
+                  final int index = entry.key;
+                  final group = entry.value;
+                  final int groupTotalSteps = group.fold(
+                    0,
+                        (sum, item) => sum + (item.jan != null ? int.tryParse(item.jan.toString()) ?? 0 : 0),
+                  );
+                  final String teamName = index < teamNames.length ? teamNames[index] : 'TEAM ${index+1}';
+                  return {'group': group, 'total': groupTotalSteps, 'teamName': teamName};
+                }).toList();
+
+                // Sort by groupTotalSteps descending
+                chunkedWithTotals.sort((a, b) => (b['total'] as int).compareTo(a['total'] as int));
 
                 return SizedBox(
                   width: double.infinity,
                   child: ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: chunkedData.length,
+                    itemCount: chunkedWithTotals.length,
                     itemBuilder: (context, chunkIndex) {
-                      final group = chunkedData[chunkIndex];
-                      // Calculate total step count for this group
-                      final int groupTotalSteps = group.fold(
-                        0,
-                            (sum, item) => sum + (item.dec != null ? int.tryParse(item.dec.toString()) ?? 0 : 0),
-                      );
-
-
+                      final group = chunkedWithTotals[chunkIndex]['group'] as List;
+                      final int groupTotalSteps = chunkedWithTotals[chunkIndex]['total'] as int;
+                      final String teamName = chunkedWithTotals[chunkIndex]['teamName'] as String;
                       return Padding(
                         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                         child: Card(
@@ -101,14 +113,14 @@ class _CustomteamsState extends State<Customteams> {
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text('${teamNames[chunkIndex]} ', style: AppTextStyles.subtitle.copyWith(fontSize:35,fontWeight: FontWeight.bold, color: AppTextStyles.primaryBlue),),
+                                        SelectableText(' ${chunkIndex+1}. ${teamName} ', style: AppTextStyles.subtitle.copyWith(fontSize:35,fontWeight: FontWeight.bold, color: AppTextStyles.primaryBlue),),
                                         Container(
                                             decoration: BoxDecoration(
                                               color: AppTextStyles.primaryBlue,
                                               borderRadius: BorderRadius.circular(16),
                                             ),
                                             padding: const EdgeInsetsGeometry.symmetric(horizontal: 15,vertical: 10),
-                                            child: Text('${AppTextStyles().formatIndianNumber(groupTotalSteps)} Steps', style: AppTextStyles.subtitle.copyWith(fontSize:30,fontWeight: FontWeight.bold, color: AppTextStyles.white),)),
+                                            child: SelectableText('${AppTextStyles().formatIndianNumber(groupTotalSteps)} Steps', style: AppTextStyles.subtitle.copyWith(fontSize:30,fontWeight: FontWeight.bold, color: AppTextStyles.white),)),
 
                                       ],
                                     ),
@@ -121,7 +133,7 @@ class _CustomteamsState extends State<Customteams> {
                                             SizedBox(width: 10,),
                                             item.location == 'HYD' ? Container(
                                               decoration: BoxDecoration(
-                                                color: item.dec!='0' ? AppTextStyles.orange : AppTextStyles.white,
+                                                color: item.jan!='0' ? AppTextStyles.orange : AppTextStyles.white,
                                                 borderRadius: BorderRadius.circular(10),
                                               ),
                                               padding: EdgeInsetsGeometry.symmetric(horizontal: 7,vertical: 2),
@@ -129,13 +141,13 @@ class _CustomteamsState extends State<Customteams> {
                                             )
                                                 : Container(
                                               decoration: BoxDecoration(
-                                                color: item.dec!='0' ? AppTextStyles.orange : AppTextStyles.white,
+                                                color: item.jan!='0' ? AppTextStyles.orange : AppTextStyles.white,
                                                 borderRadius: BorderRadius.circular(10),
                                               ),
                                               padding: EdgeInsetsGeometry.symmetric(horizontal: 7,vertical: 2),
                                               child: Text('BLR',style: AppTextStyles.body.copyWith(fontWeight: FontWeight.bold,fontSize: 12),),
                                             ),
-                                            // item.dec!='0' ? Text('${item.dec}'):Text('000000'),
+                                            // item.jan!='0' ? Text('${item.jan}'):Text('000000'),
                                           ]
                                           )).toList(),
                                     ),

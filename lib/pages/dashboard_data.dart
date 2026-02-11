@@ -280,9 +280,9 @@ class _DashboardDataState extends State<DashboardData> {
                         },
                         child: Card(
                           color:
-                              item.dec!.isNotEmpty && item.dec != '0'
+                              item.jan!.isNotEmpty && item.jan != '0'
                                   ? Colors.white
-                                  : Colors.red.shade100,
+                                  : Colors.pink.shade100,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
@@ -360,6 +360,7 @@ class _DashboardDataState extends State<DashboardData> {
                                     ),
                                   ),
                                 ),
+                                item.teams !='0' ? Icon(Icons.group) : Icon(Icons.snowshoeing)
                               ],
                             ),
                             subtitle: Row(
@@ -557,15 +558,18 @@ class _DashboardDataState extends State<DashboardData> {
     if(data.dec!='0') {
       avgMonthsToCalculate = avgMonthsToCalculate + 31;
     }
+    if(data.jan!='0') {
+      avgMonthsToCalculate = avgMonthsToCalculate + 31;
+    }
     final avgSteps = int.parse(data.total.toString()) / avgMonthsToCalculate;
-    print('CHECK -- > ${data.name} - $avgSteps  ${data.total} $avgMonthsToCalculate');
+    print('CHECK -- > :: ${data.name} - $avgSteps  ${data.total} $avgMonthsToCalculate');
     return avgSteps.toInt().toString();
 
   }
 
   getStarIfSubmittedAllMonths(ParticipentData item) {
     print('Checking for ${item.name}');
-    int count = StepCountData().  checkNoOfSubmissions(item, item.name) ?? 0;
+    int count = StepCountData().checkNoOfSubmissions(item, item.name) ?? 0;
     print('Name ---> ${item.name} - Months Submitted : $count');
     return count >= 8
         ? Padding(

@@ -586,14 +586,14 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                         ),
                                                         child: SelectableText(
                                                           int.parse(
-                                                                    data.dec
+                                                                    data.jan
                                                                         .toString(),
                                                                   ) >
                                                                   0
                                                               ? AppTextStyles()
                                                                   .formatIndianNumber(
                                                                     int.parse(
-                                                                      data.dec
+                                                                      data.jan
                                                                           .toString(),
                                                                     ),
                                                                   )
@@ -688,14 +688,14 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                           ),
                                                           child: SelectableText(
                                                             int.parse(
-                                                                      data.dec
+                                                                      data.jan
                                                                           .toString(),
                                                                     ) >
                                                                     0
                                                                 ? AppTextStyles()
                                                                     .formatIndianNumber(
                                                                       int.parse(
-                                                                        data.dec
+                                                                        data.jan
                                                                             .toString(),
                                                                       ),
                                                                     )
@@ -841,7 +841,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                         itemCount: snapshot.data!.length,
                                         itemBuilder: (context, index) {
                                           final data = snapshot.data![index];
-                                          int val =  int.parse(data.dec.toString());
+                                          int val =  int.parse(data.jan.toString());
                                            return Card(
                                             elevation: 4,
                                             color:
@@ -1022,7 +1022,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                             ),
                                                           ),
                                                           SelectableText(
-                                                            '${stepsToKm(int.parse(data.dec ?? '0')).toStringAsFixed(2)} KM',
+                                                            '${stepsToKm(int.parse(data.jan ?? '0')).toStringAsFixed(2)} KM',
                                                             style: AppTextStyles.subtitle.copyWith(
                                                               fontWeight: FontWeight.bold,
                                                               fontSize: 18,
@@ -1056,7 +1056,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                   AppTextStyles()
                                                                       .formatIndianNumber(
                                                                         int.parse(
-                                                                          data.dec
+                                                                          data.jan
                                                                               .toString(),
                                                                         ),
                                                                       ),
@@ -1377,7 +1377,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                             ),
                                                           ),
                                                           SelectableText(
-                                                            '${stepsToKm(int.parse(data.dec ?? '0')).toStringAsFixed(2)} KM',
+                                                            '${stepsToKm(int.parse(data.jan ?? '0')).toStringAsFixed(2)} KM',
                                                             style: AppTextStyles.subtitle.copyWith(
                                                               fontWeight: FontWeight.bold,
                                                               fontSize: 18,
@@ -1411,7 +1411,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                   AppTextStyles()
                                                                       .formatIndianNumber(
                                                                     int.parse(
-                                                                      data.dec
+                                                                      data.jan
                                                                           .toString(),
                                                                     ),
                                                                   ),
@@ -1634,10 +1634,10 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                               children: [
                                                 SelectableText(
                                                   '${StepCountData().getAvgValue(data)}',
-                                                  style: AppTextStyles.subtitle,
+                                                  style: AppTextStyles.subtitle.copyWith(fontWeight: FontWeight.bold),
 
                                                 ),
-                                                 getMonthSubmitted(data),
+
 
                                               ],
                                             ),
@@ -1646,42 +1646,43 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                             flex: !kIsWeb ? 1 : 2,
                                             child: SizedBox(),
                                           ),
-                                          Expanded(
-                                            flex: !kIsWeb ? 2 : 1,
-                                            child: Center(
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                      vertical: 4.0,
-                                                      horizontal: 16.0,
-                                                    ),
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                  shape: BoxShape.rectangle,
-                                                  color: AppTextStyles.white,
-                                                ),
-                                                child: SelectableText(
-                                                  AppTextStyles()
-                                                      .formatIndianNumber(
-                                                        int.parse(
-                                                          data.total.toString(),
-                                                        ),
-                                                      ),
-                                                  style: AppTextStyles.subtitle
-                                                      .copyWith(
-                                                        fontSize:
-                                                            !kIsWeb ? 10 : 13,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color:
-                                                            AppTextStyles
-                                                                .primaryBlue,
-                                                      ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                          getMonthSubmitted(data),
+                                          // Expanded(
+                                          //   flex: !kIsWeb ? 2 : 1,
+                                          //   child: Center(
+                                          //     child: Container(
+                                          //       padding:
+                                          //           const EdgeInsets.symmetric(
+                                          //             vertical: 4.0,
+                                          //             horizontal: 16.0,
+                                          //           ),
+                                          //       decoration: BoxDecoration(
+                                          //         borderRadius:
+                                          //             BorderRadius.circular(12),
+                                          //         shape: BoxShape.rectangle,
+                                          //         color: AppTextStyles.white,
+                                          //       ),
+                                          //       child: SelectableText(
+                                          //         AppTextStyles()
+                                          //             .formatIndianNumber(
+                                          //               int.parse(
+                                          //                 data.total.toString(),
+                                          //               ),
+                                          //             ),
+                                          //         style: AppTextStyles.subtitle
+                                          //             .copyWith(
+                                          //               fontSize:
+                                          //                   !kIsWeb ? 10 : 13,
+                                          //               fontWeight:
+                                          //                   FontWeight.bold,
+                                          //               color:
+                                          //                   AppTextStyles
+                                          //                       .primaryBlue,
+                                          //             ),
+                                          //       ),
+                                          //     ),
+                                          //   ),
+                                          // ),
                                         ],
                                       ),
                                     ),
@@ -1815,10 +1816,10 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                   AppTextStyles()
                                                       .formatIndianNumber(
                                                     int.parse('${StepCountData().getAvgValue(data)}',),),
-                                                  style: AppTextStyles.subtitle,
+                                                  style: AppTextStyles.subtitle.copyWith(fontWeight: FontWeight.bold),
 
                                                 ),
-                                                getMonthSubmitted(data),
+                                                // getMonthSubmitted(data),
                                               ],
                                             ),
                                           ),
@@ -1826,42 +1827,43 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                             flex: !kIsWeb ? 1 : 2,
                                             child: SizedBox(),
                                           ),
-                                          Expanded(
-                                            flex: !kIsWeb ? 2 : 1,
-                                            child: Center(
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                      vertical: 4.0,
-                                                      horizontal: 16.0,
-                                                    ),
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                  shape: BoxShape.rectangle,
-                                                  color: AppTextStyles.white,
-                                                ),
-                                                child: SelectableText(
-                                                  AppTextStyles()
-                                                      .formatIndianNumber(
-                                                        int.parse(
-                                                          data.total.toString(),
-                                                        ),
-                                                      ),
-                                                  style: AppTextStyles.subtitle
-                                                      .copyWith(
-                                                        fontSize:
-                                                            !kIsWeb ? 10 : 13,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color:
-                                                            AppTextStyles
-                                                                .primaryBlue,
-                                                      ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                          getMonthSubmitted(data),
+                                          // Expanded(
+                                          //   flex: !kIsWeb ? 2 : 1,
+                                          //   child: Center(
+                                          //     child: Container(
+                                          //       padding:
+                                          //           const EdgeInsets.symmetric(
+                                          //             vertical: 4.0,
+                                          //             horizontal: 16.0,
+                                          //           ),
+                                          //       decoration: BoxDecoration(
+                                          //         borderRadius:
+                                          //             BorderRadius.circular(12),
+                                          //         shape: BoxShape.rectangle,
+                                          //         color: AppTextStyles.white,
+                                          //       ),
+                                          //       child: SelectableText(
+                                          //         AppTextStyles()
+                                          //             .formatIndianNumber(
+                                          //               int.parse(
+                                          //                 data.total.toString(),
+                                          //               ),
+                                          //             ),
+                                          //         style: AppTextStyles.subtitle
+                                          //             .copyWith(
+                                          //               fontSize:
+                                          //                   !kIsWeb ? 10 : 13,
+                                          //               fontWeight:
+                                          //                   FontWeight.bold,
+                                          //               color:
+                                          //                   AppTextStyles
+                                          //                       .primaryBlue,
+                                          //             ),
+                                          //       ),
+                                          //     ),
+                                          //   ),
+                                          // ),
                                         ],
                                       ),
                                     ),
@@ -1880,7 +1882,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
   }
 
   getAvgMonthStepCount(ParticipentData data, String code) {
-    int userSteps = int.parse(data.dec.toString());
+    int userSteps = int.parse(data.jan.toString());
     if (userSteps != 0) {
       final monthCode = DateTime.now().month - 1;
       var val = 30;
@@ -1898,10 +1900,14 @@ class _StatsDisplayState extends State<StatsDisplay> {
         val = 31;
       } else if (monthCode == 9) {
         val = 30;
-      }else if (monthCode == 9) {
+      }else if (monthCode == 10) {
         val = 31;
-      }else if (monthCode == 9) {
+      }else if (monthCode == 11) {
         val = 30;
+      }else if (monthCode == 12) {
+        val = 31;
+      }else if(monthCode == 1){
+        val = 31;
       }
       final aprAyvSteps = userSteps / val;
       return Container(
@@ -1915,7 +1921,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
         ),
         child: SelectableText(
           userSteps != 0
-              ? AppTextStyles().formatIndianNumber(StepCountData().getAvgValue(data))
+              ? AppTextStyles().formatIndianNumber(aprAyvSteps.toInt())
               : '0',
           style: AppTextStyles.subtitle.copyWith(
             fontSize: 16,
@@ -1930,32 +1936,52 @@ class _StatsDisplayState extends State<StatsDisplay> {
 
   Widget getMonthSubmitted(ParticipentData data) {
     List<String> months = [];
+    int count = 0;
     if(data.steps!='0'){
       months.add('MAR');
+      count++;
     }
     if(data.apr!='0'){
       months.add('APR');
+      count++;
     }
     if(data.may!='0'){
       months.add('MAY');
+      count++;
     }
     if(data.jun!='0'){
       months.add('JUN');
+      count++;
     }
     if(data.jul!='0'){
       months.add('JUL');
+      count++;
     }
     if(data.aug!='0'){
       months.add('AUG');
+      count++;
     }
     if(data.sep!='0'){
       months.add('SEP');
+      count++;
     }
     if(data.oct!='0') {
       months.add('OCT');
+      count++;
     }
-    if(data.dec!='0') {
+    if(data.nov!='0') {
       months.add('NOV');
+      count++;
+    }
+
+    if(data.dec!='0') {
+      months.add('DEC');
+      count++;
+    }
+
+    if(data.jan!='0') {
+      months.add('JAN');
+      count++;
     }
 
     print(' codes are ${widget.code1} and ${widget.code2}');
@@ -1978,31 +2004,23 @@ class _StatsDisplayState extends State<StatsDisplay> {
                 .white,
           ),),
         ):
-    Row(
-      children: months.map((char) => Center(
-        child: Container(
-          margin: EdgeInsetsGeometry.symmetric(horizontal: 2),
-          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            color: AppTextStyles
-                .primaryBlue,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: AppTextStyles
-                .primaryBlue, width: 1),
-          ),
-          child: Center(
-            child: SelectableText(
-              char,
-              style: AppTextStyles.subtitle.copyWith(
-                fontSize: 8,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
+    Container(
+      margin: EdgeInsetsGeometry.symmetric(horizontal: 20),
+      padding: EdgeInsetsGeometry.all(8),
+      decoration: BoxDecoration(
+        color: AppTextStyles.white,
+            borderRadius: BorderRadius.circular(8)
+      ),
+      child: Center(
+        child: SelectableText(
+          'Months : $count',
+          style: AppTextStyles.subtitle.copyWith(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            color: AppTextStyles.primaryBlue,
           ),
         ),
-      )).toList(),
+      ),
     );
   }
 
@@ -2071,8 +2089,8 @@ class _StatsDisplayState extends State<StatsDisplay> {
   }
 
   getStepUpValueForThisMonth(ParticipentData data) {
-    int novSteps = int.parse(data.dec.toString());
-    int octSteps = int.parse(data.nov.toString());
+    int novSteps = int.parse(data.jan.toString());
+    int octSteps = int.parse(data.dec.toString());
     final stepUpValue = novSteps - octSteps;
     return stepUpValue;
   }
@@ -2096,9 +2114,9 @@ class _StatsDisplayState extends State<StatsDisplay> {
         avgMonthsToCalculate = avgMonthsToCalculate + 30;
     }else if(data.oct!='0') {
         avgMonthsToCalculate = avgMonthsToCalculate + 31;
-    }else if(data.dec!='0') {
+    }else if(data.jan!='0') {
         avgMonthsToCalculate = avgMonthsToCalculate + 30;
-    }else if(data.dec!='0') {
+    }else if(data.jan!='0') {
         avgMonthsToCalculate = avgMonthsToCalculate + 31;
     }
     final avgSteps = int.parse(data.total.toString()) / avgMonthsToCalculate;

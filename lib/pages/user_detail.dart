@@ -336,6 +336,8 @@ class _UserDetailState extends State<UserDetail> {
       val = 30;
     }else if(monthCode == 12){
       val = 31;
+    }else if(monthCode == 13){
+      val = 31;
     }
     int avg = (steps / val).toInt();
     return AppTextStyles().formatIndianNumber(int.parse(avg.toString()));
@@ -554,7 +556,9 @@ class _UserDetailState extends State<UserDetail> {
 
   Widget getDataForMonthToDisplay(ParticipentData participant) {
     int currentMonth = DateTime.now().month;
-    if(currentMonth <=3){
+    if(currentMonth == 1){
+      currentMonth = 12;
+    }if(currentMonth ==2){
       currentMonth = 13;
     }
     List<Widget> monthWidgets = [];
@@ -631,6 +635,15 @@ class _UserDetailState extends State<UserDetail> {
           difference =
               int.parse(participant.dec.toString()) -
                   int.parse(participant.nov.toString());
+          break;
+
+        case 13:
+          totalSteps = participant.jan ?? '0';
+          monthForWalk = 'JAN';
+          difference =
+              int.parse(participant.jan.toString()) -
+                  int.parse(participant.dec.toString());
+          break;
       }
       print('Total Steps for $monthForWalk : $totalSteps');
       totalSteps != '0'

@@ -313,8 +313,10 @@ class _MonthlyStatsState extends State<MonthlyStats> {
       List<MonthlyData> monthlyStatsList = [];
       final data = StepCountData.originalData;
       var monthValue = DateTime.now().month;
-      if(monthValue <= 2){
+      if(monthValue ==1){
         monthValue = 12;
+      } if(monthValue == 2){
+        monthValue = 13;
       }
       for (int i = 4; i <= monthValue+1; i++) {
         int dateMonth = i;
@@ -355,6 +357,10 @@ class _MonthlyStatsState extends State<MonthlyStats> {
               monthName = 'December';
               totalMonthStepsHYD += safeParse(data[i].dec.toString());
               print('Inside December $totalMonthStepsHYD');
+            }else if (dateMonth == 14) {
+              monthName = 'January';
+              totalMonthStepsHYD += safeParse(data[i].jan.toString());
+              print('Inside January $totalMonthStepsHYD');
             }
             totalStepCountHYDCurrentMonth.value = totalMonthStepsHYD;
             totalStepCountHYD.value += safeParse(data[i].total.toString());
@@ -393,6 +399,10 @@ class _MonthlyStatsState extends State<MonthlyStats> {
               monthName = 'December';
               totalMonthStepsBLR += safeParse(data[i].dec.toString());
               print('Inside December $totalMonthStepsBLR');
+            }else if (dateMonth == 14) {
+              monthName = 'January';
+              totalMonthStepsBLR += safeParse(data[i].jan.toString());
+              print('Inside January $totalMonthStepsHYD');
             }
 
             totalStepCountBLRCurrentMonth.value = totalMonthStepsBLR;
