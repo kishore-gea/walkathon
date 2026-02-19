@@ -47,6 +47,11 @@ class _SplashScreenState extends State<SplashScreen> {
             // crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image.asset(
+                'assets/images/ge.png',
+                width: 120, // Adjust size as needed
+                height: 120,
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,

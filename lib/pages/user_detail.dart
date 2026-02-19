@@ -1,9 +1,12 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:wellnesswalkathon/data_constants/stepcount_data.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 
 import '../model/participent_data.dart';
 import '../style/text_style.dart';
+import '../utils/pdf_utils.dart';
 
 class UserDetail extends StatefulWidget {
   final ParticipentData participant;
@@ -53,9 +56,9 @@ class _UserDetailState extends State<UserDetail> {
     }
 
     final locationList =
-        widget.participants
-            .where((p) => p.location == widget.participant.location)
-            .toList();
+    widget.participants
+        .where((p) => p.location == widget.participant.location)
+        .toList();
 
     for (int i = 0; i < locationList.length; i++) {
       if (locationList[i].name == widget.participant.name) {
@@ -108,9 +111,9 @@ class _UserDetailState extends State<UserDetail> {
                     CircleAvatar(
                       radius: 30,
                       backgroundColor:
-                          widget.participant.gender == 'Male'
-                              ? AppTextStyles.primaryBlue
-                              : Colors.pinkAccent,
+                      widget.participant.gender == 'Male'
+                          ? AppTextStyles.primaryBlue
+                          : Colors.pinkAccent,
                       child: Text(
                         widget.participant.name!.isNotEmpty
                             ? widget.participant.name![0].toUpperCase()
@@ -221,23 +224,23 @@ class _UserDetailState extends State<UserDetail> {
                     SizedBox(height: 10),
                     location == 'HYD'
                         ? Text(
-                          'HYD : ${individualWithLocation.toStringAsFixed(2)}%',
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.subtitle.copyWith(
-                            fontSize: 16,
-                            color: AppTextStyles.primaryBlue,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
+                      'HYD : ${individualWithLocation.toStringAsFixed(2)}%',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.subtitle.copyWith(
+                        fontSize: 16,
+                        color: AppTextStyles.primaryBlue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
                         : Text(
-                          'BLR : ${individualWithLocation.toStringAsFixed(2)}%',
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.subtitle.copyWith(
-                            fontSize: 16,
-                            color: AppTextStyles.primaryBlue,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                      'BLR : ${individualWithLocation.toStringAsFixed(2)}%',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.subtitle.copyWith(
+                        fontSize: 16,
+                        color: AppTextStyles.primaryBlue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     SizedBox(height: 10),
                     Divider(color: AppTextStyles.primaryBlue, thickness: 1),
                     Text(
@@ -295,7 +298,21 @@ class _UserDetailState extends State<UserDetail> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: generateAndShareUserPdf,
+        label: Text('Generate PDF'),
+        icon: Icon(Icons.picture_as_pdf),
+      ),
     );
+  }
+
+  Future<void> generateAndShareUserPdf() async {
+    final pdf = await generateParticipantPdf(
+      participant: widget.participant,
+      rank: widget.rank,
+      generatedDate: DateTime(2026, 2, 17),
+    );
+    await Printing.layoutPdf(onLayout: (format) async => pdf.save());
   }
 
   bool compareWithPreviousMonth(String? mar, String? apr) {
@@ -465,7 +482,7 @@ class _UserDetailState extends State<UserDetail> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: List.generate(
         stars,
-        (index) => Padding(
+            (index) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 2),
           child: Icon(
             Icons.star,
@@ -498,57 +515,57 @@ class _UserDetailState extends State<UserDetail> {
 
       return list.length == 1
           ? Container(
-            margin: EdgeInsets.only(top: 5),
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.orange.shade400),
-            ),
-            child: Text(
-              list[0],
-              style: AppTextStyles.body.copyWith(
-                fontSize: 16,
-                color: AppTextStyles.primaryBlue,
-                fontWeight: FontWeight.w500,
+        margin: EdgeInsets.only(top: 5),
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.orange.shade400),
+        ),
+        child: Text(
+          list[0],
+          style: AppTextStyles.body.copyWith(
+            fontSize: 16,
+            color: AppTextStyles.primaryBlue,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      )
+          : Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(
+          list.length,
+              (index) =>
+          list[index].isNotEmpty
+              ? Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 2),
+            child: Container(
+              margin: EdgeInsets.only(top: 5),
+              padding: EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 4,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: Colors.orange.shade400,
+                  width: 4,
+                ),
+              ),
+              child: Text(
+                list[index],
+                style: AppTextStyles.body.copyWith(
+                  fontSize: 16,
+                  color: AppTextStyles.primaryBlue,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           )
-          : Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              list.length,
-              (index) =>
-                  list[index].isNotEmpty
-                      ? Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 2),
-                        child: Container(
-                          margin: EdgeInsets.only(top: 5),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              color: Colors.orange.shade400,
-                              width: 4,
-                            ),
-                          ),
-                          child: Text(
-                            list[index],
-                            style: AppTextStyles.body.copyWith(
-                              fontSize: 16,
-                              color: AppTextStyles.primaryBlue,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      )
-                      : SizedBox(),
-            ),
-          );
+              : SizedBox(),
+        ),
+      );
     } else {
       return SizedBox(height: 0);
     }
@@ -578,42 +595,42 @@ class _UserDetailState extends State<UserDetail> {
           monthForWalk = 'APR';
           difference =
               int.parse(participant.apr.toString()) -
-              int.parse(participant.steps.toString());
+                  int.parse(participant.steps.toString());
           break;
         case 5:
           totalSteps = participant.may ?? '0';
           monthForWalk = 'MAY';
           difference =
               int.parse(participant.may.toString()) -
-              int.parse(participant.apr.toString());
+                  int.parse(participant.apr.toString());
           break;
         case 6:
           totalSteps = participant.jun ?? '0';
           monthForWalk = 'JUN';
           difference =
               int.parse(participant.jun.toString()) -
-              int.parse(participant.may.toString());
+                  int.parse(participant.may.toString());
           break;
         case 7:
           totalSteps = participant.jul ?? '0';
           monthForWalk = 'JUL';
           difference =
               int.parse(participant.jul.toString()) -
-              int.parse(participant.jun.toString());
+                  int.parse(participant.jun.toString());
           break;
         case 8:
           totalSteps = participant.aug ?? '0';
           monthForWalk = 'AUG';
           difference =
               int.parse(participant.aug.toString()) -
-              int.parse(participant.jul.toString());
+                  int.parse(participant.jul.toString());
           break;
         case 9:
           totalSteps = participant.sep ?? '0';
           monthForWalk = 'SEP';
           difference =
               int.parse(participant.sep.toString()) -
-              int.parse(participant.aug.toString());
+                  int.parse(participant.aug.toString());
           break;
         case 10:
           totalSteps = participant.oct ?? '0';
@@ -648,144 +665,144 @@ class _UserDetailState extends State<UserDetail> {
       print('Total Steps for $monthForWalk : $totalSteps');
       totalSteps != '0'
           ? monthWidgets.add(
-            Container(
-              margin: EdgeInsets.all(5),
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              decoration: BoxDecoration(
-                color: AppTextStyles.white,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppTextStyles.primaryBlue, width: 3),
+        Container(
+          margin: EdgeInsets.all(5),
+          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          decoration: BoxDecoration(
+            color: AppTextStyles.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: AppTextStyles.primaryBlue, width: 3),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 3,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: Text(
+                    monthForWalk,
+                    style: AppTextStyles.subtitle.copyWith(
+                      fontSize: 20,
+                      color: AppTextStyles.primaryBlue,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
+              Expanded(
+                flex: 3,
+                child: Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppTextStyles.white,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: AppTextStyles.orange,
+                          width: 3,
+                        ),
+                      ),
                       child: Text(
-                        monthForWalk,
+                        getAvgForMonth(totalSteps, i),
                         style: AppTextStyles.subtitle.copyWith(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: AppTextStyles.primaryBlue,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 5,
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppTextStyles.white,
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              color: AppTextStyles.orange,
-                              width: 3,
-                            ),
-                          ),
-                          child: Text(
-                            getAvgForMonth(totalSteps, i),
-                            style: AppTextStyles.subtitle.copyWith(
-                              fontSize: 16,
-                              color: AppTextStyles.primaryBlue,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 4,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    i > 3
+                        ? Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
+                      decoration: BoxDecoration(
+                        color:
+                        difference > 0 ? Colors.green : Colors.red,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color:
+                          difference > 0
+                              ? Colors.green
+                              : Colors.red,
+                          width: 3,
                         ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        i > 3
-                            ? Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 5,
-                              ),
-                              decoration: BoxDecoration(
-                                color:
-                                    difference > 0 ? Colors.green : Colors.red,
-                                borderRadius: BorderRadius.circular(16),
-                                border: Border.all(
-                                  color:
-                                      difference > 0
-                                          ? Colors.green
-                                          : Colors.red,
-                                  width: 3,
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  difference > 0
-                                      ? Icon(
-                                        Icons.trending_up_outlined,
-                                        color: Colors.white,
-                                        size: 15,
-                                      )
-                                      : Icon(
-                                        Icons.trending_down_outlined,
-                                        color: Colors.white,
-                                        size: 15,
-                                      ),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    AppTextStyles().formatIndianNumber(
-                                      difference,
-                                    ),
-                                    style: AppTextStyles.subtitle.copyWith(
-                                      fontSize: 15,
-                                      color: AppTextStyles.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                            : SizedBox(width: 0, height: 0),
-                        SizedBox(width: 10),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 5,
+                      ),
+                      child: Row(
+                        children: [
+                          difference > 0
+                              ? Icon(
+                            Icons.trending_up_outlined,
+                            color: Colors.white,
+                            size: 15,
+                          )
+                              : Icon(
+                            Icons.trending_down_outlined,
+                            color: Colors.white,
+                            size: 15,
                           ),
-                          decoration: BoxDecoration(
-                            color: AppTextStyles.primaryBlue,
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              color: AppTextStyles.primaryBlue,
-                              width: 3,
-                            ),
-                          ),
-                          child: Text(
+                          SizedBox(width: 5),
+                          Text(
                             AppTextStyles().formatIndianNumber(
-                              int.parse(totalSteps.toString()),
+                              difference,
                             ),
                             style: AppTextStyles.subtitle.copyWith(
-                              fontSize: 18,
+                              fontSize: 15,
                               color: AppTextStyles.white,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                        ],
+                      ),
+                    )
+                        : SizedBox(width: 0, height: 0),
+                    SizedBox(width: 10),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppTextStyles.primaryBlue,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: AppTextStyles.primaryBlue,
+                          width: 3,
                         ),
-                      ],
+                      ),
+                      child: Text(
+                        AppTextStyles().formatIndianNumber(
+                          int.parse(totalSteps.toString()),
+                        ),
+                        style: AppTextStyles.subtitle.copyWith(
+                          fontSize: 18,
+                          color: AppTextStyles.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          )
+            ],
+          ),
+        ),
+      )
           : SizedBox();
     }
 

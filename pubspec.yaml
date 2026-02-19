@@ -39,6 +39,8 @@ dependencies:
   get: ^4.6.5
   universal_platform: ^1.0.0
   fl_chart: ^0.64.0
+  pdf: ^3.10.1
+  printing: ^5.10.0
 
 dev_dependencies:
   flutter_test:
