@@ -181,8 +181,8 @@ class _DebutLeadersState extends State<DebutLeaders> {
                                               .primaryBlue,
                                         ),
                                         child: SelectableText(
-                                          (int.tryParse(data.jan.toString()) ?? 0) > 0
-                                              ? AppTextStyles().formatIndianNumber(int.tryParse(data.jan.toString()) ?? 0)
+                                          (int.tryParse(data.jan26.toString()) ?? 0) > 0
+                                              ? AppTextStyles().formatIndianNumber(int.tryParse(data.jan26.toString()) ?? 0)
                                               : 'D.N.S',
                                           style: AppTextStyles
                                               .subtitle
@@ -304,8 +304,8 @@ class _DebutLeadersState extends State<DebutLeaders> {
                                                 .primaryBlue,
                                           ),
                                           child: SelectableText(
-                                            (int.tryParse(data.jan.toString()) ?? 0) > 0
-                                                ? AppTextStyles().formatIndianNumber(int.tryParse(data.jan.toString()) ?? 0)
+                                            (int.tryParse(data.jan26.toString()) ?? 0) > 0
+                                                ? AppTextStyles().formatIndianNumber(int.tryParse(data.jan26.toString()) ?? 0)
                                                 : 'D.N.S',
 
                                             style: AppTextStyles

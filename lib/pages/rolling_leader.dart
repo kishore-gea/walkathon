@@ -402,7 +402,7 @@ class _RollingLeaderState extends State<RollingLeader> {
   String getValue(ParticipentData data) {
     /// We need to generate average steps for month based on months submitted
     int avgMonthsToCalculate = 0;
-    if (data.steps != '0') avgMonthsToCalculate += 31; // March
+    if (data.mar != '0') avgMonthsToCalculate += 31; // March
     if (data.apr != '0') avgMonthsToCalculate += 30;
     if (data.may != '0') avgMonthsToCalculate += 31;
     if (data.jun != '0') avgMonthsToCalculate += 30;
@@ -421,7 +421,7 @@ class _RollingLeaderState extends State<RollingLeader> {
     var monthsCount = '';
 
     int stepsAPR = int.parse(data.apr.toString());
-    int stepsMAR = int.parse(data.steps.toString());
+    int stepsMAR = int.parse(data.mar.toString());
     int stepsMAY = int.parse(data.may.toString());
     int stepsJUNE = int.parse(data.jun.toString());
     int stepsJULY = int.parse(data.jul.toString());

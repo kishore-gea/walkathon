@@ -363,7 +363,7 @@ class _UserDetailState extends State<UserDetail> {
   int getStepGrowth(ParticipentData participant) {
     // Map months to their corresponding step values
     Map<int, String?> monthSteps = {
-      3: participant.steps, // March
+      3: participant.mar, // March
       4: participant.apr,
       5: participant.may,
       6: participant.jun,
@@ -387,7 +387,7 @@ class _UserDetailState extends State<UserDetail> {
   }
 
   Widget getMonthDifferenceValue(ParticipentData participant) {
-    int marSteps = int.parse(participant.steps.toString());
+    int marSteps = int.parse(participant.mar.toString());
     int aprSteps = int.parse(participant.apr.toString());
     int maySteps = int.parse(participant.may.toString());
     int junSteps = int.parse(participant.jun.toString());
@@ -571,100 +571,58 @@ class _UserDetailState extends State<UserDetail> {
     }
   }
 
-  Widget getDataForMonthToDisplay(ParticipentData participant) {
-    int currentMonth = DateTime.now().month;
-    if(currentMonth == 1){
-      currentMonth = 12;
-    }if(currentMonth ==2){
-      currentMonth = 13;
-    }
-    List<Widget> monthWidgets = [];
-    int difference = 0;
+Widget getDataForMonthToDisplay(ParticipentData participant) {
+    final Map<String, dynamic> json = participant.toJson();
 
-    for (int i = 1; i <=currentMonth; i++) {
-      String totalSteps = '0';
-      String monthForWalk = '';
-      print('i value: $i');
-      switch (i) {
-        case 3:
-          totalSteps = participant.steps ?? '0';
-          monthForWalk = 'MAR';
-          break;
-        case 4:
-          totalSteps = participant.apr ?? '0';
-          monthForWalk = 'APR';
-          difference =
-              int.parse(participant.apr.toString()) -
-                  int.parse(participant.steps.toString());
-          break;
-        case 5:
-          totalSteps = participant.may ?? '0';
-          monthForWalk = 'MAY';
-          difference =
-              int.parse(participant.may.toString()) -
-                  int.parse(participant.apr.toString());
-          break;
-        case 6:
-          totalSteps = participant.jun ?? '0';
-          monthForWalk = 'JUN';
-          difference =
-              int.parse(participant.jun.toString()) -
-                  int.parse(participant.may.toString());
-          break;
-        case 7:
-          totalSteps = participant.jul ?? '0';
-          monthForWalk = 'JUL';
-          difference =
-              int.parse(participant.jul.toString()) -
-                  int.parse(participant.jun.toString());
-          break;
-        case 8:
-          totalSteps = participant.aug ?? '0';
-          monthForWalk = 'AUG';
-          difference =
-              int.parse(participant.aug.toString()) -
-                  int.parse(participant.jul.toString());
-          break;
-        case 9:
-          totalSteps = participant.sep ?? '0';
-          monthForWalk = 'SEP';
-          difference =
-              int.parse(participant.sep.toString()) -
-                  int.parse(participant.aug.toString());
-          break;
-        case 10:
-          totalSteps = participant.oct ?? '0';
-          monthForWalk = 'OCT';
-          difference =
-              int.parse(participant.oct.toString()) -
-                  int.parse(participant.sep.toString());
-
-        case 11:
-          totalSteps = participant.nov ?? '0';
-          monthForWalk = 'NOV';
-          difference =
-              int.parse(participant.nov.toString()) -
-                  int.parse(participant.oct.toString());
-          break;
-        case 12:
-          totalSteps = participant.dec ?? '0';
-          monthForWalk = 'DEC';
-          difference =
-              int.parse(participant.dec.toString()) -
-                  int.parse(participant.nov.toString());
-          break;
-
-        case 13:
-          totalSteps = participant.jan ?? '0';
-          monthForWalk = 'JAN';
-          difference =
-              int.parse(participant.jan.toString()) -
-                  int.parse(participant.dec.toString());
-          break;
+    int readInt(List<String> keys) {
+      for (final key in keys) {
+        if (json.containsKey(key)) {
+          final parsed = int.tryParse('${json[key]}');
+          if (parsed != null) return parsed;
+        }
       }
-      print('Total Steps for $monthForWalk : $totalSteps');
-      totalSteps != '0'
-          ? monthWidgets.add(
+      return 0;
+    }
+
+    // Season 1: Mar'25 → Feb'26  |  Season 2: Mar'26 → May'26
+    final List<Map<String, dynamic>> months = [
+      {'label': 'MAR 2025', 'steps': readInt(['steps', 'mar', 'Mar']), 'days': 31},
+      {'label': 'APR 2025', 'steps': readInt(['apr', 'Apr']), 'days': 30},
+      {'label': 'MAY 2025', 'steps': readInt(['may', 'May']), 'days': 31},
+      {'label': 'JUN 2025', 'steps': readInt(['jun', 'Jun']), 'days': 30},
+      {'label': 'JUL 2025', 'steps': readInt(['jul', 'Jul']), 'days': 31},
+      {'label': 'AUG 2025', 'steps': readInt(['aug', 'Aug']), 'days': 31},
+      {'label': 'SEP 2025', 'steps': readInt(['sep', 'sept', 'Sep', 'Sept']), 'days': 30},
+      {'label': 'OCT 2025', 'steps': readInt(['oct', 'Oct']), 'days': 31},
+      {'label': 'NOV 2025', 'steps': readInt(['nov', 'Nov']), 'days': 30},
+      {'label': 'DEC 2025', 'steps': readInt(['dec', 'Dec']), 'days': 31},
+      // Season 1 tail
+      {'label': 'JAN 2026', 'steps': readInt(['jan26', 'Jan26']), 'days': 31},
+      {'label': 'FEB 2026', 'steps': readInt(['feb26', 'Feb26']), 'days': 28},
+      // Season 2
+      {'label': 'MAR 2026', 'steps': readInt(['mar26', 'Mar26']), 'days': 31},
+      // {'label': 'APR 2026', 'steps': readInt(['apr26', 'Apr26']), 'days': 30},
+      // {'label': 'MAY 2026', 'steps': readInt(['may26', 'May26']), 'days': 31},
+    ];
+
+    final List<Widget> monthWidgets = [];
+
+    for (int i = 0; i < months.length; i++) {
+      final String monthLabel = months[i]['label'] as String;
+      final int steps = months[i]['steps'] as int;
+      final int days = months[i]['days'] as int;
+      final int avg = days > 0 ? (steps / days).floor() : 0;
+
+      final bool showDiff = i > 0;
+      final int difference = showDiff ? steps - (months[i - 1]['steps'] as int) : 0;
+
+      final Color diffColor = difference > 0
+          ? Colors.green
+          : difference < 0
+              ? Colors.red
+              : Colors.grey;
+
+      monthWidgets.add(
         Container(
           margin: EdgeInsets.all(5),
           padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
@@ -682,7 +640,7 @@ class _UserDetailState extends State<UserDetail> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: Text(
-                    monthForWalk,
+                    monthLabel,
                     style: AppTextStyles.subtitle.copyWith(
                       fontSize: 20,
                       color: AppTextStyles.primaryBlue,
@@ -696,20 +654,14 @@ class _UserDetailState extends State<UserDetail> {
                 child: Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
                         color: AppTextStyles.white,
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: AppTextStyles.orange,
-                          width: 3,
-                        ),
+                        border: Border.all(color: AppTextStyles.orange, width: 3),
                       ),
                       child: Text(
-                        getAvgForMonth(totalSteps, i),
+                        AppTextStyles().formatIndianNumber(avg),
                         style: AppTextStyles.subtitle.copyWith(
                           fontSize: 16,
                           color: AppTextStyles.primaryBlue,
@@ -725,70 +677,44 @@ class _UserDetailState extends State<UserDetail> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    i > 3
+                    showDiff
                         ? Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        color:
-                        difference > 0 ? Colors.green : Colors.red,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color:
-                          difference > 0
-                              ? Colors.green
-                              : Colors.red,
-                          width: 3,
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          difference > 0
-                              ? Icon(
-                            Icons.trending_up_outlined,
-                            color: Colors.white,
-                            size: 15,
+                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            decoration: BoxDecoration(
+                              color: diffColor,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(color: diffColor, width: 3),
+                            ),
+                            child: Row(
+                              children: [
+                                difference > 0
+                                    ? Icon(Icons.trending_up_outlined, color: Colors.white, size: 15)
+                                    : difference < 0
+                                        ? Icon(Icons.trending_down_outlined, color: Colors.white, size: 15)
+                                        : Icon(Icons.trending_flat_outlined, color: Colors.white, size: 15),
+                                SizedBox(width: 5),
+                                Text(
+                                  AppTextStyles().formatIndianNumber(difference),
+                                  style: AppTextStyles.subtitle.copyWith(
+                                    fontSize: 15,
+                                    color: AppTextStyles.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
                           )
-                              : Icon(
-                            Icons.trending_down_outlined,
-                            color: Colors.white,
-                            size: 15,
-                          ),
-                          SizedBox(width: 5),
-                          Text(
-                            AppTextStyles().formatIndianNumber(
-                              difference,
-                            ),
-                            style: AppTextStyles.subtitle.copyWith(
-                              fontSize: 15,
-                              color: AppTextStyles.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
                         : SizedBox(width: 0, height: 0),
                     SizedBox(width: 10),
                     Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
                         color: AppTextStyles.primaryBlue,
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: AppTextStyles.primaryBlue,
-                          width: 3,
-                        ),
+                        border: Border.all(color: AppTextStyles.primaryBlue, width: 3),
                       ),
                       child: Text(
-                        AppTextStyles().formatIndianNumber(
-                          int.parse(totalSteps.toString()),
-                        ),
+                        AppTextStyles().formatIndianNumber(steps),
                         style: AppTextStyles.subtitle.copyWith(
                           fontSize: 18,
                           color: AppTextStyles.white,
@@ -802,8 +728,7 @@ class _UserDetailState extends State<UserDetail> {
             ],
           ),
         ),
-      )
-          : SizedBox();
+      );
     }
 
     return Column(
@@ -811,34 +736,20 @@ class _UserDetailState extends State<UserDetail> {
       children: monthWidgets,
     );
   }
-
   List<FlSpot> generateFlSpots(ParticipentData participant) {
-    Map<int, String?> monthData = {
-      12: participant.dec, // January
-      3: participant.steps, // March
-      4: participant.apr,
-      5: participant.may,
-      6: participant.jun,
-      7: participant.jul,
-      8: participant.aug,
-      9: participant.sep,
-      10: participant.oct,
-      11: participant.nov,
-    };
+    // Season 1: codes 3–14 mapped to x=1..12, Season 2: codes 15–17 mapped to x=13..15
+    final allMonths = [
+      ...StepCountData.season1Months,
+      ...StepCountData.season2Months,
+    ];
 
     List<FlSpot> spots = [];
-
-    for (int month = 1; month <=12; month++) {
-      String? value = monthData[month];
-      double y = 0;
-
-      if (value != null && value != '0') {
-        try {
-          y = double.parse(value);
-        } catch (_) {
-          y = 0; // fallback if parse fails
-        }
-        spots.add(FlSpot(month.toDouble(), y));
+    for (int i = 0; i < allMonths.length; i++) {
+      final code = allMonths[i]['code'] as int;
+      final raw = StepCountData.getMonthValue(participant, code);
+      final y = double.tryParse(raw) ?? 0;
+      if (y > 0) {
+        spots.add(FlSpot((i + 1).toDouble(), y));
       }
     }
 

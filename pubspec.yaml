@@ -41,6 +41,11 @@ dependencies:
   fl_chart: ^0.64.0
   pdf: ^3.10.1
   printing: ^5.10.0
+  flutter_health_connect: 1.2.3
+  health: 10.2.0
+  provider: ^6.0.5
+  shared_preferences: ^2.2.2
+  flutter_secure_storage: ^9.0.0
 
 dev_dependencies:
   flutter_test:
@@ -96,6 +101,7 @@ flutter:
     - assets/images/trend_down.png
     - assets/images/ind.png
     - assets/images/wwlogo.png
+    - assets/images/wwact1.jpg
 
   fonts:
     - family: Barlow

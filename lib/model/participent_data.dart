@@ -1,6 +1,6 @@
 class ParticipentData {
   String? name;
-  String? steps;
+  String? mar;
   String? location;
   String? gender;
   String? rank;
@@ -13,7 +13,11 @@ class ParticipentData {
   String? oct;
   String? nov;
   String? dec;
-  String? jan;
+  String? jan26;
+  String? feb26;
+  String? mar26;
+  String? apr26;
+  String? may26;
   String? total;
   String? avg;
   String? up;
@@ -21,11 +25,11 @@ class ParticipentData {
   String? teams;
   String? teamName;
 
-  ParticipentData({this.name, this.steps, this.location, this.gender});
+  ParticipentData({this.name, this.mar, this.location, this.gender});
 
   ParticipentData.fromJson(Map<String, dynamic> json) {
     name = json['Name'];
-    steps = json['Mar'] ?? '0';
+    mar = json['Mar'] ?? '0';
     apr = json['Apr'] ?? '0';
     may = json['May'] ?? '0';
     jun = json['Jun'] ?? '0';
@@ -35,7 +39,11 @@ class ParticipentData {
     oct = json['Oct'] ?? '0';
     nov = json['Nov'] ?? '0';
     dec = json['Dec'] ?? '0';
-    jan = json['Jan'] ?? '0';
+    jan26 = json['Jan26'] ?? '0';
+    feb26 = json['Feb26'] ?? '0';
+    mar26 = json['Mar26'] ?? '0';
+    apr26 = json['Apr26'] ?? '0';
+    may26 = json['May26'] ?? '0';
     total = json['Total'] ?? '0';
     avg = json['AVG'] ?? '0';
     location = json['Location'];
@@ -50,7 +58,7 @@ class ParticipentData {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['Name'] = name;
-    data['Mar'] = steps;
+    data['Mar'] = mar;
     data['Apr'] = apr;
     data['May'] = may;
     data['Jun'] = jun;
@@ -60,7 +68,11 @@ class ParticipentData {
     data['Oct'] = oct;
     data['Nov'] = nov;
     data['Dec'] = dec;
-    data['Jan'] = jan;
+    data['Jan26'] = jan26;
+    data['Feb26'] = feb26;
+    data['Mar26'] = mar26;
+    data['Apr26'] = apr26;
+    data['May26'] = may26;
     data['Total'] = total;
     data['AVG'] = avg;
     data['Location'] = location;

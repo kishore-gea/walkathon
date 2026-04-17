@@ -280,7 +280,7 @@ class _DashboardDataState extends State<DashboardData> {
                         },
                         child: Card(
                           color:
-                              item.jan!.isNotEmpty && item.jan != '0'
+                              item.jan26!.isNotEmpty && item.jan26 != '0'
                                   ? Colors.white
                                   : Colors.pink.shade100,
                           shape: RoundedRectangleBorder(
@@ -463,11 +463,11 @@ class _DashboardDataState extends State<DashboardData> {
     String curMonthVal = '';
     switch (DateTime.now().month) {
       case 4:
-        curMonthVal = data.steps ?? '0';
+        curMonthVal = data.mar ?? '0';
         break;
       case 5:
         curMonthVal = data.apr ?? '0';
-        val = int.parse(data.steps ?? '0');
+        val = int.parse(data.mar ?? '0');
         break;
       case 6:
         curMonthVal = data.may ?? '0';
@@ -498,7 +498,7 @@ class _DashboardDataState extends State<DashboardData> {
         val = int.parse(data.oct ?? '0');
         break;
       default:
-        curMonthVal = data.steps ?? '0';
+        curMonthVal = data.mar ?? '0';
     }
     if (curMonthVal == data.total.toString()) {
       return Text(
@@ -528,7 +528,7 @@ class _DashboardDataState extends State<DashboardData> {
   String getValue(ParticipentData data) {
     /// We need to generate average steps for month based on months submitted
     int avgMonthsToCalculate = 0;
-    if(data.steps!='0'){
+    if(data.mar!='0'){
       avgMonthsToCalculate = avgMonthsToCalculate + 31;
     }
     if(data.apr!='0'){
@@ -558,7 +558,7 @@ class _DashboardDataState extends State<DashboardData> {
     if(data.dec!='0') {
       avgMonthsToCalculate = avgMonthsToCalculate + 31;
     }
-    if(data.jan!='0') {
+    if(data.jan26!='0') {
       avgMonthsToCalculate = avgMonthsToCalculate + 31;
     }
     final avgSteps = int.parse(data.total.toString()) / avgMonthsToCalculate;

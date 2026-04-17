@@ -16,7 +16,7 @@ Future<pw.Document> generateParticipantPdf({
 
   // Prepare monthly data inside the function for correct scoping
   final months = [
-    {'label': 'MAR', 'days': 31, 'value': participant.steps},
+    {'label': 'MAR', 'days': 31, 'value': participant.mar},
     {'label': 'APR', 'days': 30, 'value': participant.apr},
     {'label': 'MAY', 'days': 31, 'value': participant.may},
     {'label': 'JUN', 'days': 30, 'value': participant.jun},
@@ -26,7 +26,9 @@ Future<pw.Document> generateParticipantPdf({
     {'label': 'OCT', 'days': 31, 'value': participant.oct},
     {'label': 'NOV', 'days': 30, 'value': participant.nov},
     {'label': 'DEC', 'days': 31, 'value': participant.dec},
-    {'label': 'JAN', 'days': 31, 'value': participant.jan},
+    {'label': 'JAN', 'days': 31, 'value': participant.jan26},
+    {'label': 'FEB', 'days': 29, 'value': participant.feb26},
+    {'label': 'MAR26', 'days': 31, 'value': participant.mar26},
   ];
   int totalSteps = 0;
   final tableRows = <pw.TableRow>[];

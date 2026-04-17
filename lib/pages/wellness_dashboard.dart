@@ -8,7 +8,6 @@ import 'package:wellnesswalkathon/data_constants/stepcount_data.dart';
 import 'package:wellnesswalkathon/pages/customteams.dart';
 import 'package:wellnesswalkathon/pages/india_teams.dart';
 import 'package:wellnesswalkathon/pages/rolling_leader.dart';
-import 'package:wellnesswalkathon/pages/walkathon_facts.dart';
 import 'package:wellnesswalkathon/pages/walkathon_monthly_stats.dart';
 import 'package:wellnesswalkathon/pages/walkathon_total_count_page.dart';
 import 'package:wellnesswalkathon/pages/walkthon_stats/walkathon_stats.dart';
@@ -29,6 +28,12 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
   var totalStepCount = 0.obs;
   var totalStepCountHYD = 0.obs;
   var totalStepCountBLR = 0.obs;
+  var totalStepCountHYDSeason1 = 0.obs;
+  var totalStepCountHYDSeason2 = 0.obs;
+  var totalStepCountBLRSeason1 = 0.obs;
+  var totalStepCountBLRSeason2 = 0.obs;
+  int _selectedHydSeason = StepCountData.currentSeason;
+  int _selectedBlrSeason = StepCountData.currentSeason;
   bool _initialized = false;
 
   final List<bool> monthSelected = [
@@ -325,8 +330,8 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                               selectedCode: 'HYD',
                               headerName: 'Hyderabad',
                               totalWalkathonSteps: totalStepCount.value,
-                              hydTotalSteps: totalStepCountHYD.value,
-                              blrTotalSteps: totalStepCountBLR.value,
+                              hydTotalSteps: _selectedHydSeasonTotal,
+                              blrTotalSteps: _selectedBlrSeasonTotal,
                             ),
                             transition: Transition.rightToLeft,
                             duration: const Duration(milliseconds: 500),
@@ -356,11 +361,20 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                                   height: 40, // Adjust height if needed
                                 ),
                               ),
+                              const SizedBox(height: 6),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  _buildHydSeasonOption(1, 'S1'),
+                                  const SizedBox(width: 6),
+                                  _buildHydSeasonOption(2, 'S2'),
+                                ],
+                              ),
                               SizedBox(height: 5),
                               Obx(
                                 () => Text(
                                   AppTextStyles().formatIndianNumber(
-                                    totalStepCountHYD.value,
+                                    _selectedHydSeasonTotal,
                                   ),
                                   style: AppTextStyles.subtitle.copyWith(
                                     color: AppTextStyles.black,
@@ -370,7 +384,7 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                                 ),
                               ),
                               Text(
-                                'Overall Hyderabad Step Count',
+                                _selectedHydSeasonLabel,
                                 style: AppTextStyles.subtitle.copyWith(
                                   color: AppTextStyles.black,
                                   fontWeight: FontWeight.w300,
@@ -394,8 +408,8 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                               selectedCode: 'BLR',
                               headerName: 'Bangalore',
                               totalWalkathonSteps: totalStepCount.value,
-                              hydTotalSteps: totalStepCountHYD.value,
-                              blrTotalSteps: totalStepCountBLR.value,
+                              hydTotalSteps: _selectedHydSeasonTotal,
+                              blrTotalSteps: _selectedBlrSeasonTotal,
                             ),
                             transition: Transition.rightToLeft,
                             duration: const Duration(milliseconds: 500),
@@ -425,34 +439,43 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
                                   height: 35, // Adjust height if needed
                                 ),
                               ),
-                              SizedBox(height: 5),
-                              Obx(
-                                () => Text(
-                                  AppTextStyles().formatIndianNumber(
-                                    totalStepCountBLR.value,
-                                  ),
-                                  style: AppTextStyles.subtitle.copyWith(
-                                    color: AppTextStyles.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 22,
-                                  ),
-                                ),
+                              const SizedBox(height: 6),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  _buildBlrSeasonOption(1, 'S1'),
+                                  const SizedBox(width: 6),
+                                  _buildBlrSeasonOption(2, 'S2'),
+                                ],
                               ),
-                              Text(
-                                'Overall Bangalore Step Count',
-                                style: AppTextStyles.subtitle.copyWith(
-                                  color: AppTextStyles.black,
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                               SizedBox(height: 5),
+                               Obx(
+                                 () => Text(
+                                   AppTextStyles().formatIndianNumber(
+                                    _selectedBlrSeasonTotal,
+                                   ),
+                                   style: AppTextStyles.subtitle.copyWith(
+                                     color: AppTextStyles.black,
+                                     fontWeight: FontWeight.bold,
+                                     fontSize: 22,
+                                   ),
+                                 ),
+                               ),
+                               Text(
+                                _selectedBlrSeasonLabel,
+                                 style: AppTextStyles.subtitle.copyWith(
+                                   color: AppTextStyles.black,
+                                   fontWeight: FontWeight.w300,
+                                   fontSize: 11,
+                                 ),
+                               ),
+                             ],
+                           ),
+                         ),
+                       ),
+                     ),
+                   ],
+                 ),
                 SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
@@ -908,12 +931,17 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
       'HYD',
     );
 
+    totalStepCountHYDSeason1.value = _getLocationSeasonTotal('HYD', 1);
+    totalStepCountHYDSeason2.value = _getLocationSeasonTotal('HYD', 2);
+    totalStepCountBLRSeason1.value = _getLocationSeasonTotal('BLR', 1);
+    totalStepCountBLRSeason2.value = _getLocationSeasonTotal('BLR', 2);
+
     totalStepCountBLR.value = await StepCountData().getLocationWiseDataCount(
       'BLR',
     );
 
     headersList.clear();
-    for (int i = 0; i < headers.length; i++) {
+    for (int i = 0; i < headers.length; i++) { 
       if (StepCountData().monthsForWalk.any(
         (month) => headers[i].toString().contains(month),
       )) {
@@ -923,6 +951,35 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
     // print('Headers FROM Excel: $headersList');
     AppTextStyles().hideLoadingDialog(context);
   }
+
+  int _getLocationSeasonTotal(String location, int season) {
+    int total = 0;
+    final months = StepCountData.getSeasonMonths(season);
+    for (final participant in StepCountData.originalData) {
+      if (participant.location != location) continue;
+      for (final month in months) {
+        final code = month['code'] as int;
+        total += int.tryParse(StepCountData.getMonthValue(participant, code)) ?? 0;
+      }
+    }
+    return total;
+  }
+
+  int get _selectedHydSeasonTotal =>
+      _selectedHydSeason == 1
+          ? totalStepCountHYDSeason1.value
+          : totalStepCountHYDSeason2.value;
+
+  int get _selectedBlrSeasonTotal =>
+      _selectedBlrSeason == 1
+          ? totalStepCountBLRSeason1.value
+          : totalStepCountBLRSeason2.value;
+
+  String get _selectedHydSeasonLabel =>
+      _selectedHydSeason == 1 ? "Season 1 (Mar'25 - Feb'26)" : "Season 2 (Mar'26 onwards)";
+
+  String get _selectedBlrSeasonLabel =>
+      _selectedBlrSeason == 1 ? "Season 1 (Mar'25 - Feb'26)" : "Season 2 (Mar'26 onwards)";
 
   String getMonthName() {
     int monthIndex = DateTime.now().month;
@@ -956,5 +1013,51 @@ class _WellnessDashboardState extends State<WellnessDashboard> {
       default:
         return '';
     }
+  }
+
+  Widget _buildHydSeasonOption(int season, String label) {
+    final isSelected = _selectedHydSeason == season;
+    return GestureDetector(
+      onTap: () => setState(() => _selectedHydSeason = season),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+        decoration: BoxDecoration(
+          color: isSelected ? AppTextStyles.primaryBlue : Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppTextStyles.primaryBlue, width: 1.5),
+        ),
+        child: Text(
+          label,
+          style: AppTextStyles.subtitle.copyWith(
+            color: isSelected ? Colors.white : AppTextStyles.primaryBlue,
+            fontWeight: FontWeight.bold,
+            fontSize: 11,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBlrSeasonOption(int season, String label) {
+    final isSelected = _selectedBlrSeason == season;
+    return GestureDetector(
+      onTap: () => setState(() => _selectedBlrSeason = season),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+        decoration: BoxDecoration(
+          color: isSelected ? AppTextStyles.primaryBlue : Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppTextStyles.primaryBlue, width: 1.5),
+        ),
+        child: Text(
+          label,
+          style: AppTextStyles.subtitle.copyWith(
+            color: isSelected ? Colors.white : AppTextStyles.primaryBlue,
+            fontWeight: FontWeight.bold,
+            fontSize: 11,
+          ),
+        ),
+      ),
+    );
   }
 }

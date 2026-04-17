@@ -83,7 +83,7 @@ class _CustomteamsState extends State<Customteams> {
                   final group = entry.value;
                   final int groupTotalSteps = group.fold(
                     0,
-                        (sum, item) => sum + (item.jan != null ? int.tryParse(item.jan.toString()) ?? 0 : 0),
+                        (sum, item) => sum + (item.jan26 != null ? int.tryParse(item.jan26.toString()) ?? 0 : 0),
                   );
                   final String teamName = index < teamNames.length ? teamNames[index] : 'TEAM ${index+1}';
                   return {'group': group, 'total': groupTotalSteps, 'teamName': teamName};
@@ -152,7 +152,7 @@ class _CustomteamsState extends State<Customteams> {
                                                         color: AppTextStyles.primaryBlue,
                                                         borderRadius: BorderRadius.circular(8)
                                                       ),
-                                                      child: Text('${AppTextStyles().formatIndianNumber(int.parse(item.jan))} Km',style: AppTextStyles.body.copyWith(color: AppTextStyles.white,fontWeight: FontWeight.bold),)),
+                                                      child: Text('${AppTextStyles().formatIndianNumber(int.parse(item.jan26))} Km',style: AppTextStyles.body.copyWith(color: AppTextStyles.white,fontWeight: FontWeight.bold),)),
                                               )).toList(),
                                             ),
                                             actions: [
@@ -202,7 +202,7 @@ class _CustomteamsState extends State<Customteams> {
                                                 SizedBox(width: 10,),
                                                 item.location == 'HYD' ? Container(
                                                   decoration: BoxDecoration(
-                                                    color: item.jan!='0' ? AppTextStyles.orange : AppTextStyles.white,
+                                                    color: item.jan26!='0' ? AppTextStyles.orange : AppTextStyles.white,
                                                     borderRadius: BorderRadius.circular(10),
                                                   ),
                                                   padding: EdgeInsetsGeometry.symmetric(horizontal: 7,vertical: 2),
@@ -210,13 +210,13 @@ class _CustomteamsState extends State<Customteams> {
                                                 )
                                                     : Container(
                                                   decoration: BoxDecoration(
-                                                    color: item.jan!='0' ? AppTextStyles.orange : AppTextStyles.white,
+                                                    color: item.jan26!='0' ? AppTextStyles.orange : AppTextStyles.white,
                                                     borderRadius: BorderRadius.circular(10),
                                                   ),
                                                   padding: EdgeInsetsGeometry.symmetric(horizontal: 7,vertical: 2),
                                                   child: Text('BLR',style: AppTextStyles.body.copyWith(fontWeight: FontWeight.bold,fontSize: 12),),
                                                 ),
-                                                // item.jan!='0' ? Text('${item.jan}'):Text('000000'),
+                                                // item.jan26!='0' ? Text('${item.jan26}'):Text('000000'),
                                               ]
                                               )).toList(),
                                         ),
@@ -357,7 +357,7 @@ class _CustomteamsState extends State<Customteams> {
                     pw.Padding(
                       padding: const pw.EdgeInsets.all(8),
                       child: pw.Text(
-                        formatNumber(int.tryParse(item.jan.toString()) ?? 0),
+                        formatNumber(int.tryParse(item.jan26.toString()) ?? 0),
                         style: pw.TextStyle(fontWeight: pw.FontWeight.normal, color: PdfColors.black),
                       ),
                     ),

@@ -9,6 +9,7 @@ class AppTextStyles {
   static const Color black = Color(0xFF000000);
   static const Color lightGrey = Color(0xFFD9D9D6);
   static const Color orange = Color(0xFFFFA500);
+  static const Color lightBiscuit = Color(0xFFF3F1E5);
 
   String formatIndianNumber(int number) {
     final formatter = NumberFormat.decimalPattern('en_IN');

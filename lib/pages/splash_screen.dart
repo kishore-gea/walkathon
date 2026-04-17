@@ -19,10 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // Start fade-in animation and navigate after 2 seconds
     _startAnimation();
     Timer(Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(
-        context,
-        '/home',
-      ); // Change '/home' to your next screen
+      Navigator.pushReplacementNamed(context, '/options');
     });
   }
 
@@ -47,11 +44,6 @@ class _SplashScreenState extends State<SplashScreen> {
             // crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                'assets/images/ge.png',
-                width: 120, // Adjust size as needed
-                height: 120,
-              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,

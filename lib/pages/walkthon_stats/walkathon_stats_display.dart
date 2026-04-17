@@ -27,6 +27,8 @@ class _StatsDisplayState extends State<StatsDisplay> {
   bool isAllSelected = true;
   String filter = 'A';
   bool isIndiaSelected = false;
+  int selectedSeason = 1;
+  int selectedMonthCode = 13;
 
   bool isMenINDSelected = false;
   bool isWomenINDSelected = false;
@@ -34,8 +36,9 @@ class _StatsDisplayState extends State<StatsDisplay> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    selectedSeason = StepCountData.currentSeason == 2 ? 2 : 1;
+    selectedMonthCode = selectedSeason == 1 ? 13 : 15;
   }
 
   @override
@@ -54,6 +57,56 @@ class _StatsDisplayState extends State<StatsDisplay> {
           ),
         ),
         actions: [
+          (widget.code1 == '6A' || widget.code1 == '6B')
+              ? Row(
+                children: [
+                  _buildSeasonChip(1, 'S1'),
+                  _buildSeasonChip(2, 'S2'),
+                  const SizedBox(width: 6),
+                  PopupMenuButton<int>(
+                    tooltip: 'Select Month',
+                    onSelected: (code) {
+                      setState(() {
+                        selectedMonthCode = code;
+                      });
+                    },
+                    itemBuilder: (context) {
+                      return _selectedMonthOptions
+                          .map(
+                            (m) => PopupMenuItem<int>(
+                              value: m['code'] as int,
+                              child: Text(m['label'] as String),
+                            ),
+                          )
+                          .toList();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 4,
+                        horizontal: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: AppTextStyles.primaryBlue,
+                          width: 1,
+                        ),
+                        color: Colors.white,
+                      ),
+                      child: Text(
+                        _selectedMonthLabel,
+                        style: AppTextStyles.headline.copyWith(
+                          fontSize: 11,
+                          color: AppTextStyles.primaryBlue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                ],
+              )
+              : const SizedBox(),
           isIndiaSelected == true
               ? SizedBox()
               : GestureDetector(
@@ -486,12 +539,15 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                     ),
                                   );
                                 }
+                                final sortedData = _sortBySelectedMonth(
+                                  List<ParticipentData>.from(snapshot.data!),
+                                );
                                 return ListView.builder(
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
-                                  itemCount: snapshot.data!.length,
+                                  itemCount: sortedData.length,
                                   itemBuilder: (context, index) {
-                                    final data = snapshot.data![index];
+                                    final data = sortedData[index];
                                     return Card(
                                       elevation: 4,
                                       color:
@@ -585,24 +641,17 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                   .primaryBlue,
                                                         ),
                                                         child: SelectableText(
-                                                          int.parse(
-                                                                    data.jan
-                                                                        .toString(),
-                                                                  ) >
-                                                                  0
+                                                          _selectedMonthSteps(data) > 0
                                                               ? AppTextStyles()
                                                                   .formatIndianNumber(
-                                                                    int.parse(
-                                                                      data.jan
-                                                                          .toString(),
-                                                                    ),
+                                                                    _selectedMonthSteps(data),
                                                                   )
                                                               : 'D.N.S',
                                                           style: AppTextStyles
                                                               .subtitle
                                                               .copyWith(
                                                                 fontSize: 18,
-                                                                fontWeight:
+                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
                                                                 color:
@@ -687,17 +736,10 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                     .primaryBlue,
                                                           ),
                                                           child: SelectableText(
-                                                            int.parse(
-                                                                      data.jan
-                                                                          .toString(),
-                                                                    ) >
-                                                                    0
+                                                            _selectedMonthSteps(data) > 0
                                                                 ? AppTextStyles()
                                                                     .formatIndianNumber(
-                                                                      int.parse(
-                                                                        data.jan
-                                                                            .toString(),
-                                                                      ),
+                                                                      _selectedMonthSteps(data),
                                                                     )
                                                                 : 'D.N.S',
 
@@ -835,13 +877,15 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                           ),
                                         );
                                       }
+                                      final sortedData = _sortBySelectedMonth(
+                                        List<ParticipentData>.from(snapshot.data!),
+                                      );
                                       return ListView.builder(
                                         shrinkWrap: true,
                                         physics: NeverScrollableScrollPhysics(),
-                                        itemCount: snapshot.data!.length,
+                                        itemCount: sortedData.length,
                                         itemBuilder: (context, index) {
-                                          final data = snapshot.data![index];
-                                          int val =  int.parse(data.jan.toString());
+                                          final data = sortedData[index];
                                            return Card(
                                             elevation: 4,
                                             color:
@@ -947,10 +991,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                               child: SelectableText(
                                                                 AppTextStyles()
                                                                     .formatIndianNumber(
-                                                                      int.parse(
-                                                                        data.apr
-                                                                            .toString(),
-                                                                      ),
+                                                                      _selectedMonthSteps(data),
                                                                     ),
                                                                 style: AppTextStyles
                                                                     .subtitle
@@ -990,7 +1031,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                 .spaceBetween,
                                                         children: [
                                                           SelectableText(
-                                                            '${index + 1}. ',
+                                                            '${index + 1}.',
                                                             style: AppTextStyles
                                                                 .subtitle
                                                                 .copyWith(
@@ -1022,7 +1063,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                             ),
                                                           ),
                                                           SelectableText(
-                                                            '${stepsToKm(int.parse(data.jan ?? '0')).toStringAsFixed(2)} KM',
+                                                            '${stepsToKm(_selectedMonthSteps(data)).toStringAsFixed(2)} KM',
                                                             style: AppTextStyles.subtitle.copyWith(
                                                               fontWeight: FontWeight.bold,
                                                               fontSize: 18,
@@ -1055,10 +1096,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                 child: SelectableText(
                                                                   AppTextStyles()
                                                                       .formatIndianNumber(
-                                                                        int.parse(
-                                                                          data.jan
-                                                                              .toString(),
-                                                                        ),
+                                                                        _selectedMonthSteps(data),
                                                                       ),
                                                                   style: AppTextStyles.subtitle.copyWith(
                                                                     fontSize:
@@ -1189,12 +1227,15 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                           ),
                                         );
                                       }
+                                      final sortedData = _sortBySelectedMonth(
+                                        List<ParticipentData>.from(snapshot.data!),
+                                      );
                                       return ListView.builder(
                                         shrinkWrap: true,
                                         physics: NeverScrollableScrollPhysics(),
-                                        itemCount: snapshot.data!.length,
+                                        itemCount: sortedData.length,
                                         itemBuilder: (context, index) {
-                                          final data = snapshot.data![index];
+                                          final data = sortedData[index];
                                           return Card(
                                             elevation: 4,
                                             color:
@@ -1301,10 +1342,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                               child: SelectableText(
                                                                 AppTextStyles()
                                                                     .formatIndianNumber(
-                                                                      int.parse(
-                                                                        data.apr
-                                                                            .toString(),
-                                                                      ),
+                                                                      _selectedMonthSteps(data),
                                                                     ),
                                                                 style: AppTextStyles
                                                                     .subtitle
@@ -1377,7 +1415,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                             ),
                                                           ),
                                                           SelectableText(
-                                                            '${stepsToKm(int.parse(data.jan ?? '0')).toStringAsFixed(2)} KM',
+                                                            '${stepsToKm(_selectedMonthSteps(data)).toStringAsFixed(2)} KM',
                                                             style: AppTextStyles.subtitle.copyWith(
                                                               fontWeight: FontWeight.bold,
                                                               fontSize: 18,
@@ -1410,10 +1448,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
                                                                 child: SelectableText(
                                                                   AppTextStyles()
                                                                       .formatIndianNumber(
-                                                                    int.parse(
-                                                                      data.jan
-                                                                          .toString(),
-                                                                    ),
+                                                                    _selectedMonthSteps(data),
                                                                   ),
                                                                   style: AppTextStyles.subtitle.copyWith(
                                                                     fontSize:
@@ -1881,35 +1916,97 @@ class _StatsDisplayState extends State<StatsDisplay> {
     );
   }
 
+  List<Map<String, Object>> get _season1MonthOptions => const [
+    {'label': 'Mar', 'code': 3, 'days': 31},
+    {'label': 'Apr', 'code': 4, 'days': 30},
+    {'label': 'May', 'code': 5, 'days': 31},
+    {'label': 'Jun', 'code': 6, 'days': 30},
+    {'label': 'Jul', 'code': 7, 'days': 31},
+    {'label': 'Aug', 'code': 8, 'days': 31},
+    {'label': 'Sep', 'code': 9, 'days': 30},
+    {'label': 'Oct', 'code': 10, 'days': 31},
+    {'label': 'Nov', 'code': 11, 'days': 30},
+    {'label': 'Dec', 'code': 12, 'days': 31},
+    {'label': 'Jan26', 'code': 13, 'days': 31},
+  ];
+
+  List<Map<String, Object>> get _season2MonthOptions => const [
+    {'label': 'Mar26', 'code': 15, 'days': 31},
+  ];
+
+  List<Map<String, Object>> get _selectedMonthOptions =>
+      selectedSeason == 1 ? _season1MonthOptions : _season2MonthOptions;
+
+  String get _selectedMonthLabel {
+    final month = _selectedMonthOptions.firstWhere(
+      (m) => m['code'] == selectedMonthCode,
+      orElse: () => _selectedMonthOptions.first,
+    );
+    return month['label'] as String;
+  }
+
+  int _selectedMonthDays() {
+    final month = _selectedMonthOptions.firstWhere(
+      (m) => m['code'] == selectedMonthCode,
+      orElse: () => _selectedMonthOptions.first,
+    );
+    return month['days'] as int;
+  }
+
+  int _selectedMonthSteps(ParticipentData data) {
+    final raw = StepCountData.getMonthValue(data, selectedMonthCode);
+    return int.tryParse(raw) ?? 0;
+  }
+
+  List<ParticipentData> _sortBySelectedMonth(List<ParticipentData> input) {
+    input.sort((a, b) {
+      final bSteps = _selectedMonthSteps(b);
+      final aSteps = _selectedMonthSteps(a);
+      if (bSteps != aSteps) return bSteps.compareTo(aSteps);
+      final aName = a.name ?? '';
+      final bName = b.name ?? '';
+      return aName.compareTo(bName);
+    });
+    return input;
+  }
+
+  Widget _buildSeasonChip(int season, String label) {
+    final isSelected = selectedSeason == season;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedSeason = season;
+          selectedMonthCode = season == 1 ? 13 : 15;
+        });
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 4),
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: isSelected ? AppTextStyles.primaryBlue : Colors.grey,
+            width: 1,
+          ),
+          color: isSelected ? AppTextStyles.primaryBlue : Colors.white,
+        ),
+        child: Text(
+          label,
+          style: AppTextStyles.headline.copyWith(
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            color: isSelected ? AppTextStyles.white : Colors.grey,
+            fontSize: 11,
+          ),
+        ),
+      ),
+    );
+  }
+
   getAvgMonthStepCount(ParticipentData data, String code) {
-    int userSteps = int.parse(data.jan.toString());
+    int userSteps = _selectedMonthSteps(data);
     if (userSteps != 0) {
-      final monthCode = DateTime.now().month - 1;
-      var val = 30;
-      if (monthCode == 3) {
-        val = 31;
-      } else if (monthCode == 4) {
-        val = 30;
-      } else if (monthCode == 5) {
-        val = 31;
-      } else if (monthCode == 6) {
-        val = 30;
-      } else if (monthCode == 7) {
-        val = 31;
-      } else if (monthCode == 8) {
-        val = 31;
-      } else if (monthCode == 9) {
-        val = 30;
-      }else if (monthCode == 10) {
-        val = 31;
-      }else if (monthCode == 11) {
-        val = 30;
-      }else if (monthCode == 12) {
-        val = 31;
-      }else if(monthCode == 1){
-        val = 31;
-      }
-      final aprAyvSteps = userSteps / val;
+      final aprAyvSteps = userSteps / _selectedMonthDays();
       return Container(
         margin: const EdgeInsets.only(top: 8.0),
         padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8),
@@ -1937,7 +2034,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
   Widget getMonthSubmitted(ParticipentData data) {
     List<String> months = [];
     int count = 0;
-    if(data.steps!='0'){
+    if(data.mar!='0'){
       months.add('MAR');
       count++;
     }
@@ -1979,7 +2076,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
       count++;
     }
 
-    if(data.jan!='0') {
+    if(data.jan26!='0') {
       months.add('JAN');
       count++;
     }
@@ -2025,7 +2122,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
   }
 
   getAvgSteps(ParticipentData data, String code) {
-    int marSteps = int.parse(data.steps.toString());
+    int marSteps = int.parse(data.mar.toString());
     final marAyvSteps = marSteps / 31;
     int aprSteps = int.parse(data.apr.toString());
     final aprAyvSteps = aprSteps / 30;
@@ -2089,7 +2186,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
   }
 
   getStepUpValueForThisMonth(ParticipentData data) {
-    int novSteps = int.parse(data.jan.toString());
+    int novSteps = int.parse(data.jan26.toString());
     int octSteps = int.parse(data.dec.toString());
     final stepUpValue = novSteps - octSteps;
     return stepUpValue;
@@ -2098,7 +2195,7 @@ class _StatsDisplayState extends State<StatsDisplay> {
   String getValue(ParticipentData data) {
     /// We need to generate average steps for month based on months submitted
     int avgMonthsToCalculate = 0;
-    if(data.steps!='0'){
+    if(data.mar!='0'){
         avgMonthsToCalculate = avgMonthsToCalculate + 31;
     }else if(data.apr!='0'){
         avgMonthsToCalculate = avgMonthsToCalculate + 30;
@@ -2114,9 +2211,9 @@ class _StatsDisplayState extends State<StatsDisplay> {
         avgMonthsToCalculate = avgMonthsToCalculate + 30;
     }else if(data.oct!='0') {
         avgMonthsToCalculate = avgMonthsToCalculate + 31;
-    }else if(data.jan!='0') {
+    }else if(data.jan26!='0') {
         avgMonthsToCalculate = avgMonthsToCalculate + 30;
-    }else if(data.jan!='0') {
+    }else if(data.jan26!='0') {
         avgMonthsToCalculate = avgMonthsToCalculate + 31;
     }
     final avgSteps = int.parse(data.total.toString()) / avgMonthsToCalculate;
